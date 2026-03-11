@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Services\AccountingService;
+use App\Services\AccountingReportService;
 use BackedEnum;
 use Filament\Pages\Page;
 use Illuminate\Support\Collection;
@@ -41,7 +41,7 @@ class TrialBalancePage extends Page
     #[Computed]
     public function trialBalance(): Collection
     {
-        return app(AccountingService::class)->getTrialBalance($this->year, $this->month);
+        return app(AccountingReportService::class)->getTrialBalance($this->year, $this->month);
     }
 
     public function updatedYear(): void

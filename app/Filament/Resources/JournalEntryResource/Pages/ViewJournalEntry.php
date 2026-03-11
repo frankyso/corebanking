@@ -2,9 +2,11 @@
 
 namespace App\Filament\Resources\JournalEntryResource\Pages;
 
+use App\Actions\Accounting\PostJournalEntry;
+use App\Actions\Accounting\ReverseJournalEntry;
 use App\Enums\JournalStatus;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\JournalEntryResource;
-use App\Services\AccountingService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use Filament\Notifications\Notification;
@@ -27,10 +29,10 @@ class ViewJournalEntry extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === JournalStatus::Draft && $this->record->canBeApprovedBy(auth()->user()))
                 ->action(function (): void {
                     try {
-                        app(AccountingService::class)->postJournal($this->record, auth()->user());
+                        app(PostJournalEntry::class)->execute($this->record, auth()->user());
                         Notification::make()->title('Jurnal berhasil diposting')->success()->send();
                         $this->refreshFormData(['status', 'approval_status', 'posted_at']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -47,10 +49,10 @@ class ViewJournalEntry extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === JournalStatus::Posted)
                 ->action(function (array $data): void {
                     try {
-                        app(AccountingService::class)->reverseJournal($this->record, auth()->user(), $data['reason']);
+                        app(ReverseJournalEntry::class)->execute($this->record, auth()->user(), $data['reason']);
                         Notification::make()->title('Jurnal berhasil dibatalkan')->success()->send();
                         $this->refreshFormData(['status', 'reversed_by', 'reversed_at', 'reversal_reason']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),

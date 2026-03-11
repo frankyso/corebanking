@@ -76,6 +76,14 @@ class TellerSession extends Model
         return $this->hasMany(TellerTransaction::class);
     }
 
+    public static function getActiveForUser(User $teller): ?static
+    {
+        return static::query()
+            ->forUser($teller->id)
+            ->open()
+            ->first();
+    }
+
     public function isOpen(): bool
     {
         return $this->status === TellerSessionStatus::Open;

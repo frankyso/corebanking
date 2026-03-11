@@ -2,14 +2,16 @@
 
 namespace App\Filament\Resources\DepositAccountResource\Pages;
 
+use App\Actions\Deposit\PlaceDeposit;
+use App\DTOs\Deposit\PlaceDepositData;
 use App\Enums\InterestPaymentMethod;
 use App\Enums\RolloverType;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\DepositAccountResource;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\DepositProduct;
 use App\Models\SavingsAccount;
-use App\Services\DepositService;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -96,19 +98,21 @@ class CreateDepositAccount extends CreateRecord
         $product = DepositProduct::findOrFail($data['deposit_product_id']);
 
         try {
-            $record = app(DepositService::class)->place(
-                product: $product,
-                customerId: $data['customer_id'],
-                branchId: $data['branch_id'],
-                principalAmount: (float) $data['principal_amount'],
-                tenorMonths: (int) $data['tenor_months'],
-                interestPaymentMethod: InterestPaymentMethod::from($data['interest_payment_method']),
-                rolloverType: RolloverType::from($data['rollover_type']),
-                savingsAccountId: $data['savings_account_id'] ?? null,
-                performer: auth()->user(),
-                placementDate: $data['placement_date'] ? Carbon::parse($data['placement_date']) : null,
+            $record = app(PlaceDeposit::class)->execute(
+                new PlaceDepositData(
+                    product: $product,
+                    customerId: $data['customer_id'],
+                    branchId: $data['branch_id'],
+                    principalAmount: (float) $data['principal_amount'],
+                    tenorMonths: (int) $data['tenor_months'],
+                    interestPaymentMethod: InterestPaymentMethod::from($data['interest_payment_method']),
+                    rolloverType: RolloverType::from($data['rollover_type']),
+                    savingsAccountId: $data['savings_account_id'] ?? null,
+                    performer: auth()->user(),
+                    placementDate: $data['placement_date'] ? Carbon::parse($data['placement_date']) : null,
+                ),
             );
-        } catch (\InvalidArgumentException $e) {
+        } catch (DomainException $e) {
             Notification::make()
                 ->title('Gagal menempatkan deposito')
                 ->body($e->getMessage())

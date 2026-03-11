@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\JournalEntryResource\Pages;
 
+use App\Actions\Accounting\CreateJournalEntry as CreateJournalEntryAction;
+use App\DTOs\Accounting\CreateJournalData;
 use App\Enums\JournalSource;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\JournalEntryResource;
 use App\Models\Branch;
 use App\Models\ChartOfAccount;
-use App\Services\AccountingService;
 use Carbon\Carbon;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Repeater;
@@ -86,7 +88,7 @@ class CreateJournalEntry extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         try {
-            $record = app(AccountingService::class)->createJournal(
+            $record = app(CreateJournalEntryAction::class)->execute(new CreateJournalData(
                 journalDate: Carbon::parse($data['journal_date']),
                 description: $data['description'],
                 source: JournalSource::from($data['source']),
@@ -98,8 +100,8 @@ class CreateJournalEntry extends CreateRecord
                 ])->toArray(),
                 creator: auth()->user(),
                 branchId: $data['branch_id'] ?? null,
-            );
-        } catch (\InvalidArgumentException $e) {
+            ));
+        } catch (DomainException $e) {
             Notification::make()
                 ->title('Gagal membuat jurnal')
                 ->body($e->getMessage())

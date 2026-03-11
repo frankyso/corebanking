@@ -2,11 +2,18 @@
 
 namespace App\Filament\Pages;
 
+use App\Actions\Teller\CloseTellerSession;
+use App\Actions\Teller\OpenTellerSession;
+use App\Actions\Teller\ProcessTellerDeposit;
+use App\Actions\Teller\ProcessTellerLoanPayment;
+use App\Actions\Teller\ProcessTellerWithdrawal;
+use App\DTOs\Teller\OpenTellerSessionData;
+use App\DTOs\Teller\TellerTransactionData;
+use App\Exceptions\DomainException;
 use App\Models\LoanAccount;
 use App\Models\SavingsAccount;
 use App\Models\TellerSession;
 use App\Models\Vault;
-use App\Services\TellerService;
 use BackedEnum;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Select;
@@ -41,7 +48,7 @@ class TellerDashboard extends Page
     #[Computed]
     public function activeSession(): ?TellerSession
     {
-        return app(TellerService::class)->getActiveSession(auth()->user());
+        return TellerSession::getActiveForUser(auth()->user());
     }
 
     #[Computed]
@@ -89,14 +96,14 @@ class TellerDashboard extends Page
                 ->action(function (array $data): void {
                     try {
                         $vault = Vault::findOrFail($data['vault_id']);
-                        app(TellerService::class)->openSession(
+                        app(OpenTellerSession::class)->execute(new OpenTellerSessionData(
                             teller: auth()->user(),
                             vault: $vault,
                             openingBalance: (float) $data['opening_balance'],
-                        );
+                        ));
                         Notification::make()->title('Sesi teller berhasil dibuka')->success()->send();
                         unset($this->activeSession, $this->recentTransactions);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -118,14 +125,14 @@ class TellerDashboard extends Page
                     : '')
                 ->action(function (array $data): void {
                     try {
-                        app(TellerService::class)->closeSession(
+                        app(CloseTellerSession::class)->execute(
                             session: $this->activeSession,
                             performer: auth()->user(),
                             notes: $data['closing_notes'] ?? null,
                         );
                         Notification::make()->title('Sesi teller berhasil ditutup')->success()->send();
                         unset($this->activeSession, $this->recentTransactions);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -156,16 +163,18 @@ class TellerDashboard extends Page
                 ->action(function (array $data): void {
                     try {
                         $account = SavingsAccount::findOrFail($data['savings_account_id']);
-                        app(TellerService::class)->processDeposit(
-                            session: $this->activeSession,
-                            account: $account,
-                            amount: (float) $data['amount'],
-                            performer: auth()->user(),
-                            description: $data['description'] ?? null,
+                        app(ProcessTellerDeposit::class)->execute(
+                            new TellerTransactionData(
+                                session: $this->activeSession,
+                                amount: (float) $data['amount'],
+                                performer: auth()->user(),
+                                description: $data['description'] ?? null,
+                            ),
+                            $account,
                         );
                         Notification::make()->title('Setoran berhasil')->success()->send();
                         unset($this->activeSession, $this->recentTransactions);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -196,16 +205,18 @@ class TellerDashboard extends Page
                 ->action(function (array $data): void {
                     try {
                         $account = SavingsAccount::findOrFail($data['savings_account_id']);
-                        app(TellerService::class)->processWithdrawal(
-                            session: $this->activeSession,
-                            account: $account,
-                            amount: (float) $data['amount'],
-                            performer: auth()->user(),
-                            description: $data['description'] ?? null,
+                        app(ProcessTellerWithdrawal::class)->execute(
+                            new TellerTransactionData(
+                                session: $this->activeSession,
+                                amount: (float) $data['amount'],
+                                performer: auth()->user(),
+                                description: $data['description'] ?? null,
+                            ),
+                            $account,
                         );
                         Notification::make()->title('Penarikan berhasil')->success()->send();
                         unset($this->activeSession, $this->recentTransactions);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -236,16 +247,18 @@ class TellerDashboard extends Page
                 ->action(function (array $data): void {
                     try {
                         $loanAccount = LoanAccount::findOrFail($data['loan_account_id']);
-                        app(TellerService::class)->processLoanPayment(
-                            session: $this->activeSession,
-                            loanAccount: $loanAccount,
-                            amount: (float) $data['amount'],
-                            performer: auth()->user(),
-                            description: $data['description'] ?? null,
+                        app(ProcessTellerLoanPayment::class)->execute(
+                            new TellerTransactionData(
+                                session: $this->activeSession,
+                                amount: (float) $data['amount'],
+                                performer: auth()->user(),
+                                description: $data['description'] ?? null,
+                            ),
+                            $loanAccount,
                         );
                         Notification::make()->title('Pembayaran angsuran berhasil')->success()->send();
                         unset($this->activeSession, $this->recentTransactions);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),

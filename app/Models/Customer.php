@@ -117,4 +117,54 @@ class Customer extends Model implements AuditableContract
     {
         return $query->where('customer_type', $type);
     }
+
+    public function block(): void
+    {
+        $this->update(['status' => CustomerStatus::Blocked]);
+    }
+
+    public function unblock(): void
+    {
+        $this->update(['status' => CustomerStatus::Active]);
+    }
+
+    public function deactivate(): void
+    {
+        $this->update(['status' => CustomerStatus::Inactive]);
+    }
+
+    public function markClosed(): void
+    {
+        $this->update(['status' => CustomerStatus::Closed]);
+    }
+
+    public static function checkDuplicateNik(string $nik, ?int $excludeCustomerId = null): bool
+    {
+        $query = IndividualDetail::where('nik', $nik);
+
+        if ($excludeCustomerId) {
+            $query->where('customer_id', '!=', $excludeCustomerId);
+        }
+
+        return $query->exists();
+    }
+
+    /**
+     * @param  array<string, mixed>  $data
+     */
+    public static function calculateRiskRating(array $data): RiskRating
+    {
+        $nationality = $data['nationality'] ?? 'IDN';
+        $monthlyIncome = (float) ($data['monthly_income'] ?? 0);
+
+        if ($nationality !== 'IDN' || $monthlyIncome > 500_000_000) {
+            return RiskRating::High;
+        }
+
+        if ($monthlyIncome > 100_000_000) {
+            return RiskRating::Medium;
+        }
+
+        return RiskRating::Low;
+    }
 }

@@ -10,7 +10,7 @@ use App\Enums\MaritalStatus;
 use App\Enums\RiskRating;
 use App\Filament\Resources\CustomerResource;
 use App\Models\Branch;
-use App\Services\CustomerService;
+use App\Services\SequenceService;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
@@ -268,8 +268,7 @@ class CreateCustomer extends CreateRecord
         $data['status'] = CustomerStatus::PendingApproval->value;
 
         $branchCode = auth()->user()->branch?->code ?? '001';
-        $data['cif_number'] = app(CustomerService::class)
-            ->getSequenceService()
+        $data['cif_number'] = app(SequenceService::class)
             ->generateCifNumber($branchCode);
 
         return $data;

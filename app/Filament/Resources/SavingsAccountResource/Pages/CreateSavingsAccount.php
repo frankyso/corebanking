@@ -2,11 +2,13 @@
 
 namespace App\Filament\Resources\SavingsAccountResource\Pages;
 
+use App\Actions\Savings\OpenSavingsAccount;
+use App\DTOs\Savings\OpenSavingsAccountData;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\SavingsAccountResource;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\SavingsProduct;
-use App\Services\SavingsService;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -56,14 +58,16 @@ class CreateSavingsAccount extends CreateRecord
         $product = SavingsProduct::findOrFail($data['savings_product_id']);
 
         try {
-            $record = app(SavingsService::class)->open(
-                product: $product,
-                customerId: $data['customer_id'],
-                branchId: $data['branch_id'],
-                initialDeposit: (float) $data['initial_deposit'],
-                performer: auth()->user(),
+            $record = app(OpenSavingsAccount::class)->execute(
+                new OpenSavingsAccountData(
+                    product: $product,
+                    customerId: $data['customer_id'],
+                    branchId: $data['branch_id'],
+                    initialDeposit: (float) $data['initial_deposit'],
+                    performer: auth()->user(),
+                ),
             );
-        } catch (\InvalidArgumentException $e) {
+        } catch (DomainException $e) {
             Notification::make()
                 ->title('Gagal membuka rekening')
                 ->body($e->getMessage())

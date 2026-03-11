@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\LoanApplicationResource\Pages;
 
+use App\Actions\Loan\ApproveLoanApplication;
+use App\Actions\Loan\DisburseLoan;
+use App\Actions\Loan\RejectLoanApplication;
+use App\DTOs\Loan\ApproveLoanApplicationData;
 use App\Enums\LoanApplicationStatus;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\LoanApplicationResource;
-use App\Services\LoanService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -39,15 +43,15 @@ class ViewLoanApplication extends ViewRecord
                     && $this->record->created_by !== auth()->id())
                 ->action(function (array $data): void {
                     try {
-                        app(LoanService::class)->approveApplication(
+                        app(ApproveLoanApplication::class)->execute(new ApproveLoanApplicationData(
                             application: $this->record,
                             approver: auth()->user(),
                             approvedAmount: (float) $data['approved_amount'],
                             approvedTenor: (int) $data['approved_tenor'],
-                        );
+                        ));
                         Notification::make()->title('Permohonan berhasil disetujui')->success()->send();
                         $this->refreshFormData(['status', 'approved_amount', 'approved_tenor_months', 'approved_by', 'approved_at']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -65,14 +69,10 @@ class ViewLoanApplication extends ViewRecord
                 ->visible(fn (): bool => in_array($this->record->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview]))
                 ->action(function (array $data): void {
                     try {
-                        app(LoanService::class)->rejectApplication(
-                            application: $this->record,
-                            approver: auth()->user(),
-                            reason: $data['reason'],
-                        );
+                        app(RejectLoanApplication::class)->execute($this->record, auth()->user(), $data['reason']);
                         Notification::make()->title('Permohonan ditolak')->warning()->send();
                         $this->refreshFormData(['status', 'rejection_reason']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -91,7 +91,7 @@ class ViewLoanApplication extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === LoanApplicationStatus::Approved)
                 ->action(function (): void {
                     try {
-                        $account = app(LoanService::class)->disburse(
+                        $account = app(DisburseLoan::class)->execute(
                             application: $this->record,
                             performer: auth()->user(),
                         );
@@ -101,7 +101,7 @@ class ViewLoanApplication extends ViewRecord
                             ->success()
                             ->send();
                         $this->refreshFormData(['status', 'disbursed_at']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),

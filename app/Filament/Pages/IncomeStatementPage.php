@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Services\AccountingService;
+use App\Services\AccountingReportService;
 use BackedEnum;
 use Carbon\Carbon;
 use Filament\Pages\Page;
@@ -41,7 +41,7 @@ class IncomeStatementPage extends Page
     #[Computed]
     public function incomeStatement(): array
     {
-        return app(AccountingService::class)->getIncomeStatement(
+        return app(AccountingReportService::class)->getIncomeStatement(
             Carbon::parse($this->startDate),
             Carbon::parse($this->endDate),
         );
