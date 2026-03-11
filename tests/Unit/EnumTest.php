@@ -31,11 +31,11 @@ use App\Enums\VaultTransactionType;
 // AccountGroup
 // ============================================================================
 
-it('has exactly 5 AccountGroup cases', function () {
+it('has exactly 5 AccountGroup cases', function (): void {
     expect(AccountGroup::cases())->toHaveCount(5);
 });
 
-it('has correct AccountGroup backing values', function (AccountGroup $case, string $value) {
+it('has correct AccountGroup backing values', function (AccountGroup $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Asset' => [AccountGroup::Asset, 'asset'],
@@ -45,7 +45,7 @@ it('has correct AccountGroup backing values', function (AccountGroup $case, stri
     'Expense' => [AccountGroup::Expense, 'expense'],
 ]);
 
-it('returns correct AccountGroup labels', function (AccountGroup $case, string $label) {
+it('returns correct AccountGroup labels', function (AccountGroup $case, string $label): void {
     expect($case->label())->toBe($label);
 })->with([
     'Asset' => [AccountGroup::Asset, 'Aset'],
@@ -55,7 +55,7 @@ it('returns correct AccountGroup labels', function (AccountGroup $case, string $
     'Expense' => [AccountGroup::Expense, 'Beban'],
 ]);
 
-it('returns correct AccountGroup code prefixes', function (AccountGroup $case, string $prefix) {
+it('returns correct AccountGroup code prefixes', function (AccountGroup $case, string $prefix): void {
     expect($case->codePrefix())->toBe($prefix);
 })->with([
     'Asset' => [AccountGroup::Asset, '1'],
@@ -69,18 +69,18 @@ it('returns correct AccountGroup code prefixes', function (AccountGroup $case, s
 // NormalBalance
 // ============================================================================
 
-it('has exactly 2 NormalBalance cases', function () {
+it('has exactly 2 NormalBalance cases', function (): void {
     expect(NormalBalance::cases())->toHaveCount(2);
 });
 
-it('has correct NormalBalance backing values', function (NormalBalance $case, string $value) {
+it('has correct NormalBalance backing values', function (NormalBalance $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Debit' => [NormalBalance::Debit, 'debit'],
     'Credit' => [NormalBalance::Credit, 'credit'],
 ]);
 
-it('returns correct NormalBalance labels', function (NormalBalance $case, string $label) {
+it('returns correct NormalBalance labels', function (NormalBalance $case, string $label): void {
     expect($case->label())->toBe($label);
 })->with([
     'Debit' => [NormalBalance::Debit, 'Debit'],
@@ -91,11 +91,11 @@ it('returns correct NormalBalance labels', function (NormalBalance $case, string
 // ApprovalStatus
 // ============================================================================
 
-it('has exactly 3 ApprovalStatus cases', function () {
+it('has exactly 3 ApprovalStatus cases', function (): void {
     expect(ApprovalStatus::cases())->toHaveCount(3);
 });
 
-it('has correct ApprovalStatus backing values', function (ApprovalStatus $case, string $value) {
+it('has correct ApprovalStatus backing values', function (ApprovalStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Pending' => [ApprovalStatus::Pending, 'pending'],
@@ -103,7 +103,7 @@ it('has correct ApprovalStatus backing values', function (ApprovalStatus $case, 
     'Rejected' => [ApprovalStatus::Rejected, 'rejected'],
 ]);
 
-it('returns correct ApprovalStatus labels', function (ApprovalStatus $case, string $label) {
+it('returns correct ApprovalStatus labels', function (ApprovalStatus $case, string $label): void {
     expect($case->label())->toBe($label);
 })->with([
     'Pending' => [ApprovalStatus::Pending, 'Menunggu Persetujuan'],
@@ -111,7 +111,7 @@ it('returns correct ApprovalStatus labels', function (ApprovalStatus $case, stri
     'Rejected' => [ApprovalStatus::Rejected, 'Ditolak'],
 ]);
 
-it('returns correct ApprovalStatus colors', function (ApprovalStatus $case, string $color) {
+it('returns correct ApprovalStatus colors', function (ApprovalStatus $case, string $color): void {
     expect($case->color())->toBe($color);
 })->with([
     'Pending' => [ApprovalStatus::Pending, 'warning'],
@@ -123,18 +123,18 @@ it('returns correct ApprovalStatus colors', function (ApprovalStatus $case, stri
 // CustomerType
 // ============================================================================
 
-it('has exactly 2 CustomerType cases', function () {
+it('has exactly 2 CustomerType cases', function (): void {
     expect(CustomerType::cases())->toHaveCount(2);
 });
 
-it('has correct CustomerType backing values', function (CustomerType $case, string $value) {
+it('has correct CustomerType backing values', function (CustomerType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Individual' => [CustomerType::Individual, 'individual'],
     'Corporate' => [CustomerType::Corporate, 'corporate'],
 ]);
 
-it('returns correct CustomerType labels', function (CustomerType $case, string $label) {
+it('returns correct CustomerType labels', function (CustomerType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Individual' => [CustomerType::Individual, 'Perorangan'],
@@ -145,11 +145,11 @@ it('returns correct CustomerType labels', function (CustomerType $case, string $
 // CustomerStatus
 // ============================================================================
 
-it('has exactly 5 CustomerStatus cases', function () {
+it('has exactly 5 CustomerStatus cases', function (): void {
     expect(CustomerStatus::cases())->toHaveCount(5);
 });
 
-it('has correct CustomerStatus backing values', function (CustomerStatus $case, string $value) {
+it('has correct CustomerStatus backing values', function (CustomerStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'PendingApproval' => [CustomerStatus::PendingApproval, 'pending_approval'],
@@ -159,7 +159,7 @@ it('has correct CustomerStatus backing values', function (CustomerStatus $case, 
     'Closed' => [CustomerStatus::Closed, 'closed'],
 ]);
 
-it('returns correct CustomerStatus labels', function (CustomerStatus $case, string $label) {
+it('returns correct CustomerStatus labels', function (CustomerStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'PendingApproval' => [CustomerStatus::PendingApproval, 'Menunggu Persetujuan'],
@@ -169,7 +169,7 @@ it('returns correct CustomerStatus labels', function (CustomerStatus $case, stri
     'Closed' => [CustomerStatus::Closed, 'Ditutup'],
 ]);
 
-it('returns correct CustomerStatus colors', function (CustomerStatus $case, string $color) {
+it('returns correct CustomerStatus colors', function (CustomerStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'PendingApproval' => [CustomerStatus::PendingApproval, 'warning'],
@@ -183,18 +183,18 @@ it('returns correct CustomerStatus colors', function (CustomerStatus $case, stri
 // Gender
 // ============================================================================
 
-it('has exactly 2 Gender cases', function () {
+it('has exactly 2 Gender cases', function (): void {
     expect(Gender::cases())->toHaveCount(2);
 });
 
-it('has correct Gender backing values', function (Gender $case, string $value) {
+it('has correct Gender backing values', function (Gender $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Male' => [Gender::Male, 'M'],
     'Female' => [Gender::Female, 'F'],
 ]);
 
-it('returns correct Gender labels', function (Gender $case, string $label) {
+it('returns correct Gender labels', function (Gender $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Male' => [Gender::Male, 'Laki-laki'],
@@ -205,11 +205,11 @@ it('returns correct Gender labels', function (Gender $case, string $label) {
 // MaritalStatus
 // ============================================================================
 
-it('has exactly 4 MaritalStatus cases', function () {
+it('has exactly 4 MaritalStatus cases', function (): void {
     expect(MaritalStatus::cases())->toHaveCount(4);
 });
 
-it('has correct MaritalStatus backing values', function (MaritalStatus $case, string $value) {
+it('has correct MaritalStatus backing values', function (MaritalStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Single' => [MaritalStatus::Single, 'single'],
@@ -218,7 +218,7 @@ it('has correct MaritalStatus backing values', function (MaritalStatus $case, st
     'Widowed' => [MaritalStatus::Widowed, 'widowed'],
 ]);
 
-it('returns correct MaritalStatus labels', function (MaritalStatus $case, string $label) {
+it('returns correct MaritalStatus labels', function (MaritalStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Single' => [MaritalStatus::Single, 'Belum Menikah'],
@@ -231,11 +231,11 @@ it('returns correct MaritalStatus labels', function (MaritalStatus $case, string
 // RiskRating
 // ============================================================================
 
-it('has exactly 3 RiskRating cases', function () {
+it('has exactly 3 RiskRating cases', function (): void {
     expect(RiskRating::cases())->toHaveCount(3);
 });
 
-it('has correct RiskRating backing values', function (RiskRating $case, string $value) {
+it('has correct RiskRating backing values', function (RiskRating $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Low' => [RiskRating::Low, 'low'],
@@ -243,7 +243,7 @@ it('has correct RiskRating backing values', function (RiskRating $case, string $
     'High' => [RiskRating::High, 'high'],
 ]);
 
-it('returns correct RiskRating labels', function (RiskRating $case, string $label) {
+it('returns correct RiskRating labels', function (RiskRating $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Low' => [RiskRating::Low, 'Rendah'],
@@ -251,7 +251,7 @@ it('returns correct RiskRating labels', function (RiskRating $case, string $labe
     'High' => [RiskRating::High, 'Tinggi'],
 ]);
 
-it('returns correct RiskRating colors', function (RiskRating $case, string $color) {
+it('returns correct RiskRating colors', function (RiskRating $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Low' => [RiskRating::Low, 'success'],
@@ -263,11 +263,11 @@ it('returns correct RiskRating colors', function (RiskRating $case, string $colo
 // InterestCalcMethod
 // ============================================================================
 
-it('has exactly 3 InterestCalcMethod cases', function () {
+it('has exactly 3 InterestCalcMethod cases', function (): void {
     expect(InterestCalcMethod::cases())->toHaveCount(3);
 });
 
-it('has correct InterestCalcMethod backing values', function (InterestCalcMethod $case, string $value) {
+it('has correct InterestCalcMethod backing values', function (InterestCalcMethod $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'DailyBalance' => [InterestCalcMethod::DailyBalance, 'daily_balance'],
@@ -275,7 +275,7 @@ it('has correct InterestCalcMethod backing values', function (InterestCalcMethod
     'LowestBalance' => [InterestCalcMethod::LowestBalance, 'lowest_balance'],
 ]);
 
-it('returns correct InterestCalcMethod labels', function (InterestCalcMethod $case, string $label) {
+it('returns correct InterestCalcMethod labels', function (InterestCalcMethod $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'DailyBalance' => [InterestCalcMethod::DailyBalance, 'Saldo Harian'],
@@ -287,11 +287,11 @@ it('returns correct InterestCalcMethod labels', function (InterestCalcMethod $ca
 // SavingsAccountStatus
 // ============================================================================
 
-it('has exactly 4 SavingsAccountStatus cases', function () {
+it('has exactly 4 SavingsAccountStatus cases', function (): void {
     expect(SavingsAccountStatus::cases())->toHaveCount(4);
 });
 
-it('has correct SavingsAccountStatus backing values', function (SavingsAccountStatus $case, string $value) {
+it('has correct SavingsAccountStatus backing values', function (SavingsAccountStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Active' => [SavingsAccountStatus::Active, 'active'],
@@ -300,7 +300,7 @@ it('has correct SavingsAccountStatus backing values', function (SavingsAccountSt
     'Closed' => [SavingsAccountStatus::Closed, 'closed'],
 ]);
 
-it('returns correct SavingsAccountStatus labels', function (SavingsAccountStatus $case, string $label) {
+it('returns correct SavingsAccountStatus labels', function (SavingsAccountStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Active' => [SavingsAccountStatus::Active, 'Aktif'],
@@ -309,7 +309,7 @@ it('returns correct SavingsAccountStatus labels', function (SavingsAccountStatus
     'Closed' => [SavingsAccountStatus::Closed, 'Ditutup'],
 ]);
 
-it('returns correct SavingsAccountStatus colors', function (SavingsAccountStatus $case, string $color) {
+it('returns correct SavingsAccountStatus colors', function (SavingsAccountStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Active' => [SavingsAccountStatus::Active, 'success'],
@@ -322,11 +322,11 @@ it('returns correct SavingsAccountStatus colors', function (SavingsAccountStatus
 // SavingsTransactionType
 // ============================================================================
 
-it('has exactly 10 SavingsTransactionType cases', function () {
+it('has exactly 10 SavingsTransactionType cases', function (): void {
     expect(SavingsTransactionType::cases())->toHaveCount(10);
 });
 
-it('has correct SavingsTransactionType backing values', function (SavingsTransactionType $case, string $value) {
+it('has correct SavingsTransactionType backing values', function (SavingsTransactionType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Deposit' => [SavingsTransactionType::Deposit, 'deposit'],
@@ -341,7 +341,7 @@ it('has correct SavingsTransactionType backing values', function (SavingsTransac
     'Unhold' => [SavingsTransactionType::Unhold, 'unhold'],
 ]);
 
-it('returns correct SavingsTransactionType labels', function (SavingsTransactionType $case, string $label) {
+it('returns correct SavingsTransactionType labels', function (SavingsTransactionType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Deposit' => [SavingsTransactionType::Deposit, 'Setoran'],
@@ -356,7 +356,7 @@ it('returns correct SavingsTransactionType labels', function (SavingsTransaction
     'Unhold' => [SavingsTransactionType::Unhold, 'Pembukaan Blokir'],
 ]);
 
-it('returns correct SavingsTransactionType colors', function (SavingsTransactionType $case, string $color) {
+it('returns correct SavingsTransactionType colors', function (SavingsTransactionType $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Deposit' => [SavingsTransactionType::Deposit, 'success'],
@@ -371,7 +371,7 @@ it('returns correct SavingsTransactionType colors', function (SavingsTransaction
     'Unhold' => [SavingsTransactionType::Unhold, 'success'],
 ]);
 
-it('identifies credit SavingsTransactionTypes correctly', function (SavingsTransactionType $case) {
+it('identifies credit SavingsTransactionTypes correctly', function (SavingsTransactionType $case): void {
     expect($case->isCredit())->toBeTrue()
         ->and($case->isDebit())->toBeFalse();
 })->with([
@@ -381,7 +381,7 @@ it('identifies credit SavingsTransactionTypes correctly', function (SavingsTrans
     'Unhold' => [SavingsTransactionType::Unhold],
 ]);
 
-it('identifies debit SavingsTransactionTypes correctly', function (SavingsTransactionType $case) {
+it('identifies debit SavingsTransactionTypes correctly', function (SavingsTransactionType $case): void {
     expect($case->isDebit())->toBeTrue()
         ->and($case->isCredit())->toBeFalse();
 })->with([
@@ -392,7 +392,7 @@ it('identifies debit SavingsTransactionTypes correctly', function (SavingsTransa
     'Hold' => [SavingsTransactionType::Hold],
 ]);
 
-it('identifies Transfer as neither credit nor debit', function () {
+it('identifies Transfer as neither credit nor debit', function (): void {
     expect(SavingsTransactionType::Transfer->isCredit())->toBeFalse()
         ->and(SavingsTransactionType::Transfer->isDebit())->toBeFalse();
 });
@@ -401,11 +401,11 @@ it('identifies Transfer as neither credit nor debit', function () {
 // DepositStatus
 // ============================================================================
 
-it('has exactly 6 DepositStatus cases', function () {
+it('has exactly 6 DepositStatus cases', function (): void {
     expect(DepositStatus::cases())->toHaveCount(6);
 });
 
-it('has correct DepositStatus backing values', function (DepositStatus $case, string $value) {
+it('has correct DepositStatus backing values', function (DepositStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Active' => [DepositStatus::Active, 'active'],
@@ -416,7 +416,7 @@ it('has correct DepositStatus backing values', function (DepositStatus $case, st
     'Closed' => [DepositStatus::Closed, 'closed'],
 ]);
 
-it('returns correct DepositStatus labels', function (DepositStatus $case, string $label) {
+it('returns correct DepositStatus labels', function (DepositStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Active' => [DepositStatus::Active, 'Aktif'],
@@ -427,7 +427,7 @@ it('returns correct DepositStatus labels', function (DepositStatus $case, string
     'Closed' => [DepositStatus::Closed, 'Ditutup'],
 ]);
 
-it('returns correct DepositStatus colors', function (DepositStatus $case, string $color) {
+it('returns correct DepositStatus colors', function (DepositStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Active' => [DepositStatus::Active, 'success'],
@@ -442,11 +442,11 @@ it('returns correct DepositStatus colors', function (DepositStatus $case, string
 // InterestPaymentMethod
 // ============================================================================
 
-it('has exactly 3 InterestPaymentMethod cases', function () {
+it('has exactly 3 InterestPaymentMethod cases', function (): void {
     expect(InterestPaymentMethod::cases())->toHaveCount(3);
 });
 
-it('has correct InterestPaymentMethod backing values', function (InterestPaymentMethod $case, string $value) {
+it('has correct InterestPaymentMethod backing values', function (InterestPaymentMethod $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Maturity' => [InterestPaymentMethod::Maturity, 'maturity'],
@@ -454,7 +454,7 @@ it('has correct InterestPaymentMethod backing values', function (InterestPayment
     'Upfront' => [InterestPaymentMethod::Upfront, 'upfront'],
 ]);
 
-it('returns correct InterestPaymentMethod labels', function (InterestPaymentMethod $case, string $label) {
+it('returns correct InterestPaymentMethod labels', function (InterestPaymentMethod $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Maturity' => [InterestPaymentMethod::Maturity, 'Saat Jatuh Tempo'],
@@ -466,11 +466,11 @@ it('returns correct InterestPaymentMethod labels', function (InterestPaymentMeth
 // RolloverType
 // ============================================================================
 
-it('has exactly 3 RolloverType cases', function () {
+it('has exactly 3 RolloverType cases', function (): void {
     expect(RolloverType::cases())->toHaveCount(3);
 });
 
-it('has correct RolloverType backing values', function (RolloverType $case, string $value) {
+it('has correct RolloverType backing values', function (RolloverType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'None' => [RolloverType::None, 'none'],
@@ -478,7 +478,7 @@ it('has correct RolloverType backing values', function (RolloverType $case, stri
     'PrincipalAndInterest' => [RolloverType::PrincipalAndInterest, 'principal_and_interest'],
 ]);
 
-it('returns correct RolloverType labels', function (RolloverType $case, string $label) {
+it('returns correct RolloverType labels', function (RolloverType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'None' => [RolloverType::None, 'Tidak Diperpanjang'],
@@ -490,11 +490,11 @@ it('returns correct RolloverType labels', function (RolloverType $case, string $
 // JournalStatus
 // ============================================================================
 
-it('has exactly 4 JournalStatus cases', function () {
+it('has exactly 4 JournalStatus cases', function (): void {
     expect(JournalStatus::cases())->toHaveCount(4);
 });
 
-it('has correct JournalStatus backing values', function (JournalStatus $case, string $value) {
+it('has correct JournalStatus backing values', function (JournalStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Draft' => [JournalStatus::Draft, 'draft'],
@@ -503,7 +503,7 @@ it('has correct JournalStatus backing values', function (JournalStatus $case, st
     'Reversed' => [JournalStatus::Reversed, 'reversed'],
 ]);
 
-it('returns correct JournalStatus labels', function (JournalStatus $case, string $label) {
+it('returns correct JournalStatus labels', function (JournalStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Draft' => [JournalStatus::Draft, 'Draft'],
@@ -512,7 +512,7 @@ it('returns correct JournalStatus labels', function (JournalStatus $case, string
     'Reversed' => [JournalStatus::Reversed, 'Dibatalkan'],
 ]);
 
-it('returns correct JournalStatus colors', function (JournalStatus $case, string $color) {
+it('returns correct JournalStatus colors', function (JournalStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Draft' => [JournalStatus::Draft, 'gray'],
@@ -525,11 +525,11 @@ it('returns correct JournalStatus colors', function (JournalStatus $case, string
 // JournalSource
 // ============================================================================
 
-it('has exactly 6 JournalSource cases', function () {
+it('has exactly 6 JournalSource cases', function (): void {
     expect(JournalSource::cases())->toHaveCount(6);
 });
 
-it('has correct JournalSource backing values', function (JournalSource $case, string $value) {
+it('has correct JournalSource backing values', function (JournalSource $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Manual' => [JournalSource::Manual, 'manual'],
@@ -540,7 +540,7 @@ it('has correct JournalSource backing values', function (JournalSource $case, st
     'Eod' => [JournalSource::Eod, 'eod'],
 ]);
 
-it('returns correct JournalSource labels', function (JournalSource $case, string $label) {
+it('returns correct JournalSource labels', function (JournalSource $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Manual' => [JournalSource::Manual, 'Manual'],
@@ -551,7 +551,7 @@ it('returns correct JournalSource labels', function (JournalSource $case, string
     'Eod' => [JournalSource::Eod, 'EOD'],
 ]);
 
-it('returns correct JournalSource colors', function (JournalSource $case, string $color) {
+it('returns correct JournalSource colors', function (JournalSource $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Manual' => [JournalSource::Manual, 'primary'],
@@ -566,11 +566,11 @@ it('returns correct JournalSource colors', function (JournalSource $case, string
 // LoanType
 // ============================================================================
 
-it('has exactly 3 LoanType cases', function () {
+it('has exactly 3 LoanType cases', function (): void {
     expect(LoanType::cases())->toHaveCount(3);
 });
 
-it('has correct LoanType backing values', function (LoanType $case, string $value) {
+it('has correct LoanType backing values', function (LoanType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Kmk' => [LoanType::Kmk, 'kmk'],
@@ -578,7 +578,7 @@ it('has correct LoanType backing values', function (LoanType $case, string $valu
     'Kk' => [LoanType::Kk, 'kk'],
 ]);
 
-it('returns correct LoanType labels', function (LoanType $case, string $label) {
+it('returns correct LoanType labels', function (LoanType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Kmk' => [LoanType::Kmk, 'Kredit Modal Kerja'],
@@ -590,11 +590,11 @@ it('returns correct LoanType labels', function (LoanType $case, string $label) {
 // InterestType
 // ============================================================================
 
-it('has exactly 3 InterestType cases', function () {
+it('has exactly 3 InterestType cases', function (): void {
     expect(InterestType::cases())->toHaveCount(3);
 });
 
-it('has correct InterestType backing values', function (InterestType $case, string $value) {
+it('has correct InterestType backing values', function (InterestType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Flat' => [InterestType::Flat, 'flat'],
@@ -602,7 +602,7 @@ it('has correct InterestType backing values', function (InterestType $case, stri
     'Annuity' => [InterestType::Annuity, 'annuity'],
 ]);
 
-it('returns correct InterestType labels', function (InterestType $case, string $label) {
+it('returns correct InterestType labels', function (InterestType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Flat' => [InterestType::Flat, 'Flat'],
@@ -614,11 +614,11 @@ it('returns correct InterestType labels', function (InterestType $case, string $
 // LoanStatus
 // ============================================================================
 
-it('has exactly 6 LoanStatus cases', function () {
+it('has exactly 6 LoanStatus cases', function (): void {
     expect(LoanStatus::cases())->toHaveCount(6);
 });
 
-it('has correct LoanStatus backing values', function (LoanStatus $case, string $value) {
+it('has correct LoanStatus backing values', function (LoanStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Active' => [LoanStatus::Active, 'active'],
@@ -629,7 +629,7 @@ it('has correct LoanStatus backing values', function (LoanStatus $case, string $
     'Closed' => [LoanStatus::Closed, 'closed'],
 ]);
 
-it('returns correct LoanStatus labels', function (LoanStatus $case, string $label) {
+it('returns correct LoanStatus labels', function (LoanStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Active' => [LoanStatus::Active, 'Aktif'],
@@ -640,7 +640,7 @@ it('returns correct LoanStatus labels', function (LoanStatus $case, string $labe
     'Closed' => [LoanStatus::Closed, 'Lunas'],
 ]);
 
-it('returns correct LoanStatus colors', function (LoanStatus $case, string $color) {
+it('returns correct LoanStatus colors', function (LoanStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Active' => [LoanStatus::Active, 'success'],
@@ -655,11 +655,11 @@ it('returns correct LoanStatus colors', function (LoanStatus $case, string $colo
 // Collectibility
 // ============================================================================
 
-it('has exactly 5 Collectibility cases', function () {
+it('has exactly 5 Collectibility cases', function (): void {
     expect(Collectibility::cases())->toHaveCount(5);
 });
 
-it('has correct Collectibility int backing values', function (Collectibility $case, int $value) {
+it('has correct Collectibility int backing values', function (Collectibility $case, int $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Current' => [Collectibility::Current, 1],
@@ -669,7 +669,7 @@ it('has correct Collectibility int backing values', function (Collectibility $ca
     'Loss' => [Collectibility::Loss, 5],
 ]);
 
-it('returns correct Collectibility labels', function (Collectibility $case, string $label) {
+it('returns correct Collectibility labels', function (Collectibility $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Current' => [Collectibility::Current, '1 - Lancar'],
@@ -679,7 +679,7 @@ it('returns correct Collectibility labels', function (Collectibility $case, stri
     'Loss' => [Collectibility::Loss, '5 - Macet'],
 ]);
 
-it('returns correct Collectibility colors', function (Collectibility $case, string $color) {
+it('returns correct Collectibility colors', function (Collectibility $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Current' => [Collectibility::Current, 'success'],
@@ -689,7 +689,7 @@ it('returns correct Collectibility colors', function (Collectibility $case, stri
     'Loss' => [Collectibility::Loss, 'gray'],
 ]);
 
-it('returns correct Collectibility CKPN rates', function (Collectibility $case, float $rate) {
+it('returns correct Collectibility CKPN rates', function (Collectibility $case, float $rate): void {
     expect($case->ckpnRate())->toBe($rate);
 })->with([
     'Current 1%' => [Collectibility::Current, 0.01],
@@ -703,11 +703,11 @@ it('returns correct Collectibility CKPN rates', function (Collectibility $case, 
 // CollateralType
 // ============================================================================
 
-it('has exactly 7 CollateralType cases', function () {
+it('has exactly 7 CollateralType cases', function (): void {
     expect(CollateralType::cases())->toHaveCount(7);
 });
 
-it('has correct CollateralType backing values', function (CollateralType $case, string $value) {
+it('has correct CollateralType backing values', function (CollateralType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Land' => [CollateralType::Land, 'land'],
@@ -719,7 +719,7 @@ it('has correct CollateralType backing values', function (CollateralType $case, 
     'Other' => [CollateralType::Other, 'other'],
 ]);
 
-it('returns correct CollateralType labels', function (CollateralType $case, string $label) {
+it('returns correct CollateralType labels', function (CollateralType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Land' => [CollateralType::Land, 'Tanah'],
@@ -735,11 +735,11 @@ it('returns correct CollateralType labels', function (CollateralType $case, stri
 // LoanApplicationStatus
 // ============================================================================
 
-it('has exactly 7 LoanApplicationStatus cases', function () {
+it('has exactly 7 LoanApplicationStatus cases', function (): void {
     expect(LoanApplicationStatus::cases())->toHaveCount(7);
 });
 
-it('has correct LoanApplicationStatus backing values', function (LoanApplicationStatus $case, string $value) {
+it('has correct LoanApplicationStatus backing values', function (LoanApplicationStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Draft' => [LoanApplicationStatus::Draft, 'draft'],
@@ -751,7 +751,7 @@ it('has correct LoanApplicationStatus backing values', function (LoanApplication
     'Cancelled' => [LoanApplicationStatus::Cancelled, 'cancelled'],
 ]);
 
-it('returns correct LoanApplicationStatus labels', function (LoanApplicationStatus $case, string $label) {
+it('returns correct LoanApplicationStatus labels', function (LoanApplicationStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Draft' => [LoanApplicationStatus::Draft, 'Draft'],
@@ -763,7 +763,7 @@ it('returns correct LoanApplicationStatus labels', function (LoanApplicationStat
     'Cancelled' => [LoanApplicationStatus::Cancelled, 'Dibatalkan'],
 ]);
 
-it('returns correct LoanApplicationStatus colors', function (LoanApplicationStatus $case, string $color) {
+it('returns correct LoanApplicationStatus colors', function (LoanApplicationStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Draft' => [LoanApplicationStatus::Draft, 'gray'],
@@ -779,11 +779,11 @@ it('returns correct LoanApplicationStatus colors', function (LoanApplicationStat
 // VaultTransactionType
 // ============================================================================
 
-it('has exactly 6 VaultTransactionType cases', function () {
+it('has exactly 6 VaultTransactionType cases', function (): void {
     expect(VaultTransactionType::cases())->toHaveCount(6);
 });
 
-it('has correct VaultTransactionType backing values', function (VaultTransactionType $case, string $value) {
+it('has correct VaultTransactionType backing values', function (VaultTransactionType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'InitialCash' => [VaultTransactionType::InitialCash, 'initial_cash'],
@@ -794,7 +794,7 @@ it('has correct VaultTransactionType backing values', function (VaultTransaction
     'Adjustment' => [VaultTransactionType::Adjustment, 'adjustment'],
 ]);
 
-it('returns correct VaultTransactionType labels', function (VaultTransactionType $case, string $label) {
+it('returns correct VaultTransactionType labels', function (VaultTransactionType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'InitialCash' => [VaultTransactionType::InitialCash, 'Saldo Awal'],
@@ -805,7 +805,7 @@ it('returns correct VaultTransactionType labels', function (VaultTransactionType
     'Adjustment' => [VaultTransactionType::Adjustment, 'Penyesuaian'],
 ]);
 
-it('returns correct VaultTransactionType colors', function (VaultTransactionType $case, string $color) {
+it('returns correct VaultTransactionType colors', function (VaultTransactionType $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'InitialCash' => [VaultTransactionType::InitialCash, 'gray'],
@@ -820,11 +820,11 @@ it('returns correct VaultTransactionType colors', function (VaultTransactionType
 // TellerTransactionType
 // ============================================================================
 
-it('has exactly 7 TellerTransactionType cases', function () {
+it('has exactly 7 TellerTransactionType cases', function (): void {
     expect(TellerTransactionType::cases())->toHaveCount(7);
 });
 
-it('has correct TellerTransactionType backing values', function (TellerTransactionType $case, string $value) {
+it('has correct TellerTransactionType backing values', function (TellerTransactionType $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'SavingsDeposit' => [TellerTransactionType::SavingsDeposit, 'savings_deposit'],
@@ -836,7 +836,7 @@ it('has correct TellerTransactionType backing values', function (TellerTransacti
     'Other' => [TellerTransactionType::Other, 'other'],
 ]);
 
-it('returns correct TellerTransactionType labels', function (TellerTransactionType $case, string $label) {
+it('returns correct TellerTransactionType labels', function (TellerTransactionType $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'SavingsDeposit' => [TellerTransactionType::SavingsDeposit, 'Setor Tabungan'],
@@ -848,7 +848,7 @@ it('returns correct TellerTransactionType labels', function (TellerTransactionTy
     'Other' => [TellerTransactionType::Other, 'Lainnya'],
 ]);
 
-it('returns correct TellerTransactionType colors', function (TellerTransactionType $case, string $color) {
+it('returns correct TellerTransactionType colors', function (TellerTransactionType $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'SavingsDeposit' => [TellerTransactionType::SavingsDeposit, 'success'],
@@ -864,25 +864,25 @@ it('returns correct TellerTransactionType colors', function (TellerTransactionTy
 // TellerSessionStatus
 // ============================================================================
 
-it('has exactly 2 TellerSessionStatus cases', function () {
+it('has exactly 2 TellerSessionStatus cases', function (): void {
     expect(TellerSessionStatus::cases())->toHaveCount(2);
 });
 
-it('has correct TellerSessionStatus backing values', function (TellerSessionStatus $case, string $value) {
+it('has correct TellerSessionStatus backing values', function (TellerSessionStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Open' => [TellerSessionStatus::Open, 'open'],
     'Closed' => [TellerSessionStatus::Closed, 'closed'],
 ]);
 
-it('returns correct TellerSessionStatus labels', function (TellerSessionStatus $case, string $label) {
+it('returns correct TellerSessionStatus labels', function (TellerSessionStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Open' => [TellerSessionStatus::Open, 'Aktif'],
     'Closed' => [TellerSessionStatus::Closed, 'Ditutup'],
 ]);
 
-it('returns correct TellerSessionStatus colors', function (TellerSessionStatus $case, string $color) {
+it('returns correct TellerSessionStatus colors', function (TellerSessionStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Open' => [TellerSessionStatus::Open, 'success'],
@@ -893,11 +893,11 @@ it('returns correct TellerSessionStatus colors', function (TellerSessionStatus $
 // EodStatus
 // ============================================================================
 
-it('has exactly 4 EodStatus cases', function () {
+it('has exactly 4 EodStatus cases', function (): void {
     expect(EodStatus::cases())->toHaveCount(4);
 });
 
-it('has correct EodStatus backing values', function (EodStatus $case, string $value) {
+it('has correct EodStatus backing values', function (EodStatus $case, string $value): void {
     expect($case->value)->toBe($value);
 })->with([
     'Pending' => [EodStatus::Pending, 'pending'],
@@ -906,7 +906,7 @@ it('has correct EodStatus backing values', function (EodStatus $case, string $va
     'Failed' => [EodStatus::Failed, 'failed'],
 ]);
 
-it('returns correct EodStatus labels', function (EodStatus $case, string $label) {
+it('returns correct EodStatus labels', function (EodStatus $case, string $label): void {
     expect($case->getLabel())->toBe($label);
 })->with([
     'Pending' => [EodStatus::Pending, 'Menunggu'],
@@ -915,7 +915,7 @@ it('returns correct EodStatus labels', function (EodStatus $case, string $label)
     'Failed' => [EodStatus::Failed, 'Gagal'],
 ]);
 
-it('returns correct EodStatus colors', function (EodStatus $case, string $color) {
+it('returns correct EodStatus colors', function (EodStatus $case, string $color): void {
     expect($case->getColor())->toBe($color);
 })->with([
     'Pending' => [EodStatus::Pending, 'gray'],

@@ -16,8 +16,8 @@ use App\Models\User;
 use App\Services\LoanService;
 use Carbon\Carbon;
 
-describe('LoanService', function () {
-    beforeEach(function () {
+describe('LoanService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(LoanService::class);
 
         $this->branch = Branch::create([
@@ -47,8 +47,8 @@ describe('LoanService', function () {
         ]);
     });
 
-    describe('createApplication', function () {
-        it('creates a loan application with Submitted status', function () {
+    describe('createApplication', function (): void {
+        it('creates a loan application with Submitted status', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -68,7 +68,7 @@ describe('LoanService', function () {
                 ->and($application->created_by)->toBe($this->user->id);
         });
 
-        it('associates loan officer when provided', function () {
+        it('associates loan officer when provided', function (): void {
             $officer = User::factory()->create(['branch_id' => $this->branch->id]);
 
             $application = $this->service->createApplication(
@@ -85,7 +85,7 @@ describe('LoanService', function () {
             expect($application->loan_officer_id)->toBe($officer->id);
         });
 
-        it('throws when requested amount is below product minimum', function () {
+        it('throws when requested amount is below product minimum', function (): void {
             $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -97,7 +97,7 @@ describe('LoanService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Jumlah pinjaman kurang dari minimum');
 
-        it('throws when requested amount exceeds product maximum', function () {
+        it('throws when requested amount exceeds product maximum', function (): void {
             $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -109,7 +109,7 @@ describe('LoanService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Jumlah pinjaman melebihi maksimum');
 
-        it('throws when requested tenor is outside product range', function () {
+        it('throws when requested tenor is outside product range', function (): void {
             $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -121,7 +121,7 @@ describe('LoanService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Tenor harus antara');
 
-        it('allows null max_amount on product', function () {
+        it('allows null max_amount on product', function (): void {
             $product = LoanProduct::factory()->create([
                 'code' => 'UNL',
                 'max_amount' => null,
@@ -144,8 +144,8 @@ describe('LoanService', function () {
         });
     });
 
-    describe('approveApplication', function () {
-        it('approves a submitted application with default amounts', function () {
+    describe('approveApplication', function (): void {
+        it('approves a submitted application with default amounts', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -165,7 +165,7 @@ describe('LoanService', function () {
                 ->and($approved->approved_at)->not->toBeNull();
         });
 
-        it('approves with custom approved amount and tenor', function () {
+        it('approves with custom approved amount and tenor', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -182,7 +182,7 @@ describe('LoanService', function () {
                 ->and($approved->approved_tenor_months)->toBe(6);
         });
 
-        it('throws when application is not in approvable status', function () {
+        it('throws when application is not in approvable status', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -198,7 +198,7 @@ describe('LoanService', function () {
             $this->service->approveApplication($application->fresh(), $this->approver);
         })->throws(InvalidArgumentException::class, 'Permohonan tidak dalam status yang dapat disetujui');
 
-        it('throws when approver is the same as creator', function () {
+        it('throws when approver is the same as creator', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -213,8 +213,8 @@ describe('LoanService', function () {
         })->throws(InvalidArgumentException::class, 'Tidak dapat menyetujui permohonan yang Anda buat sendiri');
     });
 
-    describe('rejectApplication', function () {
-        it('rejects a submitted application with reason', function () {
+    describe('rejectApplication', function (): void {
+        it('rejects a submitted application with reason', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -231,7 +231,7 @@ describe('LoanService', function () {
                 ->and($rejected->rejection_reason)->toBe('Tidak memenuhi syarat');
         });
 
-        it('throws when application is not in rejectable status', function () {
+        it('throws when application is not in rejectable status', function (): void {
             $application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -248,8 +248,8 @@ describe('LoanService', function () {
         })->throws(InvalidArgumentException::class, 'Permohonan tidak dalam status yang dapat ditolak');
     });
 
-    describe('disburse', function () {
-        beforeEach(function () {
+    describe('disburse', function (): void {
+        beforeEach(function (): void {
             $this->application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -263,7 +263,7 @@ describe('LoanService', function () {
             $this->application->refresh();
         });
 
-        it('creates a loan account from an approved application', function () {
+        it('creates a loan account from an approved application', function (): void {
             $account = $this->service->disburse($this->application, $this->user);
 
             expect($account)->toBeInstanceOf(LoanAccount::class)
@@ -276,7 +276,7 @@ describe('LoanService', function () {
                 ->and($account->customer_id)->toBe($this->customer->id);
         });
 
-        it('generates amortization schedule with correct number of installments', function () {
+        it('generates amortization schedule with correct number of installments', function (): void {
             $account = $this->service->disburse($this->application, $this->user);
 
             expect($account->schedules()->count())->toBe(12);
@@ -286,13 +286,13 @@ describe('LoanService', function () {
                 ->and((float) $firstSchedule->total_amount)->toBeGreaterThan(0);
         });
 
-        it('updates application status to Disbursed', function () {
+        it('updates application status to Disbursed', function (): void {
             $this->service->disburse($this->application, $this->user);
 
             expect($this->application->fresh()->status)->toBe(LoanApplicationStatus::Disbursed);
         });
 
-        it('calculates maturity date correctly', function () {
+        it('calculates maturity date correctly', function (): void {
             $disbDate = Carbon::parse('2026-01-15');
             $account = $this->service->disburse($this->application, $this->user, $disbDate);
 
@@ -300,7 +300,7 @@ describe('LoanService', function () {
                 ->and($account->maturity_date->format('Y-m-d'))->toBe('2027-01-15');
         });
 
-        it('copies collaterals from application to account', function () {
+        it('copies collaterals from application to account', function (): void {
             LoanCollateral::create([
                 'loan_application_id' => $this->application->id,
                 'collateral_type' => CollateralType::Land,
@@ -314,7 +314,7 @@ describe('LoanService', function () {
             expect($account->collaterals()->count())->toBe(1);
         });
 
-        it('throws when application is not approved', function () {
+        it('throws when application is not approved', function (): void {
             $newApp = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -329,8 +329,8 @@ describe('LoanService', function () {
         })->throws(InvalidArgumentException::class, 'Permohonan belum disetujui');
     });
 
-    describe('makePayment', function () {
-        beforeEach(function () {
+    describe('makePayment', function (): void {
+        beforeEach(function (): void {
             $this->application = $this->service->createApplication(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -350,7 +350,7 @@ describe('LoanService', function () {
             );
         });
 
-        it('creates a LoanPayment record with correct portions', function () {
+        it('creates a LoanPayment record with correct portions', function (): void {
             $firstSchedule = $this->loanAccount->schedules()->orderBy('installment_number')->first();
             $paymentAmount = (float) $firstSchedule->total_amount;
 
@@ -363,7 +363,7 @@ describe('LoanService', function () {
                 ->and((float) $payment->principal_portion)->toBeGreaterThan(0);
         });
 
-        it('updates loan account outstanding principal', function () {
+        it('updates loan account outstanding principal', function (): void {
             $firstSchedule = $this->loanAccount->schedules()->orderBy('installment_number')->first();
             $originalPrincipal = (float) $this->loanAccount->outstanding_principal;
 
@@ -375,7 +375,7 @@ describe('LoanService', function () {
                 ->and((float) $this->loanAccount->total_interest_paid)->toBeGreaterThan(0);
         });
 
-        it('marks schedule as paid when fully covered', function () {
+        it('marks schedule as paid when fully covered', function (): void {
             $firstSchedule = $this->loanAccount->schedules()->orderBy('installment_number')->first();
 
             $this->service->makePayment($this->loanAccount, (float) $firstSchedule->total_amount, $this->user);
@@ -385,7 +385,7 @@ describe('LoanService', function () {
                 ->and($firstSchedule->paid_date)->not->toBeNull();
         });
 
-        it('handles partial payment that covers only interest', function () {
+        it('handles partial payment that covers only interest', function (): void {
             $firstSchedule = $this->loanAccount->schedules()->orderBy('installment_number')->first();
             $interestOnly = (float) $firstSchedule->interest_amount;
 
@@ -398,28 +398,28 @@ describe('LoanService', function () {
             expect($firstSchedule->is_paid)->toBeFalse();
         });
 
-        it('closes loan when outstanding principal reaches zero', function () {
+        it('closes loan when outstanding principal reaches zero', function (): void {
             $schedules = $this->loanAccount->schedules()->orderBy('installment_number')->get();
-            $totalDue = $schedules->sum(fn ($s) => (float) $s->total_amount);
+            $totalDue = $schedules->sum(fn ($s): float => (float) $s->total_amount);
 
             $this->service->makePayment($this->loanAccount, $totalDue, $this->user);
 
             expect($this->loanAccount->fresh()->status)->toBe(LoanStatus::Closed);
         });
 
-        it('throws when loan is not in active status', function () {
+        it('throws when loan is not in active status', function (): void {
             $this->loanAccount->update(['status' => LoanStatus::Closed]);
 
             $this->service->makePayment($this->loanAccount, 1000000, $this->user);
         })->throws(InvalidArgumentException::class, 'Pinjaman tidak dalam status aktif');
 
-        it('throws when payment amount is zero or negative', function () {
+        it('throws when payment amount is zero or negative', function (): void {
             $this->service->makePayment($this->loanAccount, 0, $this->user);
         })->throws(InvalidArgumentException::class, 'Jumlah pembayaran harus lebih dari 0');
     });
 
-    describe('updateDpd', function () {
-        it('sets dpd to 0 and status to Current when no overdue schedules', function () {
+    describe('updateDpd', function (): void {
+        it('sets dpd to 0 and status to Current when no overdue schedules', function (): void {
             $account = LoanAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'loan_product_id' => $this->product->id,
@@ -441,7 +441,7 @@ describe('LoanService', function () {
                 ->and($account->fresh()->status)->toBe(LoanStatus::Current);
         });
 
-        it('calculates dpd from oldest overdue schedule', function () {
+        it('calculates dpd from oldest overdue schedule', function (): void {
             $account = LoanAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'loan_product_id' => $this->product->id,
@@ -464,8 +464,8 @@ describe('LoanService', function () {
         });
     });
 
-    describe('updateCollectibility', function () {
-        beforeEach(function () {
+    describe('updateCollectibility', function (): void {
+        beforeEach(function (): void {
             $this->loanAccount = LoanAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'loan_product_id' => $this->product->id,
@@ -476,35 +476,35 @@ describe('LoanService', function () {
             ]);
         });
 
-        it('sets Current collectibility for dpd 0', function () {
+        it('sets Current collectibility for dpd 0', function (): void {
             $this->loanAccount->update(['dpd' => 0]);
             $this->service->updateCollectibility($this->loanAccount);
 
             expect($this->loanAccount->fresh()->collectibility)->toBe(Collectibility::Current);
         });
 
-        it('sets SpecialMention for dpd 1-90', function () {
+        it('sets SpecialMention for dpd 1-90', function (): void {
             $this->loanAccount->update(['dpd' => 45]);
             $this->service->updateCollectibility($this->loanAccount);
 
             expect($this->loanAccount->fresh()->collectibility)->toBe(Collectibility::SpecialMention);
         });
 
-        it('sets Substandard for dpd 91-120', function () {
+        it('sets Substandard for dpd 91-120', function (): void {
             $this->loanAccount->update(['dpd' => 100]);
             $this->service->updateCollectibility($this->loanAccount);
 
             expect($this->loanAccount->fresh()->collectibility)->toBe(Collectibility::Substandard);
         });
 
-        it('sets Doubtful for dpd 121-180', function () {
+        it('sets Doubtful for dpd 121-180', function (): void {
             $this->loanAccount->update(['dpd' => 150]);
             $this->service->updateCollectibility($this->loanAccount);
 
             expect($this->loanAccount->fresh()->collectibility)->toBe(Collectibility::Doubtful);
         });
 
-        it('sets Loss for dpd above 180', function () {
+        it('sets Loss for dpd above 180', function (): void {
             $this->loanAccount->update(['dpd' => 200]);
             $this->service->updateCollectibility($this->loanAccount);
 
@@ -513,7 +513,7 @@ describe('LoanService', function () {
                 ->and((float) $account->ckpn_amount)->toBeGreaterThan(0);
         });
 
-        it('calculates CKPN amount based on collectibility rate', function () {
+        it('calculates CKPN amount based on collectibility rate', function (): void {
             $this->loanAccount->update(['dpd' => 200, 'outstanding_principal' => 10000000]);
             $this->service->updateCollectibility($this->loanAccount);
 

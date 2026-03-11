@@ -20,10 +20,10 @@ class LoanApplicationFactory extends Factory
             'application_number' => 'APP'.now()->format('Ymd').str_pad((string) random_int(1, 999999), 6, '0', STR_PAD_LEFT),
             'loan_product_id' => LoanProduct::factory(),
             'status' => LoanApplicationStatus::Submitted,
-            'requested_amount' => $this->faker->randomFloat(2, 5000000, 100000000),
-            'requested_tenor_months' => $this->faker->randomElement([6, 12, 24, 36, 48]),
+            'requested_amount' => fake()->randomFloat(2, 5000000, 100000000),
+            'requested_tenor_months' => fake()->randomElement([6, 12, 24, 36, 48]),
             'interest_rate' => 12.00,
-            'purpose' => $this->faker->sentence(),
+            'purpose' => fake()->sentence(),
         ];
     }
 }

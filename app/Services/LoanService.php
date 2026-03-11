@@ -9,6 +9,7 @@ use App\Models\LoanAccount;
 use App\Models\LoanApplication;
 use App\Models\LoanPayment;
 use App\Models\LoanProduct;
+use App\Models\LoanSchedule;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -30,13 +31,9 @@ class LoanService
         User $creator,
         ?int $loanOfficerId = null,
     ): LoanApplication {
-        if ($requestedAmount < (float) $product->min_amount) {
-            throw new \InvalidArgumentException('Jumlah pinjaman kurang dari minimum');
-        }
+        throw_if($requestedAmount < (float) $product->min_amount, new \InvalidArgumentException('Jumlah pinjaman kurang dari minimum'));
 
-        if ($product->max_amount && $requestedAmount > (float) $product->max_amount) {
-            throw new \InvalidArgumentException('Jumlah pinjaman melebihi maksimum');
-        }
+        throw_if($product->max_amount && $requestedAmount > (float) $product->max_amount, new \InvalidArgumentException('Jumlah pinjaman melebihi maksimum'));
 
         if ($requestedTenor < $product->min_tenor_months || $requestedTenor > $product->max_tenor_months) {
             throw new \InvalidArgumentException("Tenor harus antara {$product->min_tenor_months} - {$product->max_tenor_months} bulan");
@@ -63,13 +60,9 @@ class LoanService
 
     public function approveApplication(LoanApplication $application, User $approver, ?float $approvedAmount = null, ?int $approvedTenor = null): LoanApplication
     {
-        if (! in_array($application->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview])) {
-            throw new \InvalidArgumentException('Permohonan tidak dalam status yang dapat disetujui');
-        }
+        throw_unless(in_array($application->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview]), new \InvalidArgumentException('Permohonan tidak dalam status yang dapat disetujui'));
 
-        if ($application->created_by === $approver->id) {
-            throw new \InvalidArgumentException('Tidak dapat menyetujui permohonan yang Anda buat sendiri');
-        }
+        throw_if($application->created_by === $approver->id, new \InvalidArgumentException('Tidak dapat menyetujui permohonan yang Anda buat sendiri'));
 
         $application->update([
             'status' => LoanApplicationStatus::Approved,
@@ -84,9 +77,7 @@ class LoanService
 
     public function rejectApplication(LoanApplication $application, User $approver, string $reason): LoanApplication
     {
-        if (! in_array($application->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview])) {
-            throw new \InvalidArgumentException('Permohonan tidak dalam status yang dapat ditolak');
-        }
+        throw_unless(in_array($application->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview]), new \InvalidArgumentException('Permohonan tidak dalam status yang dapat ditolak'));
 
         $application->update([
             'status' => LoanApplicationStatus::Rejected,
@@ -100,9 +91,7 @@ class LoanService
 
     public function disburse(LoanApplication $application, User $performer, ?Carbon $disbursementDate = null): LoanAccount
     {
-        if ($application->status !== LoanApplicationStatus::Approved) {
-            throw new \InvalidArgumentException('Permohonan belum disetujui');
-        }
+        throw_if($application->status !== LoanApplicationStatus::Approved, new \InvalidArgumentException('Permohonan belum disetujui'));
 
         return DB::transaction(function () use ($application, $performer, $disbursementDate) {
             $product = $application->loanProduct;
@@ -173,13 +162,9 @@ class LoanService
 
     public function makePayment(LoanAccount $account, float $amount, User $performer, ?string $description = null): LoanPayment
     {
-        if (! in_array($account->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue])) {
-            throw new \InvalidArgumentException('Pinjaman tidak dalam status aktif');
-        }
+        throw_unless(in_array($account->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]), new \InvalidArgumentException('Pinjaman tidak dalam status aktif'));
 
-        if ($amount <= 0) {
-            throw new \InvalidArgumentException('Jumlah pembayaran harus lebih dari 0');
-        }
+        throw_if($amount <= 0, new \InvalidArgumentException('Jumlah pembayaran harus lebih dari 0'));
 
         return DB::transaction(function () use ($account, $amount, $performer, $description) {
             $remaining = $amount;
@@ -221,7 +206,7 @@ class LoanService
             // Current installment
             if ((float) $remaining > 0) {
                 $currentSchedule = $account->getNextUnpaidSchedule();
-                if ($currentSchedule) {
+                if ($currentSchedule instanceof LoanSchedule) {
                     $interestDue = $currentSchedule->getRemainingInterest();
                     if ($interestDue > 0 && (float) $remaining > 0) {
                         $paid = min((float) $remaining, $interestDue);

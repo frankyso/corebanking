@@ -24,8 +24,8 @@ class ViewJournalEntry extends ViewRecord
                 ->requiresConfirmation()
                 ->modalHeading('Posting Jurnal')
                 ->modalDescription('Jurnal yang sudah diposting akan mempengaruhi saldo GL. Lanjutkan?')
-                ->visible(fn () => $this->record->status === JournalStatus::Draft && $this->record->canBeApprovedBy(auth()->user()))
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === JournalStatus::Draft && $this->record->canBeApprovedBy(auth()->user()))
+                ->action(function (): void {
                     try {
                         app(AccountingService::class)->postJournal($this->record, auth()->user());
                         Notification::make()->title('Jurnal berhasil diposting')->success()->send();
@@ -44,8 +44,8 @@ class ViewJournalEntry extends ViewRecord
                         ->label('Alasan Pembatalan')
                         ->required(),
                 ])
-                ->visible(fn () => $this->record->status === JournalStatus::Posted)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => $this->record->status === JournalStatus::Posted)
+                ->action(function (array $data): void {
                     try {
                         app(AccountingService::class)->reverseJournal($this->record, auth()->user(), $data['reason']);
                         Notification::make()->title('Jurnal berhasil dibatalkan')->success()->send();

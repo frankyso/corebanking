@@ -35,9 +35,9 @@ class ViewLoanApplication extends ViewRecord
                         ->default(fn () => $this->record->requested_tenor_months)
                         ->required(),
                 ])
-                ->visible(fn () => in_array($this->record->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview])
+                ->visible(fn (): bool => in_array($this->record->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview])
                     && $this->record->created_by !== auth()->id())
-                ->action(function (array $data) {
+                ->action(function (array $data): void {
                     try {
                         app(LoanService::class)->approveApplication(
                             application: $this->record,
@@ -62,8 +62,8 @@ class ViewLoanApplication extends ViewRecord
                         ->required()
                         ->rows(3),
                 ])
-                ->visible(fn () => in_array($this->record->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview]))
-                ->action(function (array $data) {
+                ->visible(fn (): bool => in_array($this->record->status, [LoanApplicationStatus::Submitted, LoanApplicationStatus::UnderReview]))
+                ->action(function (array $data): void {
                     try {
                         app(LoanService::class)->rejectApplication(
                             application: $this->record,
@@ -83,13 +83,13 @@ class ViewLoanApplication extends ViewRecord
                 ->color('primary')
                 ->requiresConfirmation()
                 ->modalHeading('Cairkan Kredit')
-                ->modalDescription(function () {
+                ->modalDescription(function (): string {
                     $amount = number_format((float) $this->record->approved_amount, 0, ',', '.');
 
                     return "Cairkan kredit sebesar Rp {$amount} untuk tenor {$this->record->approved_tenor_months} bulan?";
                 })
-                ->visible(fn () => $this->record->status === LoanApplicationStatus::Approved)
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === LoanApplicationStatus::Approved)
+                ->action(function (): void {
                     try {
                         $account = app(LoanService::class)->disburse(
                             application: $this->record,

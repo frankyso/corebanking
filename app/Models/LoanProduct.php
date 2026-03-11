@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\InterestType;
 use App\Enums\LoanType;
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +16,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class LoanProduct extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'code',
@@ -55,27 +57,40 @@ class LoanProduct extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return HasMany<LoanAccount, $this>
+     */
     public function accounts(): HasMany
     {
         return $this->hasMany(LoanAccount::class);
     }
 
+    /**
+     * @return HasMany<LoanApplication, $this>
+     */
     public function applications(): HasMany
     {
         return $this->hasMany(LoanApplication::class);
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glLoan(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_loan_id');
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glInterestIncome(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_interest_income_id');
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }

@@ -60,7 +60,7 @@ class ChartOfAccountResource extends Resource
                 Select::make('parent_id')
                     ->label('Akun Induk')
                     ->relationship('parent', 'account_name')
-                    ->getOptionLabelFromRecordUsing(fn (ChartOfAccount $record) => "{$record->account_code} - {$record->account_name}")
+                    ->getOptionLabelFromRecordUsing(fn (ChartOfAccount $record): string => "{$record->account_code} - {$record->account_name}")
                     ->searchable()
                     ->preload(),
                 TextInput::make('level')

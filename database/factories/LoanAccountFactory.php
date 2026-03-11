@@ -17,7 +17,7 @@ class LoanAccountFactory extends Factory
 
     public function definition(): array
     {
-        $amount = $this->faker->randomFloat(2, 5000000, 100000000);
+        $amount = fake()->randomFloat(2, 5000000, 100000000);
 
         return [
             'account_number' => 'L'.str_pad((string) random_int(1, 999999999), 9, '0', STR_PAD_LEFT),

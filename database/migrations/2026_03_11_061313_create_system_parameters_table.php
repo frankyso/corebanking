@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('system_parameters', function (Blueprint $table) {
+        Schema::create('system_parameters', function (Blueprint $table): void {
             $table->id();
             $table->string('group', 50);
             $table->string('key', 100);
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type', 20)->default('string');
             $table->string('description', 255)->nullable();
             $table->boolean('is_editable')->default(true);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['group', 'key']);
         });

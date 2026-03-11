@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('loan_products', function (Blueprint $table) {
+        Schema::create('loan_products', function (Blueprint $table): void {
             $table->id();
             $table->string('code', 3)->unique();
             $table->string('name', 100);
@@ -30,8 +30,8 @@ return new class extends Migration
             $table->foreignId('gl_interest_receivable_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('gl_fee_income_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('gl_provision_id')->nullable()->constrained('chart_of_accounts');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
         });
     }
 };

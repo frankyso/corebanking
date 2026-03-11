@@ -4,14 +4,14 @@ use App\Enums\InterestType;
 use App\Services\AmortizationCalculator;
 use Carbon\Carbon;
 
-describe('AmortizationCalculator', function () {
-    beforeEach(function () {
+describe('AmortizationCalculator', function (): void {
+    beforeEach(function (): void {
         $this->calculator = app(AmortizationCalculator::class);
         $this->startDate = Carbon::create(2025, 1, 1);
     });
 
-    describe('Flat interest', function () {
-        it('produces equal principal payments with fixed interest', function () {
+    describe('Flat interest', function (): void {
+        it('produces equal principal payments with fixed interest', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Flat,
                 principal: 12_000_000,
@@ -35,7 +35,7 @@ describe('AmortizationCalculator', function () {
             expect($interestPayments->count())->toBe(1);
         });
 
-        it('adjusts last installment for rounding differences', function () {
+        it('adjusts last installment for rounding differences', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Flat,
                 principal: 10_000_000,
@@ -50,7 +50,7 @@ describe('AmortizationCalculator', function () {
             expect($lastInstallment['outstanding'])->toEqual(0);
         });
 
-        it('has outstanding of 0 at the end', function () {
+        it('has outstanding of 0 at the end', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Flat,
                 principal: 12_000_000,
@@ -63,7 +63,7 @@ describe('AmortizationCalculator', function () {
             expect($lastInstallment['outstanding'])->toEqual(0);
         });
 
-        it('has correct number of installments', function () {
+        it('has correct number of installments', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Flat,
                 principal: 12_000_000,
@@ -75,7 +75,7 @@ describe('AmortizationCalculator', function () {
             expect($schedule)->toHaveCount(6);
         });
 
-        it('has correct monthly due dates', function () {
+        it('has correct monthly due dates', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Flat,
                 principal: 12_000_000,
@@ -91,8 +91,8 @@ describe('AmortizationCalculator', function () {
         });
     });
 
-    describe('Effective interest', function () {
-        it('has equal principal payments with declining interest', function () {
+    describe('Effective interest', function (): void {
+        it('has equal principal payments with declining interest', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Effective,
                 principal: 12_000_000,
@@ -112,7 +112,7 @@ describe('AmortizationCalculator', function () {
             expect($interests->first())->toBeGreaterThan($interests->last());
         });
 
-        it('first interest is greater than last interest', function () {
+        it('first interest is greater than last interest', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Effective,
                 principal: 24_000_000,
@@ -124,7 +124,7 @@ describe('AmortizationCalculator', function () {
             expect($schedule[0]['interest'])->toBeGreaterThan(end($schedule)['interest']);
         });
 
-        it('has outstanding of 0 at the end', function () {
+        it('has outstanding of 0 at the end', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Effective,
                 principal: 12_000_000,
@@ -137,7 +137,7 @@ describe('AmortizationCalculator', function () {
             expect($lastInstallment['outstanding'])->toEqual(0);
         });
 
-        it('has correct number of installments', function () {
+        it('has correct number of installments', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Effective,
                 principal: 12_000_000,
@@ -149,7 +149,7 @@ describe('AmortizationCalculator', function () {
             expect($schedule)->toHaveCount(6);
         });
 
-        it('has correct monthly due dates', function () {
+        it('has correct monthly due dates', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Effective,
                 principal: 12_000_000,
@@ -164,8 +164,8 @@ describe('AmortizationCalculator', function () {
         });
     });
 
-    describe('Annuity interest', function () {
-        it('has approximately equal total payments across installments', function () {
+    describe('Annuity interest', function (): void {
+        it('has approximately equal total payments across installments', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Annuity,
                 principal: 12_000_000,
@@ -184,7 +184,7 @@ describe('AmortizationCalculator', function () {
             }
         });
 
-        it('falls back to flat calculation when rate is zero', function () {
+        it('falls back to flat calculation when rate is zero', function (): void {
             $annuitySchedule = $this->calculator->calculate(
                 interestType: InterestType::Annuity,
                 principal: 12_000_000,
@@ -204,7 +204,7 @@ describe('AmortizationCalculator', function () {
             expect($annuitySchedule)->toEqual($flatSchedule);
         });
 
-        it('has outstanding of 0 at the end', function () {
+        it('has outstanding of 0 at the end', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Annuity,
                 principal: 12_000_000,
@@ -217,7 +217,7 @@ describe('AmortizationCalculator', function () {
             expect($lastInstallment['outstanding'])->toEqual(0);
         });
 
-        it('has correct number of installments', function () {
+        it('has correct number of installments', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Annuity,
                 principal: 12_000_000,
@@ -229,7 +229,7 @@ describe('AmortizationCalculator', function () {
             expect($schedule)->toHaveCount(6);
         });
 
-        it('has correct monthly due dates', function () {
+        it('has correct monthly due dates', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Annuity,
                 principal: 12_000_000,
@@ -243,7 +243,7 @@ describe('AmortizationCalculator', function () {
                 ->and($schedule[2]['due_date'])->toBe('2025-04-01');
         });
 
-        it('has increasing principal and decreasing interest over time', function () {
+        it('has increasing principal and decreasing interest over time', function (): void {
             $schedule = $this->calculator->calculate(
                 interestType: InterestType::Annuity,
                 principal: 12_000_000,
@@ -260,8 +260,8 @@ describe('AmortizationCalculator', function () {
         });
     });
 
-    describe('all methods', function () {
-        it('each method returns correct installment numbers', function () {
+    describe('all methods', function (): void {
+        it('each method returns correct installment numbers', function (): void {
             foreach (InterestType::cases() as $type) {
                 $schedule = $this->calculator->calculate(
                     interestType: $type,
@@ -276,7 +276,7 @@ describe('AmortizationCalculator', function () {
             }
         });
 
-        it('each method has all required keys in each installment', function () {
+        it('each method has all required keys in each installment', function (): void {
             foreach (InterestType::cases() as $type) {
                 $schedule = $this->calculator->calculate(
                     interestType: $type,
@@ -299,7 +299,7 @@ describe('AmortizationCalculator', function () {
             }
         });
 
-        it('each method sums principal to equal the original principal', function () {
+        it('each method sums principal to equal the original principal', function (): void {
             foreach (InterestType::cases() as $type) {
                 $principal = 12_000_000;
                 $schedule = $this->calculator->calculate(
@@ -315,7 +315,7 @@ describe('AmortizationCalculator', function () {
             }
         });
 
-        it('each method has total equal to principal plus interest for each row', function () {
+        it('each method has total equal to principal plus interest for each row', function (): void {
             foreach (InterestType::cases() as $type) {
                 $schedule = $this->calculator->calculate(
                     interestType: $type,

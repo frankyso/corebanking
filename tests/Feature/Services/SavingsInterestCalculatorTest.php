@@ -11,8 +11,8 @@ use App\Models\User;
 use App\Services\SavingsInterestCalculator;
 use Carbon\Carbon;
 
-describe('SavingsInterestCalculator', function () {
-    beforeEach(function () {
+describe('SavingsInterestCalculator', function (): void {
+    beforeEach(function (): void {
         $this->calculator = app(SavingsInterestCalculator::class);
 
         $this->branch = Branch::create([
@@ -31,8 +31,8 @@ describe('SavingsInterestCalculator', function () {
         ]);
     });
 
-    describe('calculateDailyAccrual', function () {
-        it('creates an accrual record with correct amounts for a non-leap year', function () {
+    describe('calculateDailyAccrual', function (): void {
+        it('creates an accrual record with correct amounts for a non-leap year', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -72,7 +72,7 @@ describe('SavingsInterestCalculator', function () {
             expect((float) $accrual->accrued_amount)->toBe((float) $expectedDaily);
         });
 
-        it('handles leap year with 366 days', function () {
+        it('handles leap year with 366 days', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -106,7 +106,7 @@ describe('SavingsInterestCalculator', function () {
             expect((float) $accrual->accrued_amount)->toBe((float) $expectedDaily);
         });
 
-        it('applies tax when balance is at or above threshold', function () {
+        it('applies tax when balance is at or above threshold', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -134,7 +134,7 @@ describe('SavingsInterestCalculator', function () {
             expect((float) $accrual->tax_amount)->toBeGreaterThan(0);
         });
 
-        it('does not apply tax when balance is below threshold', function () {
+        it('does not apply tax when balance is below threshold', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -163,8 +163,8 @@ describe('SavingsInterestCalculator', function () {
         });
     });
 
-    describe('calculateMonthlyInterest', function () {
-        it('uses DailyBalance method based on accrual records', function () {
+    describe('calculateMonthlyInterest', function (): void {
+        it('uses DailyBalance method based on accrual records', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -211,7 +211,7 @@ describe('SavingsInterestCalculator', function () {
                 ->and($avgBalance)->toBeLessThan(15_000_000);
         });
 
-        it('uses LowestBalance method returning minimum balance from accruals', function () {
+        it('uses LowestBalance method returning minimum balance from accruals', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -252,7 +252,7 @@ describe('SavingsInterestCalculator', function () {
             expect((float) $result['balance'])->toBe(5_000_000.00);
         });
 
-        it('uses account balance when no accrual records exist', function () {
+        it('uses account balance when no accrual records exist', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,
@@ -280,7 +280,7 @@ describe('SavingsInterestCalculator', function () {
             expect((float) $result['balance'])->toBe(10_000_000.00);
         });
 
-        it('calculates net_interest as interest minus tax', function () {
+        it('calculates net_interest as interest minus tax', function (): void {
             $product = SavingsProduct::factory()->create([
                 'interest_rate' => 3.00000,
                 'tax_rate' => 20.00000,

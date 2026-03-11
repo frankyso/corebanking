@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DepositTransaction extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'reference_number',
         'deposit_account_id',
@@ -26,11 +29,17 @@ class DepositTransaction extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<DepositAccount, $this>
+     */
     public function depositAccount(): BelongsTo
     {
         return $this->belongsTo(DepositAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');

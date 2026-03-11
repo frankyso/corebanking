@@ -8,17 +8,17 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('eod_processes', function (Blueprint $table) {
+        Schema::create('eod_processes', function (Blueprint $table): void {
             $table->id();
             $table->date('process_date')->unique();
             $table->string('status', 20)->default('pending');
             $table->integer('total_steps')->default(0);
             $table->integer('completed_steps')->default(0);
-            $table->timestamp('started_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('started_at', precision: 6)->nullable();
+            $table->timestamp('completed_at', precision: 6)->nullable();
             $table->text('error_message')->nullable();
             $table->foreignId('started_by')->nullable()->constrained('users');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('status');
         });

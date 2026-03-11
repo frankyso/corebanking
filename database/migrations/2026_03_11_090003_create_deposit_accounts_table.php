@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('deposit_accounts', function (Blueprint $table) {
+        Schema::create('deposit_accounts', function (Blueprint $table): void {
             $table->id();
             $table->string('account_number', 15)->unique();
             $table->foreignId('customer_id')->constrained('customers');
@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('pledge_reference')->nullable();
             $table->foreignId('savings_account_id')->nullable()->constrained('savings_accounts');
             $table->foreignId('created_by')->constrained('users');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index(['maturity_date', 'status']);
         });

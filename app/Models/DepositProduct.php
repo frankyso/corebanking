@@ -2,6 +2,9 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Contracts\Database\Query\Builder;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -12,7 +15,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class DepositProduct extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'code',
@@ -43,27 +46,40 @@ class DepositProduct extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return HasMany<DepositProductRate, $this>
+     */
     public function rates(): HasMany
     {
         return $this->hasMany(DepositProductRate::class);
     }
 
+    /**
+     * @return HasMany<DepositAccount, $this>
+     */
     public function accounts(): HasMany
     {
         return $this->hasMany(DepositAccount::class);
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glDeposit(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_deposit_id');
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glInterestExpense(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_interest_expense_id');
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }
@@ -73,7 +89,7 @@ class DepositProduct extends Model implements AuditableContract
         return $this->rates()
             ->where('tenor_months', $tenorMonths)
             ->where('min_amount', '<=', $amount)
-            ->where(fn ($q) => $q->whereNull('max_amount')->orWhere('max_amount', '>=', $amount))
+            ->where(fn (Builder $q) => $q->whereNull('max_amount')->orWhere('max_amount', '>=', $amount))
             ->where('is_active', true)
             ->orderByDesc('min_amount')
             ->first();

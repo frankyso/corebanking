@@ -19,11 +19,17 @@ trait HasApproval
         ]);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function approver(): BelongsTo
     {
         return $this->belongsTo(User::class, 'approved_by');

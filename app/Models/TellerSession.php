@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\TellerSessionStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -10,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TellerSession extends Model
 {
-    use HasFactory;
+    use HasFactory, HasMicrosecondTimestamps;
 
     protected $fillable = [
         'user_id',
@@ -42,21 +44,33 @@ class TellerSession extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return BelongsTo<Vault, $this>
+     */
     public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
     }
 
+    /**
+     * @return HasMany<TellerTransaction, $this>
+     */
     public function transactions(): HasMany
     {
         return $this->hasMany(TellerTransaction::class);
@@ -67,12 +81,14 @@ class TellerSession extends Model
         return $this->status === TellerSessionStatus::Open;
     }
 
-    public function scopeOpen($query)
+    #[Scope]
+    protected function open($query)
     {
         return $query->where('status', TellerSessionStatus::Open);
     }
 
-    public function scopeForUser($query, int $userId)
+    #[Scope]
+    protected function forUser($query, int $userId)
     {
         return $query->where('user_id', $userId);
     }

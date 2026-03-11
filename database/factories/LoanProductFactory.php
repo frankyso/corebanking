@@ -17,13 +17,13 @@ class LoanProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => strtoupper($this->faker->unique()->lexify('L??')),
-            'name' => 'Kredit '.$this->faker->word(),
-            'loan_type' => $this->faker->randomElement(LoanType::cases()),
-            'interest_type' => $this->faker->randomElement(InterestType::cases()),
+            'code' => strtoupper(fake()->unique()->lexify('L??')),
+            'name' => 'Kredit '.fake()->word(),
+            'loan_type' => fake()->randomElement(LoanType::cases()),
+            'interest_type' => fake()->randomElement(InterestType::cases()),
             'min_amount' => 1000000,
             'max_amount' => 500000000,
-            'interest_rate' => $this->faker->randomFloat(2, 10, 24),
+            'interest_rate' => fake()->randomFloat(2, 10, 24),
             'min_tenor_months' => 3,
             'max_tenor_months' => 60,
             'admin_fee_rate' => 1.0,

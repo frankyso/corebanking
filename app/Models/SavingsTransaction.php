@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\SavingsTransactionType;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use OwenIt\Auditing\Auditable;
@@ -10,7 +11,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class SavingsTransaction extends Model implements AuditableContract
 {
-    use Auditable;
+    use Auditable, HasMicrosecondTimestamps;
 
     protected $fillable = [
         'reference_number',
@@ -44,16 +45,25 @@ class SavingsTransaction extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<SavingsAccount, $this>
+     */
     public function savingsAccount(): BelongsTo
     {
         return $this->belongsTo(SavingsAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function reverser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reversed_by');

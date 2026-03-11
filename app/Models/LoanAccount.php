@@ -4,6 +4,8 @@ namespace App\Models;
 
 use App\Enums\Collectibility;
 use App\Enums\LoanStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -15,7 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class LoanAccount extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'account_number',
@@ -63,57 +65,86 @@ class LoanAccount extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<Customer, $this>
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
+    /**
+     * @return BelongsTo<LoanProduct, $this>
+     */
     public function loanProduct(): BelongsTo
     {
         return $this->belongsTo(LoanProduct::class);
     }
 
+    /**
+     * @return BelongsTo<LoanApplication, $this>
+     */
     public function loanApplication(): BelongsTo
     {
         return $this->belongsTo(LoanApplication::class);
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function loanOfficer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'loan_officer_id');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    /**
+     * @return HasMany<LoanSchedule, $this>
+     */
     public function schedules(): HasMany
     {
         return $this->hasMany(LoanSchedule::class);
     }
 
+    /**
+     * @return HasMany<LoanPayment, $this>
+     */
     public function payments(): HasMany
     {
         return $this->hasMany(LoanPayment::class);
     }
 
+    /**
+     * @return HasMany<LoanCollateral, $this>
+     */
     public function collaterals(): HasMany
     {
         return $this->hasMany(LoanCollateral::class);
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->whereIn('status', [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]);
     }
 
-    public function scopeByCollectibility($query, Collectibility $collectibility)
+    #[Scope]
+    protected function byCollectibility($query, Collectibility $collectibility)
     {
         return $query->where('collectibility', $collectibility);
     }

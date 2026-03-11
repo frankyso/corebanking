@@ -49,7 +49,7 @@ class SavingsInterestCalculator
         $daysInYear = $month->isLeapYear() ? 366 : 365;
 
         $interest = bcmul(
-            bcmul((string) $balance, bcdiv((string) $annualRate, '100', 10), 10),
+            bcmul($balance, bcdiv((string) $annualRate, '100', 10), 10),
             bcdiv((string) $daysInMonth, (string) $daysInYear, 10),
             2
         );

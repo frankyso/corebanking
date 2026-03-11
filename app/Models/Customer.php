@@ -6,7 +6,10 @@ use App\Enums\ApprovalStatus;
 use App\Enums\CustomerStatus;
 use App\Enums\CustomerType;
 use App\Enums\RiskRating;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use App\Traits\HasApproval;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -18,7 +21,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Customer extends Model implements AuditableContract
 {
-    use Auditable, HasApproval, HasFactory, SoftDeletes;
+    use Auditable, HasApproval, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'cif_number',
@@ -44,51 +47,73 @@ class Customer extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return HasOne<IndividualDetail, $this>
+     */
     public function individualDetail(): HasOne
     {
         return $this->hasOne(IndividualDetail::class);
     }
 
+    /**
+     * @return HasOne<CorporateDetail, $this>
+     */
     public function corporateDetail(): HasOne
     {
         return $this->hasOne(CorporateDetail::class);
     }
 
+    /**
+     * @return HasMany<CustomerAddress, $this>
+     */
     public function addresses(): HasMany
     {
         return $this->hasMany(CustomerAddress::class);
     }
 
+    /**
+     * @return HasMany<CustomerPhone, $this>
+     */
     public function phones(): HasMany
     {
         return $this->hasMany(CustomerPhone::class);
     }
 
+    /**
+     * @return HasMany<CustomerDocument, $this>
+     */
     public function documents(): HasMany
     {
         return $this->hasMany(CustomerDocument::class);
     }
 
-    public function getDisplayNameAttribute(): string
+    protected function displayName(): Attribute
     {
-        if ($this->customer_type === CustomerType::Individual) {
-            return $this->individualDetail?->full_name ?? $this->cif_number;
-        }
+        return Attribute::make(get: function () {
+            if ($this->customer_type === CustomerType::Individual) {
+                return $this->individualDetail?->full_name ?? $this->cif_number;
+            }
 
-        return $this->corporateDetail?->company_name ?? $this->cif_number;
+            return $this->corporateDetail?->company_name ?? $this->cif_number;
+        });
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('status', CustomerStatus::Active);
     }
 
-    public function scopeByType($query, CustomerType $type)
+    #[Scope]
+    protected function byType($query, CustomerType $type)
     {
         return $query->where('customer_type', $type);
     }

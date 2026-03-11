@@ -5,7 +5,9 @@ namespace App\Models;
 use App\Enums\ApprovalStatus;
 use App\Enums\JournalSource;
 use App\Enums\JournalStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use App\Traits\HasApproval;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -16,7 +18,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class JournalEntry extends Model implements AuditableContract
 {
-    use Auditable, HasApproval, HasFactory, SoftDeletes;
+    use Auditable, HasApproval, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'journal_number',
@@ -56,37 +58,52 @@ class JournalEntry extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return HasMany<JournalEntryLine, $this>
+     */
     public function lines(): HasMany
     {
         return $this->hasMany(JournalEntryLine::class);
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function reversedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reversed_by');
     }
 
+    /**
+     * @return BelongsTo<JournalEntry, $this>
+     */
     public function reversalJournal(): BelongsTo
     {
         return $this->belongsTo(self::class, 'reversal_journal_id');
     }
 
-    public function scopePosted($query)
+    #[Scope]
+    protected function posted($query)
     {
         return $query->where('status', JournalStatus::Posted);
     }
 
-    public function scopeBySource($query, JournalSource $source)
+    #[Scope]
+    protected function bySource($query, JournalSource $source)
     {
         return $query->where('source', $source);
     }
 
-    public function scopeByDateRange($query, $startDate, $endDate)
+    #[Scope]
+    protected function byDateRange($query, $startDate, $endDate)
     {
         return $query->whereBetween('journal_date', [$startDate, $endDate]);
     }

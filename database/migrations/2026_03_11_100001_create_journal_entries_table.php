@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('journal_entries', function (Blueprint $table) {
+        Schema::create('journal_entries', function (Blueprint $table): void {
             $table->id();
             $table->string('journal_number', 30)->unique();
             $table->date('journal_date');
@@ -22,16 +22,16 @@ return new class extends Migration
             $table->foreignId('branch_id')->nullable()->constrained('branches');
             $table->foreignId('created_by')->constrained('users');
             $table->foreignId('approved_by')->nullable()->constrained('users');
-            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('approved_at', precision: 6)->nullable();
             $table->string('rejection_reason')->nullable();
             $table->string('approval_status', 20)->default('pending');
             $table->foreignId('reversed_by')->nullable()->constrained('users');
-            $table->timestamp('reversed_at')->nullable();
+            $table->timestamp('reversed_at', precision: 6)->nullable();
             $table->string('reversal_reason')->nullable();
             $table->foreignId('reversal_journal_id')->nullable()->constrained('journal_entries');
-            $table->timestamp('posted_at')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamp('posted_at', precision: 6)->nullable();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index('journal_date');
             $table->index('status');

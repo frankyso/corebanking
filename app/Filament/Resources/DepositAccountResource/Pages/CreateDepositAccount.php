@@ -35,7 +35,7 @@ class CreateDepositAccount extends CreateRecord
                             ->active()
                             ->with(['individualDetail', 'corporateDetail'])
                             ->get()
-                            ->mapWithKeys(fn (Customer $customer) => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
+                            ->mapWithKeys(fn (Customer $customer): array => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
                     )
                     ->searchable()
                     ->required()
@@ -96,7 +96,7 @@ class CreateDepositAccount extends CreateRecord
         $product = DepositProduct::findOrFail($data['deposit_product_id']);
 
         try {
-            return app(DepositService::class)->place(
+            $record = app(DepositService::class)->place(
                 product: $product,
                 customerId: $data['customer_id'],
                 branchId: $data['branch_id'],
@@ -116,6 +116,10 @@ class CreateDepositAccount extends CreateRecord
                 ->send();
 
             $this->halt();
+
+            throw new \RuntimeException('Unreachable');
         }
+
+        return $record;
     }
 }

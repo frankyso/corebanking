@@ -1,0 +1,2491 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Method App\\Filament\\Pages\\BalanceSheetPage\:\:balanceSheet\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Pages/BalanceSheetPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Filament\\Pages\\EodProcessPage\:\:\$currentProcess\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/EodProcessPage.php
+
+		-
+			message: '#^Cannot access property \$status on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Pages/EodProcessPage.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\EodProcessPage\:\:recentProcesses\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Filament/Pages/EodProcessPage.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\EodProcessPage\:\:stepNames\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Pages/EodProcessPage.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\EodService\:\:run\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/EodProcessPage.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\IncomeStatementPage\:\:incomeStatement\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Pages/IncomeStatementPage.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LoanAccount\:\:\$count\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LoanAccount\:\:\$total_ckpn\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LoanAccount\:\:\$total_outstanding\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 2
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\LoanPortfolioReport\:\:portfolioByCollectibility\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\LoanPortfolioReport\:\:portfolioByProduct\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\LoanPortfolioReport\:\:summary\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\LoanAccount\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: argument.unresolvableType
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Return type of call to method Illuminate\\Database\\Eloquent\\Collection\<int,App\\Models\\LoanAccount\>\:\:map\(\) contains unresolvable type\.$#'
+			identifier: method.unresolvableReturnType
+			count: 1
+			path: app/Filament/Pages/LoanPortfolioReport.php
+
+		-
+			message: '#^Access to an undefined property App\\Filament\\Pages\\TellerDashboard\:\:\$activeSession\.$#'
+			identifier: property.notFound
+			count: 11
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 3
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot access property \$current_balance on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot call method get\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot call method latest\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot call method limit\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot call method transactions\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot call method with\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 5
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\TellerDashboard\:\:recentTransactions\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\TellerDashboard\:\:recentTransactions\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns Illuminate\\Support\\Collection\<\(int\|string\), mixed\>\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\TellerDashboard\:\:recentTransactions\(\) should return Illuminate\\Database\\Eloquent\\Collection but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \#1 \$teller of method App\\Services\\TellerService\:\:getActiveSession\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\TellerService\:\:processDeposit\(\) expects App\\Models\\SavingsAccount, App\\Models\\SavingsAccount\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\SavingsAccount\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\TellerService\:\:processWithdrawal\(\) expects App\\Models\\SavingsAccount, App\\Models\\SavingsAccount\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\SavingsAccount\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\TellerService\:\:processDeposit\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\TellerService\:\:processLoanPayment\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\TellerService\:\:processWithdrawal\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$loanAccount of method App\\Services\\TellerService\:\:processLoanPayment\(\) expects App\\Models\\LoanAccount, App\\Models\\LoanAccount\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LoanAccount\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$notes of method App\\Services\\TellerService\:\:closeSession\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\TellerService\:\:closeSession\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\TellerService\:\:processDeposit\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\TellerService\:\:processLoanPayment\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\TellerService\:\:processWithdrawal\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$session of method App\\Services\\TellerService\:\:closeSession\(\) expects App\\Models\\TellerSession, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$session of method App\\Services\\TellerService\:\:processDeposit\(\) expects App\\Models\\TellerSession, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$session of method App\\Services\\TellerService\:\:processLoanPayment\(\) expects App\\Models\\TellerSession, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$session of method App\\Services\\TellerService\:\:processWithdrawal\(\) expects App\\Models\\TellerSession, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$teller of method App\\Services\\TellerService\:\:openSession\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Parameter \$vault of method App\\Services\\TellerService\:\:openSession\(\) expects App\\Models\\Vault, App\\Models\\Vault\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Vault\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Part \$acc\-\>customer\?\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 3
+			path: app/Filament/Pages/TellerDashboard.php
+
+		-
+			message: '#^Method App\\Filament\\Pages\\TrialBalancePage\:\:trialBalance\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Filament/Pages/TrialBalancePage.php
+
+		-
+			message: '#^Cannot call method leftJoin\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Filament/Resources/CustomerResource.php
+
+		-
+			message: '#^Cannot call method orWhereHas\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource.php
+
+		-
+			message: '#^Cannot call method orderByRaw\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Filament/Resources/CustomerResource.php
+
+		-
+			message: '#^Cannot call method whereHas\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource.php
+
+		-
+			message: '#^Cannot access offset ''address'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot access offset ''document_number'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot access offset ''number'' on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot access property \$customer_type on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot call method addresses\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot call method corporateDetail\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot call method create\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 5
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot call method documents\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot call method individualDetail\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot call method phones\(\) on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Method App\\Filament\\Resources\\CustomerResource\\Pages\\CreateCustomer\:\:corporateFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Method App\\Filament\\Resources\\CustomerResource\\Pages\\CreateCustomer\:\:getSteps\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Method App\\Filament\\Resources\\CustomerResource\\Pages\\CreateCustomer\:\:individualFields\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Parameter \#1 \$components of method Filament\\Schemas\\Components\\Component\:\:schema\(\) expects array\<Illuminate\\Contracts\\Support\\Htmlable\|string\>\|Closure, array given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Parameter \#1 \$value of function collect expects Illuminate\\Contracts\\Support\\Arrayable\<\(int\|string\), mixed\>\|iterable\<\(int\|string\), mixed\>\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 5
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Unable to resolve the template type TKey in call to function collect$#'
+			identifier: argument.templateType
+			count: 5
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
+			count: 5
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>code" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/CreateCustomer.php
+
+		-
+			message: '#^Cannot access property \$approval_status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Cannot access property \$status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Cannot call method canBeApprovedBy\(\) on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#1 \$customer of method App\\Services\\CustomerService\:\:approve\(\) expects App\\Models\\Customer, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#1 \$customer of method App\\Services\\CustomerService\:\:block\(\) expects App\\Models\\Customer, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#1 \$customer of method App\\Services\\CustomerService\:\:reject\(\) expects App\\Models\\Customer, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#1 \$customer of method App\\Services\\CustomerService\:\:unblock\(\) expects App\\Models\\Customer, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#2 \$approver of method App\\Services\\CustomerService\:\:approve\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#2 \$approver of method App\\Services\\CustomerService\:\:reject\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Parameter \#3 \$reason of method App\\Services\\CustomerService\:\:reject\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource.php
+
+		-
+			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Cannot access property \$branch_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$time of static method Carbon\\Carbon\:\:parse\(\) expects Carbon\\Month\|Carbon\\WeekDay\|DateTimeInterface\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method App\\Enums\\InterestPaymentMethod\:\:from\(\) expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method App\\Enums\\RolloverType\:\:from\(\) expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \$branchId of method App\\Services\\DepositService\:\:place\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \$customerId of method App\\Services\\DepositService\:\:place\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\DepositService\:\:place\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \$product of method App\\Services\\DepositService\:\:place\(\) expects App\\Models\\DepositProduct, App\\Models\\DepositProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\DepositProduct\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Parameter \$savingsAccountId of method App\\Services\\DepositService\:\:place\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
+
+		-
+			message: '#^Cannot access property \$depositProduct on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Cannot access property \$is_pledged on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Cannot access property \$penalty_rate on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Cannot access property \$status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Cannot call method isMatured\(\) on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\DepositService\:\:earlyWithdrawal\(\) expects App\\Models\\DepositAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\DepositService\:\:pledge\(\) expects App\\Models\\DepositAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\DepositService\:\:processMaturity\(\) expects App\\Models\\DepositAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\DepositService\:\:unpledge\(\) expects App\\Models\\DepositAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#2 \$performer of method App\\Services\\DepositService\:\:earlyWithdrawal\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#2 \$performer of method App\\Services\\DepositService\:\:processMaturity\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Parameter \#2 \$pledgeReference of method App\\Services\\DepositService\:\:pledge\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Part \$penaltyRate \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/DepositAccountResource/Pages/ViewDepositAccount.php
+
+		-
+			message: '#^Cannot access property \$branch_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 2
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \#1 \$callback of method Illuminate\\Support\\Collection\<\(int\|string\),mixed\>\:\:map\(\) expects callable\(mixed, int\|string\)\: array\{account_id\: mixed, description\: mixed, debit\: float, credit\: float\}, Closure\(array\)\: array\{account_id\: mixed, description\: mixed, debit\: float, credit\: float\} given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \#1 \$time of static method Carbon\\Carbon\:\:parse\(\) expects Carbon\\Month\|Carbon\\WeekDay\|DateTimeInterface\|float\|int\|string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \#1 \$value of function collect expects Illuminate\\Contracts\\Support\\Arrayable\<\(int\|string\), mixed\>\|iterable\<\(int\|string\), mixed\>\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \#1 \$value of static method App\\Enums\\JournalSource\:\:from\(\) expects int\|string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \$branchId of method App\\Services\\AccountingService\:\:createJournal\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \$creator of method App\\Services\\AccountingService\:\:createJournal\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\AccountingService\:\:createJournal\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Parameter \$lines of method App\\Services\\AccountingService\:\:createJournal\(\) expects array\<int, array\{account_id\: int, debit\: float, credit\: float, description\?\: string\}\>, array\<mixed\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Unable to resolve the template type TKey in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Unable to resolve the template type TValue in call to function collect$#'
+			identifier: argument.templateType
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/CreateJournalEntry.php
+
+		-
+			message: '#^Cannot access property \$status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Cannot call method canBeApprovedBy\(\) on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Parameter \#1 \$journal of method App\\Services\\AccountingService\:\:postJournal\(\) expects App\\Models\\JournalEntry, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Parameter \#1 \$journal of method App\\Services\\AccountingService\:\:reverseJournal\(\) expects App\\Models\\JournalEntry, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Parameter \#2 \$approver of method App\\Services\\AccountingService\:\:postJournal\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Parameter \#2 \$reverser of method App\\Services\\AccountingService\:\:reverseJournal\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Parameter \#3 \$reason of method App\\Services\\AccountingService\:\:reverseJournal\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/JournalEntryResource/Pages/ViewJournalEntry.php
+
+		-
+			message: '#^Cannot access property \$customer on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource.php
+
+		-
+			message: '#^Cannot access property \$display_name on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource.php
+
+		-
+			message: '#^Cannot call method orWhereHas\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Filament/Resources/LoanAccountResource.php
+
+		-
+			message: '#^Cannot call method whereHas\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Filament/Resources/LoanAccountResource.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>display_name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource.php
+
+		-
+			message: '#^Cannot access property \$collectibility on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot access property \$dpd on Illuminate\\Database\\Eloquent\\Model\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot access property \$installment_number on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot access property \$status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot access property \$total_amount on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot call method fresh\(\) on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot call method getLabel\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot call method getNextUnpaidSchedule\(\) on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 2
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\LoanService\:\:updateCollectibility\(\) expects App\\Models\\LoanAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\LoanService\:\:updateDpd\(\) expects App\\Models\\LoanAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\LoanService\:\:makePayment\(\) expects App\\Models\\LoanAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\LoanService\:\:makePayment\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\LoanService\:\:makePayment\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Part \$nextSchedule\-\>installment_number \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Part \$this\-\>record\-\>fresh\(\)\-\>collectibility\-\>getLabel\(\) \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Part \$this\-\>record\-\>fresh\(\)\-\>dpd \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/Pages/ViewLoanAccount.php
+
+		-
+			message: '#^Cannot call method isOverdue\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanAccountResource/RelationManagers/SchedulesRelationManager.php
+
+		-
+			message: '#^Cannot access property \$customer on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource.php
+
+		-
+			message: '#^Cannot access property \$display_name on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource.php
+
+		-
+			message: '#^Cannot call method orWhereHas\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Filament/Resources/LoanApplicationResource.php
+
+		-
+			message: '#^Cannot call method whereHas\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Filament/Resources/LoanApplicationResource.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>display_name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LoanProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LoanProduct\>\:\:\$interest_rate\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LoanProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LoanProduct\>\:\:\$max_tenor_months\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\LoanProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LoanProduct\>\:\:\$min_tenor_months\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$branch_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Parameter \$branchId of method App\\Services\\LoanService\:\:createApplication\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Parameter \$creator of method App\\Services\\LoanService\:\:createApplication\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Parameter \$customerId of method App\\Services\\LoanService\:\:createApplication\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Parameter \$loanOfficerId of method App\\Services\\LoanService\:\:createApplication\(\) expects int\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Parameter \$product of method App\\Services\\LoanService\:\:createApplication\(\) expects App\\Models\\LoanProduct, App\\Models\\LoanProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LoanProduct\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Parameter \$purpose of method App\\Services\\LoanService\:\:createApplication\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$approved_amount on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$approved_tenor_months on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$created_by on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$requested_amount on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$requested_tenor_months on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot access property \$status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 2
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$application of method App\\Services\\LoanService\:\:approveApplication\(\) expects App\\Models\\LoanApplication, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$application of method App\\Services\\LoanService\:\:disburse\(\) expects App\\Models\\LoanApplication, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$application of method App\\Services\\LoanService\:\:rejectApplication\(\) expects App\\Models\\LoanApplication, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$approver of method App\\Services\\LoanService\:\:approveApplication\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$approver of method App\\Services\\LoanService\:\:rejectApplication\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\LoanService\:\:disburse\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Parameter \$reason of method App\\Services\\LoanService\:\:rejectApplication\(\) expects string, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Part \$this\-\>record\-\>approved_tenor_months \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource.php
+
+		-
+			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Cannot access property \$branch_id on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Parameter \$branchId of method App\\Services\\SavingsService\:\:open\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Parameter \$customerId of method App\\Services\\SavingsService\:\:open\(\) expects int, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\SavingsService\:\:open\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Parameter \$product of method App\\Services\\SavingsService\:\:open\(\) expects App\\Models\\SavingsProduct, App\\Models\\SavingsProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\SavingsProduct\> given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
+			identifier: encapsedStringPart.nonString
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
+
+		-
+			message: '#^Cannot access property \$hold_amount on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Cannot access property \$status on Illuminate\\Database\\Eloquent\\Model\|int\|string\|null\.$#'
+			identifier: property.nonObject
+			count: 6
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 5
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\SavingsService\:\:close\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\SavingsService\:\:freeze\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \#1 \$account of method App\\Services\\SavingsService\:\:unfreeze\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \#2 \$performer of method App\\Services\\SavingsService\:\:close\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\SavingsService\:\:deposit\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\SavingsService\:\:hold\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\SavingsService\:\:unhold\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$account of method App\\Services\\SavingsService\:\:withdraw\(\) expects App\\Models\\SavingsAccount, Illuminate\\Database\\Eloquent\\Model\|int\|string\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\SavingsService\:\:deposit\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$description of method App\\Services\\SavingsService\:\:withdraw\(\) expects string\|null, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\SavingsService\:\:deposit\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\SavingsService\:\:hold\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\SavingsService\:\:unhold\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \$performer of method App\\Services\\SavingsService\:\:withdraw\(\) expects App\\Models\\User, App\\Models\\User\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Filament/Resources/SavingsAccountResource/Pages/ViewSavingsAccount.php
+
+		-
+			message: '#^Parameter \#1 \$number of static method Illuminate\\Support\\Number\:\:abbreviate\(\) expects float\|int, float\|int\|string given\.$#'
+			identifier: argument.type
+			count: 4
+			path: app/Filament/Widgets/BankOverviewWidget.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/Branch.php
+
+		-
+			message: '#^Class App\\Models\\Branch uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Branch.php
+
+		-
+			message: '#^Method App\\Models\\Branch\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Branch.php
+
+		-
+			message: '#^Method App\\Models\\Branch\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Branch.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 4
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Class App\\Models\\ChartOfAccount uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:byGroup\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:byGroup\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:fullName\(\) return type with generic class Illuminate\\Database\\Eloquent\\Casts\\Attribute does not specify its types\: TGet, TSet$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:postable\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Method App\\Models\\ChartOfAccount\:\:postable\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/ChartOfAccount.php
+
+		-
+			message: '#^Class App\\Models\\CorporateDetail uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/CorporateDetail.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Class App\\Models\\Customer uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:byType\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:byType\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:displayName\(\) return type with generic class Illuminate\\Database\\Eloquent\\Casts\\Attribute does not specify its types\: TGet, TSet$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:scopePendingApproval\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Method App\\Models\\Customer\:\:scopePendingApproval\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>company_name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>full_name" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Models/Customer.php
+
+		-
+			message: '#^Cannot call method isPast\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Cannot call method isToday\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Class App\\Models\\DepositAccount uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Method App\\Models\\DepositAccount\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Method App\\Models\\DepositAccount\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Method App\\Models\\DepositAccount\:\:daysToMaturity\(\) should return int but returns float\|int\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Method App\\Models\\DepositAccount\:\:maturing\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Method App\\Models\\DepositAccount\:\:maturing\(\) has parameter \$date with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Method App\\Models\\DepositAccount\:\:maturing\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/DepositAccount.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/DepositProduct.php
+
+		-
+			message: '#^Class App\\Models\\DepositProduct uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/DepositProduct.php
+
+		-
+			message: '#^Method App\\Models\\DepositProduct\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/DepositProduct.php
+
+		-
+			message: '#^Method App\\Models\\DepositProduct\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/DepositProduct.php
+
+		-
+			message: '#^Cannot call method diffInSeconds\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/EodProcessStep.php
+
+		-
+			message: '#^Method App\\Models\\EodProcessStep\:\:durationInSeconds\(\) should return int\|null but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Models/EodProcessStep.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Models/GlBalance.php
+
+		-
+			message: '#^Method App\\Models\\GlBalance\:\:forPeriod\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/GlBalance.php
+
+		-
+			message: '#^Method App\\Models\\GlBalance\:\:forPeriod\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/GlBalance.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/GlDailyBalance.php
+
+		-
+			message: '#^Method App\\Models\\GlDailyBalance\:\:forDate\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/GlDailyBalance.php
+
+		-
+			message: '#^Method App\\Models\\GlDailyBalance\:\:forDate\(\) has parameter \$date with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/GlDailyBalance.php
+
+		-
+			message: '#^Method App\\Models\\GlDailyBalance\:\:forDate\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/GlDailyBalance.php
+
+		-
+			message: '#^Class App\\Models\\Holiday uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Holiday.php
+
+		-
+			message: '#^Class App\\Models\\IndividualDetail uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/IndividualDetail.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Cannot call method whereBetween\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Class App\\Models\\JournalEntry uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:byDateRange\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:byDateRange\(\) has parameter \$endDate with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:byDateRange\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:byDateRange\(\) has parameter \$startDate with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:bySource\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:bySource\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:posted\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:posted\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:scopePendingApproval\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Method App\\Models\\JournalEntry\:\:scopePendingApproval\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/JournalEntry.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Cannot call method whereIn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Class App\\Models\\LoanAccount uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Method App\\Models\\LoanAccount\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Method App\\Models\\LoanAccount\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Method App\\Models\\LoanAccount\:\:byCollectibility\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Method App\\Models\\LoanAccount\:\:byCollectibility\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Method App\\Models\\LoanAccount\:\:getOverdueSchedules\(\) return type with generic class Illuminate\\Database\\Eloquent\\Collection does not specify its types\: TKey, TModel$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LoanAccount.php
+
+		-
+			message: '#^Cannot call method whereIn\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/LoanApplication.php
+
+		-
+			message: '#^Class App\\Models\\LoanApplication uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LoanApplication.php
+
+		-
+			message: '#^Method App\\Models\\LoanApplication\:\:pending\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/LoanApplication.php
+
+		-
+			message: '#^Method App\\Models\\LoanApplication\:\:pending\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/LoanApplication.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/LoanProduct.php
+
+		-
+			message: '#^Class App\\Models\\LoanProduct uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LoanProduct.php
+
+		-
+			message: '#^Method App\\Models\\LoanProduct\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/LoanProduct.php
+
+		-
+			message: '#^Method App\\Models\\LoanProduct\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/LoanProduct.php
+
+		-
+			message: '#^Cannot call method isPast\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/LoanSchedule.php
+
+		-
+			message: '#^Class App\\Models\\LoanSchedule uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/LoanSchedule.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Class App\\Models\\SavingsAccount uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Method App\\Models\\SavingsAccount\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Method App\\Models\\SavingsAccount\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Method App\\Models\\SavingsAccount\:\:byStatus\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Method App\\Models\\SavingsAccount\:\:byStatus\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcsub expects numeric\-string, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Parameter \#2 \$num2 of function bcsub expects numeric\-string, float given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Property App\\Models\\SavingsAccount\:\:\$available_balance \(float\) does not accept string\.$#'
+			identifier: assign.propertyType
+			count: 1
+			path: app/Models/SavingsAccount.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/SavingsProduct.php
+
+		-
+			message: '#^Class App\\Models\\SavingsProduct uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/SavingsProduct.php
+
+		-
+			message: '#^Method App\\Models\\SavingsProduct\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/SavingsProduct.php
+
+		-
+			message: '#^Method App\\Models\\SavingsProduct\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/SavingsProduct.php
+
+		-
+			message: '#^Class App\\Models\\SystemParameter uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/SystemParameter.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Models/TellerSession.php
+
+		-
+			message: '#^Class App\\Models\\TellerSession uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/TellerSession.php
+
+		-
+			message: '#^Method App\\Models\\TellerSession\:\:forUser\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/TellerSession.php
+
+		-
+			message: '#^Method App\\Models\\TellerSession\:\:forUser\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/TellerSession.php
+
+		-
+			message: '#^Method App\\Models\\TellerSession\:\:open\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/TellerSession.php
+
+		-
+			message: '#^Method App\\Models\\TellerSession\:\:open\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/TellerSession.php
+
+		-
+			message: '#^Cannot call method where\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Models/Vault.php
+
+		-
+			message: '#^Class App\\Models\\Vault uses generic trait Illuminate\\Database\\Eloquent\\Factories\\HasFactory but does not specify its types\: TFactory$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Models/Vault.php
+
+		-
+			message: '#^Method App\\Models\\Vault\:\:active\(\) has no return type specified\.$#'
+			identifier: missingType.return
+			count: 1
+			path: app/Models/Vault.php
+
+		-
+			message: '#^Method App\\Models\\Vault\:\:active\(\) has parameter \$query with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Models/Vault.php
+
+		-
+			message: '#^Method App\\Policies\\BankingPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/BankingPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\BankingPolicy\:\:update\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/BankingPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\BankingPolicy\:\:view\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/BankingPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\DepositAccountPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/DepositAccountPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\DepositAccountPolicy\:\:update\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/DepositAccountPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\JournalEntryPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/JournalEntryPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\JournalEntryPolicy\:\:update\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/JournalEntryPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\LoanAccountPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/LoanAccountPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\LoanAccountPolicy\:\:update\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/LoanAccountPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\LoanApplicationPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/LoanApplicationPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\SavingsAccountPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/SavingsAccountPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\SavingsAccountPolicy\:\:update\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/SavingsAccountPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\SystemParameterPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/SystemParameterPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\VaultPolicy\:\:delete\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/VaultPolicy.php
+
+		-
+			message: '#^Method App\\Policies\\VaultPolicy\:\:update\(\) has parameter \$model with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Policies/VaultPolicy.php
+
+		-
+			message: '#^Cannot access an offset on mixed\.$#'
+			identifier: offsetAccess.nonOffsetAccessible
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot access property \$account_code on App\\Models\\ChartOfAccount\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot access property \$account_group on App\\Models\\ChartOfAccount\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot access property \$account_name on App\\Models\\ChartOfAccount\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot access property \$normal_balance on App\\Models\\ChartOfAccount\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot access property \$total_credit on stdClass\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot access property \$total_debit on stdClass\|null\.$#'
+			identifier: property.nonObject
+			count: 4
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot call method startOfMonth\(\) on Carbon\\Carbon\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 2
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 13
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Method App\\Services\\AccountingService\:\:calculateTrialBalanceFromJournals\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Method App\\Services\\AccountingService\:\:createJournal\(\) should return App\\Models\\JournalEntry but returns App\\Models\\JournalEntry\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Method App\\Services\\AccountingService\:\:getBalanceSheet\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Method App\\Services\\AccountingService\:\:getIncomeStatement\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Method App\\Services\\AccountingService\:\:getTrialBalance\(\) return type with generic class Illuminate\\Support\\Collection does not specify its types\: TKey, TValue$#'
+			identifier: missingType.generics
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcadd expects numeric\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcsub expects numeric\-string, string given\.$#'
+			identifier: argument.type
+			count: 6
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Parameter \#2 \$num2 of function bcsub expects numeric\-string, string given\.$#'
+			identifier: argument.type
+			count: 6
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Parameter \#3 \$date of method App\\Services\\AccountingService\:\:updateDailyBalance\(\) expects Carbon\\Carbon, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Parameter \#3 \$date of method App\\Services\\AccountingService\:\:updateMonthlyBalance\(\) expects Carbon\\Carbon, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 2
+			path: app/Services/AccountingService.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcadd expects numeric\-string, float\|numeric\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/AmortizationCalculator.php
+
+		-
+			message: '#^Parameter \#2 \$num2 of function bcsub expects numeric\-string, float\|numeric\-string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/AmortizationCalculator.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Services/CustomerService.php
+
+		-
+			message: '#^Method App\\Services\\CustomerService\:\:calculateRiskRating\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Services/CustomerService.php
+
+		-
+			message: '#^Method App\\Services\\CustomerService\:\:create\(\) has parameter \$data with no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Services/CustomerService.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Relations\\HasOneOrMany\<App\\Models\\CorporateDetail,App\\Models\\Customer,App\\Models\\CorporateDetail\|null\>\:\:create\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/CustomerService.php
+
+		-
+			message: '#^Parameter \#1 \$attributes of method Illuminate\\Database\\Eloquent\\Relations\\HasOneOrMany\<App\\Models\\IndividualDetail,App\\Models\\Customer,App\\Models\\IndividualDetail\|null\>\:\:create\(\) expects array\<string, mixed\>, mixed given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/CustomerService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>code" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Services/CustomerService.php
+
+		-
+			message: '#^Cannot call method addMonths\(\) on mixed\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Cannot call method copy\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Cannot call method getRateForTenorAndAmount\(\) on App\\Models\\DepositProduct\|null\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Method App\\Services\\DepositService\:\:rollover\(\) should return App\\Models\\DepositAccount but returns App\\Models\\DepositAccount\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcadd expects numeric\-string, float given\.$#'
+			identifier: argument.type
+			count: 3
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Parameter \#1 \$product of method App\\Services\\DepositService\:\:calculateTax\(\) expects App\\Models\\DepositProduct, App\\Models\\DepositProduct\|null given\.$#'
+			identifier: argument.type
+			count: 3
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 3
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>code" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Services/DepositService.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: app/Services/EodService.php
+
+		-
+			message: '#^Match expression does not handle remaining values\: int\<min, 0\>\|int\<12, max\>$#'
+			identifier: match.unhandled
+			count: 1
+			path: app/Services/EodService.php
+
+		-
+			message: '#^Method App\\Services\\EodService\:\:getStepNames\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Services/EodService.php
+
+		-
+			message: '#^Method App\\Services\\EodService\:\:run\(\) should return App\\Models\\EodProcess but returns App\\Models\\EodProcess\|null\.$#'
+			identifier: return.type
+			count: 2
+			path: app/Services/EodService.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:getRemainingInterest\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Call to an undefined method Illuminate\\Database\\Eloquent\\Model\:\:getRemainingPrincipal\(\)\.$#'
+			identifier: method.notFound
+			count: 2
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Cannot access property \$outstanding_principal on App\\Models\\LoanAccount\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Cannot call method diffInDays\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Cannot cast mixed to int\.$#'
+			identifier: cast.int
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 4
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Method App\\Services\\LoanService\:\:approveApplication\(\) should return App\\Models\\LoanApplication but returns App\\Models\\LoanApplication\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Method App\\Services\\LoanService\:\:rejectApplication\(\) should return App\\Models\\LoanApplication but returns App\\Models\\LoanApplication\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Parameter \#2 \$amount of method Illuminate\\Database\\Eloquent\\Model\:\:increment\(\) expects float\|int, mixed given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Parameter \#2 \$num2 of function bcadd expects numeric\-string, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Parameter \#2 \$num2 of function bcsub expects numeric\-string, string given\.$#'
+			identifier: argument.type
+			count: 2
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Property App\\Services\\LoanService\:\:\$amortizationCalculator is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Property App\\Services\\LoanService\:\:\$sequenceService is never read, only written\.$#'
+			identifier: property.onlyWritten
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: app/Services/LoanService.php
+
+		-
+			message: '#^Cannot access property \$interest_calc_method on App\\Models\\SavingsProduct\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Cannot access property \$interest_rate on App\\Models\\SavingsProduct\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Cannot access property \$tax_rate on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Cannot access property \$tax_threshold on mixed\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Cannot cast mixed to string\.$#'
+			identifier: cast.string
+			count: 3
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Match expression does not handle remaining value\: string$#'
+			identifier: match.unhandled
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Method App\\Services\\SavingsInterestCalculator\:\:calculateMonthlyInterest\(\) return type has no value type specified in iterable type array\.$#'
+			identifier: missingType.iterableValue
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Method App\\Services\\SavingsInterestCalculator\:\:calculateTax\(\) has parameter \$product with no type specified\.$#'
+			identifier: missingType.parameter
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Parameter \#2 \$num2 of function bcsub expects numeric\-string, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/SavingsInterestCalculator.php
+
+		-
+			message: '#^Cannot access property \$closing_fee on App\\Models\\SavingsProduct\|null\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Cannot access property \$max_balance on App\\Models\\SavingsProduct\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Cannot access property \$min_balance on App\\Models\\SavingsProduct\|null\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcadd expects numeric\-string, float given\.$#'
+			identifier: argument.type
+			count: 3
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Parameter \#1 \$num1 of function bcsub expects numeric\-string, float given\.$#'
+			identifier: argument.type
+			count: 3
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Unreachable statement \- code above always terminates\.$#'
+			identifier: deadCode.unreachable
+			count: 1
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Using nullsafe property access "\?\-\>code" on left side of \?\? is unnecessary\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Services/SavingsService.php
+
+		-
+			message: '#^Cannot access property \$name on App\\Models\\User\|null\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Services/TellerService.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Services/TellerService.php
+
+		-
+			message: '#^Method App\\Services\\TellerService\:\:closeSession\(\) should return App\\Models\\TellerSession but returns App\\Models\\TellerSession\|null\.$#'
+			identifier: return.type
+			count: 1
+			path: app/Services/TellerService.php
+
+		-
+			message: '#^Parameter \#1 \$session of method App\\Services\\TellerService\:\:validateOpenSession\(\) expects App\\Models\\TellerSession, App\\Models\\TellerSession\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/TellerService.php
+
+		-
+			message: '#^Parameter \$session of method App\\Services\\TellerService\:\:createTellerTransaction\(\) expects App\\Models\\TellerSession, App\\Models\\TellerSession\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/TellerService.php
+
+		-
+			message: '#^Parameter \$type of method App\\Services\\TellerService\:\:createTellerTransaction\(\) expects App\\Enums\\TellerTransactionType, string given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/TellerService.php
+
+		-
+			message: '#^Parameter \$vault of method App\\Services\\TellerService\:\:createVaultTransaction\(\) expects App\\Models\\Vault, App\\Models\\Vault\|null given\.$#'
+			identifier: argument.type
+			count: 1
+			path: app/Services/TellerService.php

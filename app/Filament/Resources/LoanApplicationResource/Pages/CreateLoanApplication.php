@@ -35,7 +35,7 @@ class CreateLoanApplication extends CreateRecord
                                     ->active()
                                     ->with(['individualDetail', 'corporateDetail'])
                                     ->get()
-                                    ->mapWithKeys(fn (Customer $customer) => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
+                                    ->mapWithKeys(fn (Customer $customer): array => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
                             )
                             ->searchable()
                             ->required(),
@@ -53,7 +53,7 @@ class CreateLoanApplication extends CreateRecord
                             ->options(LoanProduct::query()->active()->pluck('name', 'id'))
                             ->required()
                             ->live()
-                            ->afterStateUpdated(function ($state, callable $set) {
+                            ->afterStateUpdated(function ($state, callable $set): void {
                                 if ($state) {
                                     $product = LoanProduct::find($state);
                                     if ($product) {
@@ -108,7 +108,7 @@ class CreateLoanApplication extends CreateRecord
         $product = LoanProduct::findOrFail($data['loan_product_id']);
 
         try {
-            return app(LoanService::class)->createApplication(
+            $record = app(LoanService::class)->createApplication(
                 product: $product,
                 customerId: $data['customer_id'],
                 branchId: $data['branch_id'],
@@ -126,6 +126,10 @@ class CreateLoanApplication extends CreateRecord
                 ->send();
 
             $this->halt();
+
+            throw new \RuntimeException('Unreachable');
         }
+
+        return $record;
     }
 }

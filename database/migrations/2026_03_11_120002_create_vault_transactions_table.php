@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('vault_transactions', function (Blueprint $table) {
+        Schema::create('vault_transactions', function (Blueprint $table): void {
             $table->id();
             $table->string('reference_number', 30)->unique();
             $table->foreignId('vault_id')->constrained('vaults');
@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->foreignId('performed_by')->constrained('users');
             $table->foreignId('approved_by')->nullable()->constrained('users');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('transaction_type');
         });

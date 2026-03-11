@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('teller_sessions', function (Blueprint $table) {
+        Schema::create('teller_sessions', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
             $table->foreignId('branch_id')->constrained('branches');
@@ -20,10 +20,10 @@ return new class extends Migration
             $table->decimal('total_cash_in', 18, 2)->default(0);
             $table->decimal('total_cash_out', 18, 2)->default(0);
             $table->integer('transaction_count')->default(0);
-            $table->timestamp('opened_at');
-            $table->timestamp('closed_at')->nullable();
+            $table->timestamp('opened_at', precision: 6);
+            $table->timestamp('closed_at', precision: 6)->nullable();
             $table->text('closing_notes')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('status');
             $table->index(['user_id', 'status']);

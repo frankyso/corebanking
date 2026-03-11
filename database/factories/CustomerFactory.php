@@ -33,21 +33,21 @@ class CustomerFactory extends Factory
 
     public function individual(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'customer_type' => CustomerType::Individual,
         ]);
     }
 
     public function corporate(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'customer_type' => CustomerType::Corporate,
         ]);
     }
 
     public function pendingApproval(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => CustomerStatus::PendingApproval,
             'approval_status' => ApprovalStatus::Pending,
             'approved_by' => null,
@@ -57,14 +57,14 @@ class CustomerFactory extends Factory
 
     public function highRisk(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'risk_rating' => RiskRating::High,
         ]);
     }
 
     public function blocked(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => CustomerStatus::Blocked,
         ]);
     }

@@ -24,8 +24,8 @@ class ViewDepositAccount extends ViewRecord
                 ->requiresConfirmation()
                 ->modalHeading('Proses Jatuh Tempo')
                 ->modalDescription('Apakah Anda yakin ingin memproses jatuh tempo deposito ini?')
-                ->visible(fn () => $this->record->status === DepositStatus::Active && $this->record->isMatured())
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === DepositStatus::Active && $this->record->isMatured())
+                ->action(function (): void {
                     try {
                         app(DepositService::class)->processMaturity($this->record, auth()->user());
                         Notification::make()->title('Jatuh tempo berhasil diproses')->success()->send();
@@ -41,13 +41,13 @@ class ViewDepositAccount extends ViewRecord
                 ->color('warning')
                 ->requiresConfirmation()
                 ->modalHeading('Pencairan Dini')
-                ->modalDescription(function () {
+                ->modalDescription(function (): string {
                     $penaltyRate = $this->record->depositProduct->penalty_rate;
 
                     return "Deposito akan dicairkan sebelum jatuh tempo dengan penalti {$penaltyRate}%. Lanjutkan?";
                 })
-                ->visible(fn () => $this->record->status === DepositStatus::Active && ! $this->record->is_pledged)
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === DepositStatus::Active && ! $this->record->is_pledged)
+                ->action(function (): void {
                     try {
                         app(DepositService::class)->earlyWithdrawal($this->record, auth()->user());
                         Notification::make()->title('Deposito berhasil dicairkan')->success()->send();
@@ -67,8 +67,8 @@ class ViewDepositAccount extends ViewRecord
                         ->required()
                         ->placeholder('Nomor kredit / referensi'),
                 ])
-                ->visible(fn () => $this->record->status === DepositStatus::Active && ! $this->record->is_pledged)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => $this->record->status === DepositStatus::Active && ! $this->record->is_pledged)
+                ->action(function (array $data): void {
                     try {
                         app(DepositService::class)->pledge($this->record, $data['pledge_reference']);
                         Notification::make()->title('Deposito berhasil dijaminkan')->success()->send();
@@ -84,7 +84,7 @@ class ViewDepositAccount extends ViewRecord
                 ->color('success')
                 ->requiresConfirmation()
                 ->visible(fn () => $this->record->is_pledged)
-                ->action(function () {
+                ->action(function (): void {
                     try {
                         app(DepositService::class)->unpledge($this->record);
                         Notification::make()->title('Jaminan berhasil dilepas')->success()->send();
