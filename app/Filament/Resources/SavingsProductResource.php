@@ -43,9 +43,11 @@ class SavingsProductResource extends Resource
         return $schema
             ->components([
                 Section::make('Informasi Produk')
+                    ->description('Identitas dan ketentuan umum produk tabungan')
                     ->schema([
                         TextInput::make('code')
                             ->label('Kode Produk')
+                            ->helperText('3 digit kode unik produk')
                             ->maxLength(3)
                             ->required()
                             ->unique(ignoreRecord: true),
@@ -71,6 +73,7 @@ class SavingsProductResource extends Resource
                     ])->columns(2),
 
                 Section::make('Ketentuan Saldo')
+                    ->description('Batasan nominal tabungan')
                     ->schema([
                         TextInput::make('min_opening_balance')
                             ->label('Setoran Awal Minimal')
@@ -89,6 +92,7 @@ class SavingsProductResource extends Resource
                     ])->columns(3),
 
                 Section::make('Biaya & Pajak')
+                    ->description('Biaya administrasi, penutupan, dormant, dan ketentuan pajak bunga')
                     ->schema([
                         TextInput::make('admin_fee_monthly')
                             ->label('Biaya Admin Bulanan')
@@ -122,6 +126,7 @@ class SavingsProductResource extends Resource
                     ])->columns(3),
 
                 Section::make('GL Mapping')
+                    ->description('Mapping ke bagan akun untuk pencatatan otomatis')
                     ->schema([
                         Select::make('gl_savings_id')
                             ->label('GL Tabungan')

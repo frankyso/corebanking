@@ -106,10 +106,11 @@ class JournalEntryResource extends Resource
                     ->sortable(),
                 TextColumn::make('creator.name')
                     ->label('Dibuat Oleh')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->placeholder('-'),
                 TextColumn::make('posted_at')
                     ->label('Tgl Posting')
                     ->dateTime('d M Y H:i')
+                    ->placeholder('-')
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->defaultSort('created_at', 'desc')

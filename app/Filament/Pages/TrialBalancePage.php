@@ -21,6 +21,8 @@ class TrialBalancePage extends Page
 
     protected static ?string $title = 'Neraca Saldo';
 
+    protected ?string $subheading = 'Daftar saldo seluruh akun — pastikan total debit dan kredit seimbang';
+
     protected string $view = 'filament.pages.trial-balance';
 
     public static function canAccess(): bool

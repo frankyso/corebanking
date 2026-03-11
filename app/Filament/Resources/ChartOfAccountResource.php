@@ -45,6 +45,7 @@ class ChartOfAccountResource extends Resource
             ->components([
                 TextInput::make('account_code')
                     ->label('Kode Akun')
+                    ->helperText('Format: X.XX.XX.XXX sesuai PAPI')
                     ->required()
                     ->maxLength(12)
                     ->unique(ignoreRecord: true)
@@ -65,6 +66,7 @@ class ChartOfAccountResource extends Resource
                     ->preload(),
                 TextInput::make('level')
                     ->label('Level')
+                    ->helperText('1=Kelompok, 2=Sub-kelompok, 3=Detail, 4=Sub-detail')
                     ->numeric()
                     ->required()
                     ->default(1)
@@ -75,7 +77,8 @@ class ChartOfAccountResource extends Resource
                     ->options(NormalBalance::class)
                     ->required(),
                 Toggle::make('is_header')
-                    ->label('Akun Header'),
+                    ->label('Akun Header')
+                    ->helperText('Akun header tidak bisa diposting langsung'),
                 Toggle::make('is_active')
                     ->label('Aktif')
                     ->default(true),
@@ -92,11 +95,13 @@ class ChartOfAccountResource extends Resource
                 TextColumn::make('account_code')
                     ->label('Kode Akun')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->description(fn (ChartOfAccount $record): string => $record->account_name),
                 TextColumn::make('account_name')
                     ->label('Nama Akun')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
                 TextColumn::make('account_group')
                     ->label('Kelompok')
                     ->badge()

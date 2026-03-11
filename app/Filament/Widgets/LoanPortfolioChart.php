@@ -8,7 +8,9 @@ use Filament\Widgets\ChartWidget;
 
 class LoanPortfolioChart extends ChartWidget
 {
-    protected ?string $heading = 'Portofolio Kredit per Kolektibilitas';
+    protected ?string $heading = 'Distribusi Kredit per Kolektibilitas';
+
+    protected ?string $description = 'Sebaran outstanding kredit per tingkat kolektibilitas';
 
     protected static ?int $sort = 3;
 

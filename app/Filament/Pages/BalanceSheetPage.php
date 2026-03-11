@@ -21,6 +21,8 @@ class BalanceSheetPage extends Page
 
     protected static ?string $title = 'Neraca';
 
+    protected ?string $subheading = 'Posisi keuangan — aset, kewajiban, dan modal pada tanggal tertentu';
+
     protected string $view = 'filament.pages.balance-sheet';
 
     public static function canAccess(): bool

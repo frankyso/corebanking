@@ -22,22 +22,26 @@ class BankOverviewWidget extends BaseWidget
         $totalOutstanding = LoanAccount::query()->active()->sum('outstanding_principal');
         $totalAssets = $totalOutstanding;
 
+        $activeLoanCount = LoanAccount::query()->active()->count();
+        $activeSavingsCount = SavingsAccount::query()->active()->count();
+        $activeDepositCount = DepositAccount::query()->active()->count();
+
         return [
-            Stat::make('Total Outstanding Kredit', 'Rp '.Number::abbreviate($totalAssets, 1))
-                ->description('Aset produktif')
-                ->icon('heroicon-o-banknotes')
+            Stat::make('Outstanding Kredit', 'Rp '.Number::abbreviate($totalAssets, 1))
+                ->description($activeLoanCount.' rekening aktif')
+                ->descriptionIcon('heroicon-m-banknotes')
                 ->color('primary'),
             Stat::make('Total Tabungan', 'Rp '.Number::abbreviate($totalSavings, 1))
-                ->description('Dana pihak ketiga')
-                ->icon('heroicon-o-wallet')
+                ->description($activeSavingsCount.' rekening aktif')
+                ->descriptionIcon('heroicon-m-wallet')
                 ->color('success'),
             Stat::make('Total Deposito', 'Rp '.Number::abbreviate($totalDeposits, 1))
-                ->description('Dana pihak ketiga')
-                ->icon('heroicon-o-lock-closed')
+                ->description($activeDepositCount.' bilyet aktif')
+                ->descriptionIcon('heroicon-m-lock-closed')
                 ->color('info'),
-            Stat::make('Outstanding Kredit', 'Rp '.Number::abbreviate($totalOutstanding, 1))
-                ->description('Baki debet')
-                ->icon('heroicon-o-credit-card')
+            Stat::make('Baki Debet', 'Rp '.Number::abbreviate($totalOutstanding, 1))
+                ->description('Sisa pokok yang belum lunas')
+                ->descriptionIcon('heroicon-m-credit-card')
                 ->color('warning'),
         ];
     }

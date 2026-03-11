@@ -49,9 +49,11 @@ class LoanProductResource extends Resource
         return $schema
             ->components([
                 Section::make('Informasi Produk')
+                    ->description('Identitas dan ketentuan umum produk kredit')
                     ->schema([
                         TextInput::make('code')
                             ->label('Kode Produk')
+                            ->helperText('3 digit kode unik produk')
                             ->maxLength(3)
                             ->required()
                             ->unique(ignoreRecord: true),
@@ -77,6 +79,7 @@ class LoanProductResource extends Resource
                     ])->columns(2),
 
                 Section::make('Ketentuan Nominal & Tenor')
+                    ->description('Batasan plafon dan jangka waktu kredit')
                     ->schema([
                         TextInput::make('min_amount')
                             ->label('Nominal Minimal')
@@ -105,6 +108,7 @@ class LoanProductResource extends Resource
                     ])->columns(3),
 
                 Section::make('Biaya & Penalti')
+                    ->description('Biaya administrasi, provisi, asuransi, dan denda keterlambatan')
                     ->schema([
                         TextInput::make('admin_fee_rate')
                             ->label('Biaya Admin (%)')
@@ -129,6 +133,7 @@ class LoanProductResource extends Resource
                     ])->columns(4),
 
                 Section::make('GL Mapping')
+                    ->description('Mapping ke bagan akun untuk pencatatan otomatis')
                     ->schema([
                         Select::make('gl_loan_id')
                             ->label('GL Kredit Yang Diberikan')

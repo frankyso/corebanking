@@ -31,18 +31,24 @@ class NplRatioWidget extends BaseWidget
             default => 'danger',
         };
 
+        $nplDescription = match (true) {
+            $nplRatio <= 5 => 'Sehat (maks 5%)',
+            $nplRatio <= 8 => 'Perlu perhatian',
+            default => 'Kritis — di atas 5%',
+        };
+
         return [
-            Stat::make('NPL Ratio', number_format($nplRatio, 2).'%')
-                ->description($nplRatio <= 5 ? 'Sehat (maks 5%)' : 'Perlu perhatian')
+            Stat::make('Rasio NPL', number_format($nplRatio, 2).'%')
+                ->description($nplDescription)
                 ->descriptionIcon($nplRatio <= 5 ? 'heroicon-m-check-circle' : 'heroicon-m-exclamation-triangle')
                 ->color($nplColor),
-            Stat::make('NPL Outstanding', 'Rp '.number_format($nplOutstanding, 0, ',', '.'))
-                ->description('Kol. 3-5')
-                ->icon('heroicon-o-exclamation-circle')
+            Stat::make('Kredit Bermasalah', 'Rp '.number_format($nplOutstanding, 0, ',', '.'))
+                ->description('Kol 3-5 (Kurang Lancar s/d Macet)')
+                ->descriptionIcon('heroicon-m-exclamation-circle')
                 ->color('danger'),
             Stat::make('CKPN Coverage', number_format($ckpnCoverage, 1).'%')
-                ->description('Cadangan kerugian')
-                ->icon('heroicon-o-shield-check')
+                ->description('Cadangan terhadap kredit bermasalah')
+                ->descriptionIcon('heroicon-m-shield-check')
                 ->color('info'),
         ];
     }

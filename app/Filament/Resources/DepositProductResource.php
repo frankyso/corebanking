@@ -42,9 +42,11 @@ class DepositProductResource extends Resource
         return $schema
             ->components([
                 Section::make('Informasi Produk')
+                    ->description('Identitas dan ketentuan umum produk deposito berjangka')
                     ->schema([
                         TextInput::make('code')
                             ->label('Kode Produk')
+                            ->helperText('3 digit kode unik produk')
                             ->maxLength(3)
                             ->required()
                             ->unique(ignoreRecord: true),
@@ -66,6 +68,7 @@ class DepositProductResource extends Resource
                     ])->columns(2),
 
                 Section::make('Ketentuan Nominal')
+                    ->description('Batasan nominal penempatan deposito')
                     ->schema([
                         TextInput::make('min_amount')
                             ->label('Nominal Minimal')
@@ -79,6 +82,7 @@ class DepositProductResource extends Resource
                     ])->columns(2),
 
                 Section::make('Penalti & Pajak')
+                    ->description('Tarif penalti pencairan dini dan pajak penghasilan atas bunga')
                     ->schema([
                         TextInput::make('penalty_rate')
                             ->label('Tarif Penalti Pencairan Dini (%)')
@@ -98,6 +102,7 @@ class DepositProductResource extends Resource
                     ])->columns(3),
 
                 Section::make('GL Mapping')
+                    ->description('Mapping ke bagan akun untuk pencatatan otomatis')
                     ->schema([
                         Select::make('gl_deposit_id')
                             ->label('GL Deposito')

@@ -38,6 +38,16 @@ class DepositAccountResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Rekening Deposito';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Deposito aktif';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema

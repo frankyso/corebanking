@@ -40,10 +40,12 @@ class SystemParameterResource extends Resource
             ->components([
                 TextInput::make('group')
                     ->label('Grup')
+                    ->helperText('Grup pengelompokan parameter, contoh: LOAN, SAVINGS')
                     ->required()
                     ->maxLength(50),
                 TextInput::make('key')
                     ->label('Kunci')
+                    ->helperText('Nama kunci unik dalam grup')
                     ->required()
                     ->maxLength(100),
                 Textarea::make('value')
@@ -92,7 +94,7 @@ class SystemParameterResource extends Resource
                 TextColumn::make('description')
                     ->label('Keterangan')
                     ->limit(40)
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->placeholder('-'),
                 IconColumn::make('is_editable')
                     ->boolean()
                     ->label('Dapat Diubah'),

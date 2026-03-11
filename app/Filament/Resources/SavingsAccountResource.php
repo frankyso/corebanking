@@ -36,6 +36,16 @@ class SavingsAccountResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Rekening Tabungan';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Rekening aktif';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema

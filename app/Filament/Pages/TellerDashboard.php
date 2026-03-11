@@ -34,9 +34,11 @@ class TellerDashboard extends Page
 
     protected static ?int $navigationSort = 30;
 
-    protected static ?string $navigationLabel = 'Dashboard Teller';
+    protected static ?string $navigationLabel = 'Layanan Teller';
 
-    protected static ?string $title = 'Dashboard Teller';
+    protected static ?string $title = 'Layanan Teller';
+
+    protected ?string $subheading = 'Buka sesi kas, layani setoran, penarikan, dan angsuran nasabah';
 
     protected string $view = 'filament.pages.teller-dashboard';
 

@@ -24,9 +24,11 @@ class EodProcessPage extends Page
 
     protected static ?int $navigationSort = 40;
 
-    protected static ?string $navigationLabel = 'End of Day';
+    protected static ?string $navigationLabel = 'Proses Akhir Hari';
 
-    protected static ?string $title = 'End of Day Process';
+    protected static ?string $title = 'Proses Akhir Hari (End of Day)';
+
+    protected ?string $subheading = 'Hitung bunga, CKPN, akrual, dan tutup buku harian';
 
     protected string $view = 'filament.pages.eod-process';
 
