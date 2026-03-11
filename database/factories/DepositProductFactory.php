@@ -15,8 +15,8 @@ class DepositProductFactory extends Factory
     public function definition(): array
     {
         return [
-            'code' => strtoupper($this->faker->unique()->lexify('D??')),
-            'name' => 'Deposito '.$this->faker->word(),
+            'code' => strtoupper(fake()->unique()->lexify('D??')),
+            'name' => 'Deposito '.fake()->word(),
             'currency' => 'IDR',
             'min_amount' => 1000000,
             'max_amount' => 2000000000,

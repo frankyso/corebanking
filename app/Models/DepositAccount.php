@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\DepositStatus;
 use App\Enums\InterestPaymentMethod;
 use App\Enums\RolloverType;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -58,54 +59,81 @@ class DepositAccount extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<Customer, $this>
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
+    /**
+     * @return BelongsTo<DepositProduct, $this>
+     */
     public function depositProduct(): BelongsTo
     {
         return $this->belongsTo(DepositProduct::class);
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return BelongsTo<SavingsAccount, $this>
+     */
     public function savingsAccount(): BelongsTo
     {
         return $this->belongsTo(SavingsAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    /**
+     * @return HasMany<DepositTransaction, $this>
+     */
     public function transactions(): HasMany
     {
         return $this->hasMany(DepositTransaction::class);
     }
 
+    /**
+     * @return HasMany<DepositInterestAccrual, $this>
+     */
     public function interestAccruals(): HasMany
     {
         return $this->hasMany(DepositInterestAccrual::class);
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('status', DepositStatus::Active);
     }
 
-    public function scopeMaturing($query, $date)
+    #[Scope]
+    protected function maturing($query, $date)
     {
         return $query->where('maturity_date', '<=', $date)->where('status', DepositStatus::Active);
     }
 
     public function isMatured(): bool
     {
-        return $this->maturity_date->isPast() || $this->maturity_date->isToday();
+        if ($this->maturity_date->isPast()) {
+            return true;
+        }
+
+        return (bool) $this->maturity_date->isToday();
     }
 
     public function daysToMaturity(): int

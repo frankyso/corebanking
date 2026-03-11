@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('loan_accounts', function (Blueprint $table) {
+        Schema::create('loan_accounts', function (Blueprint $table): void {
             $table->id();
             $table->string('account_number', 15)->unique();
             $table->foreignId('customer_id')->constrained('customers');

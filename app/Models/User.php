@@ -41,6 +41,9 @@ class User extends Authenticatable implements AuditableContract, FilamentUser
         ];
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);

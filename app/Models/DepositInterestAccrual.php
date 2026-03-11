@@ -31,6 +31,9 @@ class DepositInterestAccrual extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<DepositAccount, $this>
+     */
     public function depositAccount(): BelongsTo
     {
         return $this->belongsTo(DepositAccount::class);

@@ -31,8 +31,8 @@ class ViewSavingsAccount extends ViewRecord
                     TextInput::make('description')
                         ->label('Keterangan'),
                 ])
-                ->visible(fn () => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
-                ->action(function (array $data) {
+                ->visible(fn (): bool => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
+                ->action(function (array $data): void {
                     try {
                         app(SavingsService::class)->deposit(
                             account: $this->record,
@@ -62,8 +62,8 @@ class ViewSavingsAccount extends ViewRecord
                     TextInput::make('description')
                         ->label('Keterangan'),
                 ])
-                ->visible(fn () => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
-                ->action(function (array $data) {
+                ->visible(fn (): bool => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
+                ->action(function (array $data): void {
                     try {
                         app(SavingsService::class)->withdraw(
                             account: $this->record,
@@ -91,8 +91,8 @@ class ViewSavingsAccount extends ViewRecord
                         ->required()
                         ->minValue(1),
                 ])
-                ->visible(fn () => $this->record->status === SavingsAccountStatus::Active)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => $this->record->status === SavingsAccountStatus::Active)
+                ->action(function (array $data): void {
                     try {
                         app(SavingsService::class)->hold(
                             account: $this->record,
@@ -119,8 +119,8 @@ class ViewSavingsAccount extends ViewRecord
                         ->required()
                         ->minValue(1),
                 ])
-                ->visible(fn () => (float) $this->record->hold_amount > 0)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => (float) $this->record->hold_amount > 0)
+                ->action(function (array $data): void {
                     try {
                         app(SavingsService::class)->unhold(
                             account: $this->record,
@@ -140,8 +140,8 @@ class ViewSavingsAccount extends ViewRecord
                 ->icon('heroicon-o-no-symbol')
                 ->color('danger')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === SavingsAccountStatus::Active)
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === SavingsAccountStatus::Active)
+                ->action(function (): void {
                     app(SavingsService::class)->freeze($this->record);
                     Notification::make()->title('Rekening dibekukan')->warning()->send();
                     $this->refreshFormData(['status']);
@@ -152,8 +152,8 @@ class ViewSavingsAccount extends ViewRecord
                 ->icon('heroicon-o-arrow-path')
                 ->color('success')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === SavingsAccountStatus::Frozen)
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === SavingsAccountStatus::Frozen)
+                ->action(function (): void {
                     app(SavingsService::class)->unfreeze($this->record);
                     Notification::make()->title('Bekuan dibuka')->success()->send();
                     $this->refreshFormData(['status']);
@@ -166,8 +166,8 @@ class ViewSavingsAccount extends ViewRecord
                 ->requiresConfirmation()
                 ->modalHeading('Tutup Rekening')
                 ->modalDescription('Apakah Anda yakin ingin menutup rekening ini? Saldo tersisa akan dikembalikan.')
-                ->visible(fn () => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
-                ->action(function () {
+                ->visible(fn (): bool => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
+                ->action(function (): void {
                     try {
                         app(SavingsService::class)->close($this->record, auth()->user());
                         Notification::make()->title('Rekening ditutup')->warning()->send();

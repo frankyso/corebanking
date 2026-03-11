@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -34,27 +35,40 @@ class Vault extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function custodian(): BelongsTo
     {
         return $this->belongsTo(User::class, 'custodian_id');
     }
 
+    /**
+     * @return HasMany<VaultTransaction, $this>
+     */
     public function transactions(): HasMany
     {
         return $this->hasMany(VaultTransaction::class);
     }
 
+    /**
+     * @return HasMany<TellerSession, $this>
+     */
     public function tellerSessions(): HasMany
     {
         return $this->hasMany(TellerSession::class);
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }

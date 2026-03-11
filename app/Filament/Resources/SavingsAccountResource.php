@@ -50,7 +50,7 @@ class SavingsAccountResource extends Resource
                             ->active()
                             ->with(['individualDetail', 'corporateDetail'])
                             ->get()
-                            ->mapWithKeys(fn (Customer $customer) => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
+                            ->mapWithKeys(fn (Customer $customer): array => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
                     )
                     ->searchable()
                     ->required(),
@@ -88,9 +88,9 @@ class SavingsAccountResource extends Resource
                     ->sortable(),
                 TextColumn::make('customer.display_name')
                     ->label('Nasabah')
-                    ->searchable(query: function (Builder $query, string $search) {
-                        $query->whereHas('customer', function ($q) use ($search) {
-                            $q->whereHas('individualDetail', fn ($q) => $q->where('full_name', 'ilike', "%{$search}%"))
+                    ->searchable(query: function (Builder $query, string $search): void {
+                        $query->whereHas('customer', function (\Illuminate\Contracts\Database\Query\Builder $q) use ($search): void {
+                            $q->whereHas('individualDetail', fn (\Illuminate\Contracts\Database\Query\Builder $q) => $q->where('full_name', 'ilike', "%{$search}%"))
                                 ->orWhereHas('corporateDetail', fn ($q) => $q->where('company_name', 'ilike', "%{$search}%"));
                         });
                     }),

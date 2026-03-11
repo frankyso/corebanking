@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('system_parameters', function (Blueprint $table) {
+        Schema::create('system_parameters', function (Blueprint $table): void {
             $table->id();
             $table->string('group', 50);
             $table->string('key', 100);

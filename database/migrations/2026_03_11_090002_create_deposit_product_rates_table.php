@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('deposit_product_rates', function (Blueprint $table) {
+        Schema::create('deposit_product_rates', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('deposit_product_id')->constrained('deposit_products')->cascadeOnDelete();
             $table->integer('tenor_months');

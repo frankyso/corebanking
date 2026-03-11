@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('holidays', function (Blueprint $table) {
+        Schema::create('holidays', function (Blueprint $table): void {
             $table->id();
             $table->date('date')->unique();
             $table->string('name', 100);

@@ -46,9 +46,7 @@ class EodService
             throw new \InvalidArgumentException("EOD untuk tanggal {$processDate->format('d/m/Y')} sudah pernah dijalankan");
         }
 
-        if ($existing && $existing->isRunning()) {
-            throw new \InvalidArgumentException('EOD sedang berjalan');
-        }
+        throw_if($existing && $existing->isRunning(), new \InvalidArgumentException('EOD sedang berjalan'));
 
         $process = $existing ?? EodProcess::create([
             'process_date' => $processDate->toDateString(),
@@ -135,9 +133,7 @@ class EodService
         $checks = 0;
 
         $openSessions = TellerSession::where('status', TellerSessionStatus::Open)->count();
-        if ($openSessions > 0) {
-            throw new \RuntimeException("Masih ada {$openSessions} sesi teller yang belum ditutup");
-        }
+        throw_if($openSessions > 0, new \RuntimeException("Masih ada {$openSessions} sesi teller yang belum ditutup"));
         $checks++;
 
         $previousDate = $date->copy()->subDay();
@@ -271,7 +267,7 @@ class EodService
         $cutoffDate = $date->copy()->subDays($dormantDays);
 
         $dormantAccounts = SavingsAccount::where('status', SavingsAccountStatus::Active)
-            ->where(function ($query) use ($cutoffDate) {
+            ->where(function ($query) use ($cutoffDate): void {
                 $query->where('last_transaction_at', '<', $cutoffDate)
                     ->orWhereNull('last_transaction_at');
             })
@@ -297,9 +293,7 @@ class EodService
             ->where('balance', '<', 0)
             ->count();
 
-        if ($negativeBalances > 0) {
-            throw new \RuntimeException("Ditemukan {$negativeBalances} rekening tabungan dengan saldo negatif");
-        }
+        throw_if($negativeBalances > 0, new \RuntimeException("Ditemukan {$negativeBalances} rekening tabungan dengan saldo negatif"));
         $validations++;
 
         return $validations;

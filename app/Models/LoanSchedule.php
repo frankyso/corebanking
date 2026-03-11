@@ -41,6 +41,9 @@ class LoanSchedule extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<LoanAccount, $this>
+     */
     public function loanAccount(): BelongsTo
     {
         return $this->belongsTo(LoanAccount::class);

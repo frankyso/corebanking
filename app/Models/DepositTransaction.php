@@ -26,11 +26,17 @@ class DepositTransaction extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<DepositAccount, $this>
+     */
     public function depositAccount(): BelongsTo
     {
         return $this->belongsTo(DepositAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');

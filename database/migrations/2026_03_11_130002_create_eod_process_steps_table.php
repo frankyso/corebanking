@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('eod_process_steps', function (Blueprint $table) {
+        Schema::create('eod_process_steps', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('eod_process_id')->constrained('eod_processes')->cascadeOnDelete();
             $table->integer('step_number');

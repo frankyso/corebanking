@@ -14,6 +14,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/framework (LARAVEL) - v12
 - laravel/prompts (PROMPTS) - v0
 - livewire/livewire (LIVEWIRE) - v4
+- larastan/larastan (LARASTAN) - v3
 - laravel/boost (BOOST) - v2
 - laravel/mcp (MCP) - v0
 - laravel/pail (PAIL) - v1
@@ -21,6 +22,7 @@ This application is a Laravel application and its main Laravel ecosystems packag
 - laravel/sail (SAIL) - v1
 - pestphp/pest (PEST) - v4
 - phpunit/phpunit (PHPUNIT) - v12
+- rector/rector (RECTOR) - v2
 - tailwindcss (TAILWINDCSS) - v4
 
 ## Skills Activation
@@ -29,7 +31,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - `pest-testing` — Tests applications using the Pest 4 PHP framework. Activates when writing tests, creating unit or feature tests, adding assertions, testing Livewire components, browser testing, debugging test failures, working with datasets or mocking; or when the user mentions test, spec, TDD, expects, assertion, coverage, or needs to verify functionality works.
 - `tailwindcss-development` — Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
-- `filament-development` — Develops Filament v5 admin panels, resources, pages, widgets, and forms. Activates when creating or editing Filament resources, pages, widgets, relation managers, actions, tables, forms, infolists, navigation, or policies; or when the user mentions Filament, admin panel, resource, CRUD, dashboard widget, or Filament component.
+- `phpstan-analysis` — Runs PHPStan static analysis at max level using Larastan. Activates when fixing type errors, adding type hints, running static analysis, debugging PHPStan failures, or when the user mentions PHPStan, Larastan, static analysis, type safety, or type declarations.
 
 ## Conventions
 
@@ -141,6 +143,13 @@ protected function isAccessible(User $user, ?string $path = null): bool
 
 - The application is served by Laravel Herd and will be available at: `https?://[kebab-case-project-dir].test`. Use the `get-absolute-url` tool to generate valid URLs for the user.
 - You must not run any commands to make the site available via HTTP(S). It is always available through Laravel Herd.
+
+=== tests rules ===
+
+# Test Enforcement
+
+- Every change must be programmatically tested. Write a new test or update an existing test, then run the affected tests to make sure they pass.
+- Run the minimum number of tests needed to ensure code quality and speed. Use `php artisan test --compact` with a specific filename or filter.
 
 === laravel/core rules ===
 

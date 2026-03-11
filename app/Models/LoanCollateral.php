@@ -30,11 +30,17 @@ class LoanCollateral extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<LoanApplication, $this>
+     */
     public function loanApplication(): BelongsTo
     {
         return $this->belongsTo(LoanApplication::class);
     }
 
+    /**
+     * @return BelongsTo<LoanAccount, $this>
+     */
     public function loanAccount(): BelongsTo
     {
         return $this->belongsTo(LoanAccount::class);

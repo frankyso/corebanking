@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('customer_phones', function (Blueprint $table) {
+        Schema::create('customer_phones', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->string('type', 20)->default('mobile');

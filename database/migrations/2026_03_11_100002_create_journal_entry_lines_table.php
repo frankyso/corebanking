@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('journal_entry_lines', function (Blueprint $table) {
+        Schema::create('journal_entry_lines', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('journal_entry_id')->constrained('journal_entries')->cascadeOnDelete();
             $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts');

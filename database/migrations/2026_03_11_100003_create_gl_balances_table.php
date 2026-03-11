@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('gl_balances', function (Blueprint $table) {
+        Schema::create('gl_balances', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts');
             $table->foreignId('branch_id')->nullable()->constrained('branches');

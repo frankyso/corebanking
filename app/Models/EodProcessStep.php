@@ -30,6 +30,9 @@ class EodProcessStep extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<EodProcess, $this>
+     */
     public function eodProcess(): BelongsTo
     {
         return $this->belongsTo(EodProcess::class);

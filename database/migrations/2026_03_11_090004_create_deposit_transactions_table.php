@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('deposit_transactions', function (Blueprint $table) {
+        Schema::create('deposit_transactions', function (Blueprint $table): void {
             $table->id();
             $table->string('reference_number', 30)->unique();
             $table->foreignId('deposit_account_id')->constrained('deposit_accounts');

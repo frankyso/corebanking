@@ -31,7 +31,7 @@ class SequenceService
 
     private function generate(string $type, string $prefix, int $padding): string
     {
-        return DB::transaction(function () use ($type, $prefix, $padding) {
+        return DB::transaction(function () use ($type, $prefix, $padding): string {
             $sequence = Sequence::query()
                 ->where('type', $type)
                 ->where('prefix', $prefix)

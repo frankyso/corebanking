@@ -5,7 +5,7 @@ use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\User;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->branch = Branch::factory()->create();
 
     $this->creator = User::factory()->create([
@@ -19,7 +19,7 @@ beforeEach(function () {
     ]);
 });
 
-it('approves a pending customer and changes status to Approved', function () {
+it('approves a pending customer and changes status to Approved', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -33,7 +33,7 @@ it('approves a pending customer and changes status to Approved', function () {
     expect($customer->fresh()->approved_at)->not->toBeNull();
 });
 
-it('fails to approve when same user is creator (maker-checker)', function () {
+it('fails to approve when same user is creator (maker-checker)', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -45,7 +45,7 @@ it('fails to approve when same user is creator (maker-checker)', function () {
     expect($customer->fresh()->approval_status)->toBe(ApprovalStatus::Pending);
 });
 
-it('fails to approve when status is not Pending', function () {
+it('fails to approve when status is not Pending', function (): void {
     $customer = Customer::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -64,7 +64,7 @@ it('fails to approve when status is not Pending', function () {
     expect($result)->toBeFalse();
 });
 
-it('rejects a pending customer with a reason', function () {
+it('rejects a pending customer with a reason', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -80,7 +80,7 @@ it('rejects a pending customer with a reason', function () {
     expect($customer->fresh()->approved_at)->not->toBeNull();
 });
 
-it('fails to reject when same user is creator', function () {
+it('fails to reject when same user is creator', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -92,7 +92,7 @@ it('fails to reject when same user is creator', function () {
     expect($customer->fresh()->approval_status)->toBe(ApprovalStatus::Pending);
 });
 
-it('canBeApprovedBy returns true for different user with Pending status', function () {
+it('canBeApprovedBy returns true for different user with Pending status', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -101,7 +101,7 @@ it('canBeApprovedBy returns true for different user with Pending status', functi
     expect($customer->canBeApprovedBy($this->approver))->toBeTrue();
 });
 
-it('canBeApprovedBy returns false for same user as creator', function () {
+it('canBeApprovedBy returns false for same user as creator', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -110,7 +110,7 @@ it('canBeApprovedBy returns false for same user as creator', function () {
     expect($customer->canBeApprovedBy($this->creator))->toBeFalse();
 });
 
-it('canBeApprovedBy returns false for non-Pending status', function () {
+it('canBeApprovedBy returns false for non-Pending status', function (): void {
     $customer = Customer::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -127,7 +127,7 @@ it('canBeApprovedBy returns false for non-Pending status', function () {
     expect($customer->canBeApprovedBy($newApprover))->toBeFalse();
 });
 
-it('isPending returns true for Pending status', function () {
+it('isPending returns true for Pending status', function (): void {
     $customer = Customer::factory()->pendingApproval()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -136,7 +136,7 @@ it('isPending returns true for Pending status', function () {
     expect($customer->isPending())->toBeTrue();
 });
 
-it('isApproved returns true for Approved status', function () {
+it('isApproved returns true for Approved status', function (): void {
     $customer = Customer::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -148,7 +148,7 @@ it('isApproved returns true for Approved status', function () {
     expect($customer->isApproved())->toBeTrue();
 });
 
-it('scopePendingApproval filters only pending records', function () {
+it('scopePendingApproval filters only pending records', function (): void {
     $pendingCustomers = Customer::factory()->pendingApproval()->count(3)->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->creator->id,
@@ -165,7 +165,7 @@ it('scopePendingApproval filters only pending records', function () {
     $results = Customer::pendingApproval()->get();
 
     expect($results)->toHaveCount(3);
-    $results->each(function ($customer) {
+    $results->each(function ($customer): void {
         expect($customer->approval_status)->toBe(ApprovalStatus::Pending);
     });
 });

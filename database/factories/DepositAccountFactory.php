@@ -21,20 +21,20 @@ class DepositAccountFactory extends Factory
 
     public function definition(): array
     {
-        $placementDate = $this->faker->dateTimeBetween('-6 months', 'now');
-        $tenorMonths = $this->faker->randomElement([1, 3, 6, 12]);
+        $placementDate = fake()->dateTimeBetween('-6 months', 'now');
+        $tenorMonths = fake()->randomElement([1, 3, 6, 12]);
 
         return [
-            'account_number' => $this->faker->unique()->numerify('D01001#########'),
+            'account_number' => fake()->unique()->numerify('D01001#########'),
             'customer_id' => Customer::factory(),
             'deposit_product_id' => DepositProduct::factory(),
             'branch_id' => Branch::factory(),
             'status' => DepositStatus::Active,
-            'principal_amount' => $this->faker->randomElement([5000000, 10000000, 25000000, 50000000, 100000000]),
-            'interest_rate' => $this->faker->randomFloat(2, 3, 7),
+            'principal_amount' => fake()->randomElement([5000000, 10000000, 25000000, 50000000, 100000000]),
+            'interest_rate' => fake()->randomFloat(2, 3, 7),
             'tenor_months' => $tenorMonths,
-            'interest_payment_method' => $this->faker->randomElement(InterestPaymentMethod::cases()),
-            'rollover_type' => $this->faker->randomElement(RolloverType::cases()),
+            'interest_payment_method' => fake()->randomElement(InterestPaymentMethod::cases()),
+            'rollover_type' => fake()->randomElement(RolloverType::cases()),
             'placement_date' => $placementDate,
             'maturity_date' => now()->parse($placementDate)->addMonths($tenorMonths),
             'accrued_interest' => 0,

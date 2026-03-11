@@ -39,7 +39,7 @@ class LoanPortfolioReport extends Page
             ->groupBy('collectibility')
             ->orderBy('collectibility')
             ->get()
-            ->map(function ($row) {
+            ->map(function ($row): array {
                 $col = Collectibility::from($row->collectibility);
 
                 return [

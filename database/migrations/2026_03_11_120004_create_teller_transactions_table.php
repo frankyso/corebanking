@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('teller_transactions', function (Blueprint $table) {
+        Schema::create('teller_transactions', function (Blueprint $table): void {
             $table->id();
             $table->string('reference_number', 30)->unique();
             $table->foreignId('teller_session_id')->constrained('teller_sessions');

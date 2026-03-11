@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('savings_interest_accruals', function (Blueprint $table) {
+        Schema::create('savings_interest_accruals', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('savings_account_id')->constrained('savings_accounts');
             $table->date('accrual_date');

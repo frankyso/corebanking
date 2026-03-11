@@ -72,8 +72,8 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 // ============================================================================
 // User
 // ============================================================================
-describe('User', function () {
-    it('can be created with factory', function () {
+describe('User', function (): void {
+    it('can be created with factory', function (): void {
         $user = User::factory()->create();
 
         expect($user)->toBeInstanceOf(User::class)
@@ -81,19 +81,19 @@ describe('User', function () {
             ->and($user->email)->toBeString();
     });
 
-    it('casts is_active to boolean', function () {
+    it('casts is_active to boolean', function (): void {
         $user = User::factory()->create(['is_active' => true]);
 
         expect($user->is_active)->toBeTrue()->toBeBool();
     });
 
-    it('casts email_verified_at to datetime', function () {
+    it('casts email_verified_at to datetime', function (): void {
         $user = User::factory()->create();
 
         expect($user->email_verified_at)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has branch relationship', function () {
+    it('has branch relationship', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create(['branch_id' => $branch->id]);
 
@@ -101,13 +101,13 @@ describe('User', function () {
             ->and($user->branch->id)->toBe($branch->id);
     });
 
-    it('canAccessPanel returns true when active', function () {
+    it('canAccessPanel returns true when active', function (): void {
         $user = User::factory()->create(['is_active' => true]);
 
         expect($user->canAccessPanel(app(Panel::class)))->toBeTrue();
     });
 
-    it('canAccessPanel returns false when inactive', function () {
+    it('canAccessPanel returns false when inactive', function (): void {
         $user = User::factory()->create(['is_active' => false]);
 
         expect($user->canAccessPanel(app(Panel::class)))->toBeFalse();
@@ -117,8 +117,8 @@ describe('User', function () {
 // ============================================================================
 // Branch
 // ============================================================================
-describe('Branch', function () {
-    it('can be created with factory', function () {
+describe('Branch', function (): void {
+    it('can be created with factory', function (): void {
         $branch = Branch::factory()->create();
 
         expect($branch)->toBeInstanceOf(Branch::class)
@@ -126,26 +126,26 @@ describe('Branch', function () {
             ->and($branch->name)->toBeString();
     });
 
-    it('casts booleans correctly', function () {
+    it('casts booleans correctly', function (): void {
         $branch = Branch::factory()->create(['is_head_office' => true, 'is_active' => true]);
 
         expect($branch->is_head_office)->toBeTrue()->toBeBool()
             ->and($branch->is_active)->toBeTrue()->toBeBool();
     });
 
-    it('has head relationship', function () {
+    it('has head relationship', function (): void {
         $branch = Branch::factory()->create();
 
         expect($branch->head())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('has users relationship', function () {
+    it('has users relationship', function (): void {
         $branch = Branch::factory()->create();
 
         expect($branch->users())->toBeInstanceOf(HasMany::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         Branch::factory()->create(['is_active' => true]);
         Branch::factory()->create(['is_active' => false]);
 
@@ -158,20 +158,20 @@ describe('Branch', function () {
 // ============================================================================
 // SystemParameter
 // ============================================================================
-describe('SystemParameter', function () {
-    it('can be created with factory', function () {
+describe('SystemParameter', function (): void {
+    it('can be created with factory', function (): void {
         $param = SystemParameter::factory()->create();
 
         expect($param)->toBeInstanceOf(SystemParameter::class);
     });
 
-    it('casts is_editable to boolean', function () {
+    it('casts is_editable to boolean', function (): void {
         $param = SystemParameter::factory()->create(['is_editable' => true]);
 
         expect($param->is_editable)->toBeTrue()->toBeBool();
     });
 
-    it('getValue returns string value', function () {
+    it('getValue returns string value', function (): void {
         SystemParameter::factory()->create([
             'group' => 'general',
             'key' => 'bank_name',
@@ -182,7 +182,7 @@ describe('SystemParameter', function () {
         expect(SystemParameter::getValue('general', 'bank_name'))->toBe('Test Bank');
     });
 
-    it('getValue returns integer value', function () {
+    it('getValue returns integer value', function (): void {
         SystemParameter::factory()->integer()->create([
             'group' => 'general',
             'key' => 'max_retry',
@@ -192,7 +192,7 @@ describe('SystemParameter', function () {
         expect(SystemParameter::getValue('general', 'max_retry'))->toBe(5)->toBeInt();
     });
 
-    it('getValue returns float for decimal type', function () {
+    it('getValue returns float for decimal type', function (): void {
         SystemParameter::factory()->decimal()->create([
             'group' => 'savings',
             'key' => 'default_rate',
@@ -202,7 +202,7 @@ describe('SystemParameter', function () {
         expect(SystemParameter::getValue('savings', 'default_rate'))->toBe(3.50)->toBeFloat();
     });
 
-    it('getValue returns boolean value', function () {
+    it('getValue returns boolean value', function (): void {
         SystemParameter::factory()->boolean()->create([
             'group' => 'general',
             'key' => 'maintenance_mode',
@@ -212,7 +212,7 @@ describe('SystemParameter', function () {
         expect(SystemParameter::getValue('general', 'maintenance_mode'))->toBeTrue();
     });
 
-    it('getValue returns default when not found', function () {
+    it('getValue returns default when not found', function (): void {
         expect(SystemParameter::getValue('nonexistent', 'key', 'fallback'))->toBe('fallback');
     });
 });
@@ -220,39 +220,39 @@ describe('SystemParameter', function () {
 // ============================================================================
 // Holiday
 // ============================================================================
-describe('Holiday', function () {
-    it('can be created with factory', function () {
+describe('Holiday', function (): void {
+    it('can be created with factory', function (): void {
         $holiday = Holiday::factory()->create();
 
         expect($holiday)->toBeInstanceOf(Holiday::class);
     });
 
-    it('casts date to date', function () {
+    it('casts date to date', function (): void {
         $holiday = Holiday::factory()->create();
 
         expect($holiday->date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('isHoliday returns true for weekend', function () {
+    it('isHoliday returns true for weekend', function (): void {
         $saturday = Carbon::parse('2026-03-14'); // Saturday
 
         expect(Holiday::isHoliday($saturday))->toBeTrue();
     });
 
-    it('isHoliday returns true for registered holiday', function () {
+    it('isHoliday returns true for registered holiday', function (): void {
         $date = Carbon::parse('2026-03-11'); // Wednesday
         Holiday::factory()->onDate('2026-03-11')->create();
 
         expect(Holiday::isHoliday($date))->toBeTrue();
     });
 
-    it('isHoliday returns false for regular business day', function () {
+    it('isHoliday returns false for regular business day', function (): void {
         $date = Carbon::parse('2026-03-11'); // Wednesday, no holiday registered
 
         expect(Holiday::isHoliday($date))->toBeFalse();
     });
 
-    it('getNextBusinessDay skips holidays and weekends', function () {
+    it('getNextBusinessDay skips holidays and weekends', function (): void {
         // Friday
         $friday = Carbon::parse('2026-03-13');
         Holiday::factory()->onDate('2026-03-16')->create(); // Monday is holiday
@@ -267,14 +267,14 @@ describe('Holiday', function () {
 // ============================================================================
 // ChartOfAccount
 // ============================================================================
-describe('ChartOfAccount', function () {
-    it('can be created with factory', function () {
+describe('ChartOfAccount', function (): void {
+    it('can be created with factory', function (): void {
         $coa = ChartOfAccount::factory()->create();
 
         expect($coa)->toBeInstanceOf(ChartOfAccount::class);
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $coa = ChartOfAccount::factory()->asset()->create();
 
         expect($coa->account_group)->toBe(AccountGroup::Asset)
@@ -284,7 +284,7 @@ describe('ChartOfAccount', function () {
             ->and($coa->level)->toBeInt();
     });
 
-    it('has parent and children relationships', function () {
+    it('has parent and children relationships', function (): void {
         $parent = ChartOfAccount::factory()->header()->create();
         $child = ChartOfAccount::factory()->childOf($parent)->create();
 
@@ -294,26 +294,26 @@ describe('ChartOfAccount', function () {
             ->and($child->parent->id)->toBe($parent->id);
     });
 
-    it('scope postable filters non-header active accounts', function () {
+    it('scope postable filters non-header active accounts', function (): void {
         ChartOfAccount::factory()->create(['is_header' => false, 'is_active' => true]);
         ChartOfAccount::factory()->header()->create();
         ChartOfAccount::factory()->inactive()->create();
 
         $postable = ChartOfAccount::postable()->get();
 
-        expect($postable->every(fn ($c) => ! $c->is_header && $c->is_active))->toBeTrue();
+        expect($postable->every(fn ($c): bool => ! $c->is_header && $c->is_active))->toBeTrue();
     });
 
-    it('scope byGroup filters by account group', function () {
+    it('scope byGroup filters by account group', function (): void {
         ChartOfAccount::factory()->asset()->create();
         ChartOfAccount::factory()->liability()->create();
 
         $assets = ChartOfAccount::byGroup(AccountGroup::Asset)->get();
 
-        expect($assets->every(fn ($c) => $c->account_group === AccountGroup::Asset))->toBeTrue();
+        expect($assets->every(fn ($c): bool => $c->account_group === AccountGroup::Asset))->toBeTrue();
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         ChartOfAccount::factory()->create(['is_active' => true]);
         ChartOfAccount::factory()->inactive()->create();
 
@@ -322,7 +322,7 @@ describe('ChartOfAccount', function () {
         expect($active->every(fn ($c) => $c->is_active))->toBeTrue();
     });
 
-    it('has fullName accessor', function () {
+    it('has fullName accessor', function (): void {
         $coa = ChartOfAccount::factory()->create([
             'account_code' => '10001',
             'account_name' => 'Kas',
@@ -335,8 +335,8 @@ describe('ChartOfAccount', function () {
 // ============================================================================
 // Sequence
 // ============================================================================
-describe('Sequence', function () {
-    it('can be created', function () {
+describe('Sequence', function (): void {
+    it('can be created', function (): void {
         $seq = Sequence::create([
             'type' => 'savings_account',
             'prefix' => 'SAV',
@@ -353,8 +353,8 @@ describe('Sequence', function () {
 // ============================================================================
 // Customer
 // ============================================================================
-describe('Customer', function () {
-    it('can be created with factory', function () {
+describe('Customer', function (): void {
+    it('can be created with factory', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create();
         $customer = Customer::factory()->create([
@@ -367,7 +367,7 @@ describe('Customer', function () {
             ->and($customer->cif_number)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create();
         $customer = Customer::factory()->individual()->create([
@@ -383,7 +383,7 @@ describe('Customer', function () {
             ->and($customer->approved_at)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has branch relationship', function () {
+    it('has branch relationship', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create();
         $customer = Customer::factory()->create([
@@ -395,7 +395,7 @@ describe('Customer', function () {
             ->and($customer->branch->id)->toBe($branch->id);
     });
 
-    it('has individualDetail relationship', function () {
+    it('has individualDetail relationship', function (): void {
         $customer = Customer::factory()->individual()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -404,7 +404,7 @@ describe('Customer', function () {
         expect($customer->individualDetail())->toBeInstanceOf(HasOne::class);
     });
 
-    it('has corporateDetail relationship', function () {
+    it('has corporateDetail relationship', function (): void {
         $customer = Customer::factory()->corporate()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -413,7 +413,7 @@ describe('Customer', function () {
         expect($customer->corporateDetail())->toBeInstanceOf(HasOne::class);
     });
 
-    it('has addresses relationship', function () {
+    it('has addresses relationship', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -422,7 +422,7 @@ describe('Customer', function () {
         expect($customer->addresses())->toBeInstanceOf(HasMany::class);
     });
 
-    it('has phones relationship', function () {
+    it('has phones relationship', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -431,7 +431,7 @@ describe('Customer', function () {
         expect($customer->phones())->toBeInstanceOf(HasMany::class);
     });
 
-    it('has documents relationship', function () {
+    it('has documents relationship', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -440,7 +440,7 @@ describe('Customer', function () {
         expect($customer->documents())->toBeInstanceOf(HasMany::class);
     });
 
-    it('display_name returns individual full_name', function () {
+    it('display_name returns individual full_name', function (): void {
         $customer = Customer::factory()->individual()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -454,7 +454,7 @@ describe('Customer', function () {
         expect($customer->display_name)->toBe('John Doe');
     });
 
-    it('display_name returns corporate company_name', function () {
+    it('display_name returns corporate company_name', function (): void {
         $customer = Customer::factory()->corporate()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -468,7 +468,7 @@ describe('Customer', function () {
         expect($customer->display_name)->toBe('PT Test Corp');
     });
 
-    it('display_name falls back to cif_number', function () {
+    it('display_name falls back to cif_number', function (): void {
         $customer = Customer::factory()->individual()->create([
             'cif_number' => '00100000001',
             'branch_id' => Branch::factory(),
@@ -478,7 +478,7 @@ describe('Customer', function () {
         expect($customer->display_name)->toBe('00100000001');
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create();
         Customer::factory()->create(['status' => CustomerStatus::Active, 'branch_id' => $branch->id, 'created_by' => $user->id]);
@@ -486,10 +486,10 @@ describe('Customer', function () {
 
         $active = Customer::active()->get();
 
-        expect($active->every(fn ($c) => $c->status === CustomerStatus::Active))->toBeTrue();
+        expect($active->every(fn ($c): bool => $c->status === CustomerStatus::Active))->toBeTrue();
     });
 
-    it('scope byType filters correctly', function () {
+    it('scope byType filters correctly', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create();
         Customer::factory()->individual()->create(['branch_id' => $branch->id, 'created_by' => $user->id]);
@@ -497,10 +497,10 @@ describe('Customer', function () {
 
         $individuals = Customer::byType(CustomerType::Individual)->get();
 
-        expect($individuals->every(fn ($c) => $c->customer_type === CustomerType::Individual))->toBeTrue();
+        expect($individuals->every(fn ($c): bool => $c->customer_type === CustomerType::Individual))->toBeTrue();
     });
 
-    it('HasApproval approve works', function () {
+    it('HasApproval approve works', function (): void {
         $creator = User::factory()->create();
         $approver = User::factory()->create();
         $customer = Customer::factory()->pendingApproval()->create([
@@ -514,7 +514,7 @@ describe('Customer', function () {
             ->and($customer->fresh()->approval_status)->toBe(ApprovalStatus::Approved);
     });
 
-    it('HasApproval reject works', function () {
+    it('HasApproval reject works', function (): void {
         $creator = User::factory()->create();
         $approver = User::factory()->create();
         $customer = Customer::factory()->pendingApproval()->create([
@@ -529,7 +529,7 @@ describe('Customer', function () {
             ->and($customer->fresh()->rejection_reason)->toBe('Incomplete documents');
     });
 
-    it('HasApproval cannot self-approve', function () {
+    it('HasApproval cannot self-approve', function (): void {
         $creator = User::factory()->create();
         $customer = Customer::factory()->pendingApproval()->create([
             'branch_id' => Branch::factory(),
@@ -539,7 +539,7 @@ describe('Customer', function () {
         expect($customer->canBeApprovedBy($creator))->toBeFalse();
     });
 
-    it('HasApproval scope pendingApproval works', function () {
+    it('HasApproval scope pendingApproval works', function (): void {
         $branch = Branch::factory()->create();
         $user = User::factory()->create();
         Customer::factory()->pendingApproval()->create(['branch_id' => $branch->id, 'created_by' => $user->id]);
@@ -547,15 +547,15 @@ describe('Customer', function () {
 
         $pending = Customer::pendingApproval()->get();
 
-        expect($pending->every(fn ($c) => $c->approval_status === ApprovalStatus::Pending))->toBeTrue();
+        expect($pending->every(fn ($c): bool => $c->approval_status === ApprovalStatus::Pending))->toBeTrue();
     });
 });
 
 // ============================================================================
 // CustomerAddress
 // ============================================================================
-describe('CustomerAddress', function () {
-    it('can be created', function () {
+describe('CustomerAddress', function (): void {
+    it('can be created', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -575,7 +575,7 @@ describe('CustomerAddress', function () {
             ->and($address->is_primary)->toBeTrue()->toBeBool();
     });
 
-    it('has customer relationship', function () {
+    it('has customer relationship', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -595,8 +595,8 @@ describe('CustomerAddress', function () {
 // ============================================================================
 // CustomerPhone
 // ============================================================================
-describe('CustomerPhone', function () {
-    it('can be created', function () {
+describe('CustomerPhone', function (): void {
+    it('can be created', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -613,7 +613,7 @@ describe('CustomerPhone', function () {
             ->and($phone->is_primary)->toBeTrue()->toBeBool();
     });
 
-    it('has customer relationship', function () {
+    it('has customer relationship', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -633,8 +633,8 @@ describe('CustomerPhone', function () {
 // ============================================================================
 // CustomerDocument
 // ============================================================================
-describe('CustomerDocument', function () {
-    it('can be created', function () {
+describe('CustomerDocument', function (): void {
+    it('can be created', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -655,7 +655,7 @@ describe('CustomerDocument', function () {
             ->and($doc->is_verified)->toBeTrue()->toBeBool();
     });
 
-    it('has customer relationship', function () {
+    it('has customer relationship', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -675,15 +675,15 @@ describe('CustomerDocument', function () {
 // ============================================================================
 // IndividualDetail
 // ============================================================================
-describe('IndividualDetail', function () {
-    it('can be created with factory', function () {
+describe('IndividualDetail', function (): void {
+    it('can be created with factory', function (): void {
         $detail = IndividualDetail::factory()->create();
 
         expect($detail)->toBeInstanceOf(IndividualDetail::class)
             ->and($detail->full_name)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $detail = IndividualDetail::factory()->create([
             'gender' => Gender::Male,
             'marital_status' => MaritalStatus::Single,
@@ -694,7 +694,7 @@ describe('IndividualDetail', function () {
             ->and($detail->birth_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has customer relationship', function () {
+    it('has customer relationship', function (): void {
         $detail = IndividualDetail::factory()->create();
 
         expect($detail->customer())->toBeInstanceOf(BelongsTo::class)
@@ -705,15 +705,15 @@ describe('IndividualDetail', function () {
 // ============================================================================
 // CorporateDetail
 // ============================================================================
-describe('CorporateDetail', function () {
-    it('can be created with factory', function () {
+describe('CorporateDetail', function (): void {
+    it('can be created with factory', function (): void {
         $detail = CorporateDetail::factory()->create();
 
         expect($detail)->toBeInstanceOf(CorporateDetail::class)
             ->and($detail->company_name)->toBeString();
     });
 
-    it('casts correctly', function () {
+    it('casts correctly', function (): void {
         $detail = CorporateDetail::factory()->create([
             'beneficial_owner' => ['name' => 'John'],
             'authorized_persons' => [['name' => 'Jane', 'position' => 'Director']],
@@ -724,7 +724,7 @@ describe('CorporateDetail', function () {
             ->and($detail->authorized_persons)->toBeArray();
     });
 
-    it('has customer relationship', function () {
+    it('has customer relationship', function (): void {
         $detail = CorporateDetail::factory()->create();
 
         expect($detail->customer())->toBeInstanceOf(BelongsTo::class)
@@ -735,15 +735,15 @@ describe('CorporateDetail', function () {
 // ============================================================================
 // SavingsProduct
 // ============================================================================
-describe('SavingsProduct', function () {
-    it('can be created with factory', function () {
+describe('SavingsProduct', function (): void {
+    it('can be created with factory', function (): void {
         $product = SavingsProduct::factory()->create();
 
         expect($product)->toBeInstanceOf(SavingsProduct::class)
             ->and($product->code)->toBeString();
     });
 
-    it('casts enum and decimals correctly', function () {
+    it('casts enum and decimals correctly', function (): void {
         $product = SavingsProduct::factory()->create([
             'interest_calc_method' => InterestCalcMethod::DailyBalance,
         ]);
@@ -753,13 +753,13 @@ describe('SavingsProduct', function () {
             ->and($product->interest_rate)->toBeString(); // decimal:5 returns string
     });
 
-    it('has accounts relationship', function () {
+    it('has accounts relationship', function (): void {
         $product = SavingsProduct::factory()->create();
 
         expect($product->accounts())->toBeInstanceOf(HasMany::class);
     });
 
-    it('has GL relationships', function () {
+    it('has GL relationships', function (): void {
         $gl = ChartOfAccount::factory()->create();
         $product = SavingsProduct::factory()->create(['gl_savings_id' => $gl->id]);
 
@@ -770,7 +770,7 @@ describe('SavingsProduct', function () {
             ->and($product->glTaxPayable())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         SavingsProduct::factory()->create(['is_active' => true]);
         SavingsProduct::factory()->create(['is_active' => false]);
 
@@ -783,15 +783,15 @@ describe('SavingsProduct', function () {
 // ============================================================================
 // SavingsAccount
 // ============================================================================
-describe('SavingsAccount', function () {
-    it('can be created with factory', function () {
+describe('SavingsAccount', function (): void {
+    it('can be created with factory', function (): void {
         $account = SavingsAccount::factory()->create();
 
         expect($account)->toBeInstanceOf(SavingsAccount::class)
             ->and($account->account_number)->toBeString();
     });
 
-    it('casts enum and dates correctly', function () {
+    it('casts enum and dates correctly', function (): void {
         $account = SavingsAccount::factory()->create([
             'status' => SavingsAccountStatus::Active,
         ]);
@@ -800,7 +800,7 @@ describe('SavingsAccount', function () {
             ->and($account->opened_at)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $account = SavingsAccount::factory()->create();
 
         expect($account->customer())->toBeInstanceOf(BelongsTo::class)
@@ -811,25 +811,25 @@ describe('SavingsAccount', function () {
             ->and($account->interestAccruals())->toBeInstanceOf(HasMany::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         SavingsAccount::factory()->create(['status' => SavingsAccountStatus::Active]);
         SavingsAccount::factory()->create(['status' => SavingsAccountStatus::Dormant]);
 
         $active = SavingsAccount::active()->get();
 
-        expect($active->every(fn ($a) => $a->status === SavingsAccountStatus::Active))->toBeTrue();
+        expect($active->every(fn ($a): bool => $a->status === SavingsAccountStatus::Active))->toBeTrue();
     });
 
-    it('scope byStatus filters correctly', function () {
+    it('scope byStatus filters correctly', function (): void {
         SavingsAccount::factory()->create(['status' => SavingsAccountStatus::Dormant]);
         SavingsAccount::factory()->create(['status' => SavingsAccountStatus::Active]);
 
         $dormant = SavingsAccount::byStatus(SavingsAccountStatus::Dormant)->get();
 
-        expect($dormant->every(fn ($a) => $a->status === SavingsAccountStatus::Dormant))->toBeTrue();
+        expect($dormant->every(fn ($a): bool => $a->status === SavingsAccountStatus::Dormant))->toBeTrue();
     });
 
-    it('recalculateAvailableBalance works', function () {
+    it('recalculateAvailableBalance works', function (): void {
         $account = SavingsAccount::factory()->create([
             'balance' => 1000000.00,
             'hold_amount' => 250000.00,
@@ -846,8 +846,8 @@ describe('SavingsAccount', function () {
 // ============================================================================
 // SavingsTransaction
 // ============================================================================
-describe('SavingsTransaction', function () {
-    it('can be created', function () {
+describe('SavingsTransaction', function (): void {
+    it('can be created', function (): void {
         $account = SavingsAccount::factory()->create();
 
         $txn = SavingsTransaction::create([
@@ -870,7 +870,7 @@ describe('SavingsTransaction', function () {
             ->and($txn->transaction_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $account = SavingsAccount::factory()->create();
         $txn = SavingsTransaction::create([
             'reference_number' => 'TXN002',
@@ -894,8 +894,8 @@ describe('SavingsTransaction', function () {
 // ============================================================================
 // SavingsInterestAccrual
 // ============================================================================
-describe('SavingsInterestAccrual', function () {
-    it('can be created', function () {
+describe('SavingsInterestAccrual', function (): void {
+    it('can be created', function (): void {
         $account = SavingsAccount::factory()->create();
 
         $accrual = SavingsInterestAccrual::create([
@@ -913,7 +913,7 @@ describe('SavingsInterestAccrual', function () {
             ->and($accrual->is_posted)->toBeFalse()->toBeBool();
     });
 
-    it('has savingsAccount relationship', function () {
+    it('has savingsAccount relationship', function (): void {
         $account = SavingsAccount::factory()->create();
         $accrual = SavingsInterestAccrual::create([
             'savings_account_id' => $account->id,
@@ -933,21 +933,21 @@ describe('SavingsInterestAccrual', function () {
 // ============================================================================
 // DepositProduct
 // ============================================================================
-describe('DepositProduct', function () {
-    it('can be created with factory', function () {
+describe('DepositProduct', function (): void {
+    it('can be created with factory', function (): void {
         $product = DepositProduct::factory()->create();
 
         expect($product)->toBeInstanceOf(DepositProduct::class)
             ->and($product->code)->toBeString();
     });
 
-    it('casts correctly', function () {
+    it('casts correctly', function (): void {
         $product = DepositProduct::factory()->create();
 
         expect($product->is_active)->toBeBool();
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $product = DepositProduct::factory()->create();
 
         expect($product->rates())->toBeInstanceOf(HasMany::class)
@@ -956,7 +956,7 @@ describe('DepositProduct', function () {
             ->and($product->glInterestExpense())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         DepositProduct::factory()->create(['is_active' => true]);
         DepositProduct::factory()->create(['is_active' => false]);
 
@@ -965,7 +965,7 @@ describe('DepositProduct', function () {
         expect($active->every(fn ($p) => $p->is_active))->toBeTrue();
     });
 
-    it('getRateForTenorAndAmount returns matching rate', function () {
+    it('getRateForTenorAndAmount returns matching rate', function (): void {
         $product = DepositProduct::factory()->create();
         DepositProductRate::create([
             'deposit_product_id' => $product->id,
@@ -982,7 +982,7 @@ describe('DepositProduct', function () {
             ->and($rate->interest_rate)->toBe('5.50000');
     });
 
-    it('getRateForTenorAndAmount returns null when no match', function () {
+    it('getRateForTenorAndAmount returns null when no match', function (): void {
         $product = DepositProduct::factory()->create();
 
         expect($product->getRateForTenorAndAmount(99, 100))->toBeNull();
@@ -992,8 +992,8 @@ describe('DepositProduct', function () {
 // ============================================================================
 // DepositProductRate
 // ============================================================================
-describe('DepositProductRate', function () {
-    it('can be created', function () {
+describe('DepositProductRate', function (): void {
+    it('can be created', function (): void {
         $product = DepositProduct::factory()->create();
 
         $rate = DepositProductRate::create([
@@ -1009,7 +1009,7 @@ describe('DepositProductRate', function () {
             ->and($rate->is_active)->toBeTrue()->toBeBool();
     });
 
-    it('has depositProduct relationship', function () {
+    it('has depositProduct relationship', function (): void {
         $product = DepositProduct::factory()->create();
         $rate = DepositProductRate::create([
             'deposit_product_id' => $product->id,
@@ -1027,15 +1027,15 @@ describe('DepositProductRate', function () {
 // ============================================================================
 // DepositAccount
 // ============================================================================
-describe('DepositAccount', function () {
-    it('can be created with factory', function () {
+describe('DepositAccount', function (): void {
+    it('can be created with factory', function (): void {
         $account = DepositAccount::factory()->create();
 
         expect($account)->toBeInstanceOf(DepositAccount::class)
             ->and($account->account_number)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $account = DepositAccount::factory()->create([
             'status' => DepositStatus::Active,
             'interest_payment_method' => InterestPaymentMethod::Monthly,
@@ -1050,7 +1050,7 @@ describe('DepositAccount', function () {
             ->and($account->maturity_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $account = DepositAccount::factory()->create();
 
         expect($account->customer())->toBeInstanceOf(BelongsTo::class)
@@ -1062,16 +1062,16 @@ describe('DepositAccount', function () {
             ->and($account->interestAccruals())->toBeInstanceOf(HasMany::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         DepositAccount::factory()->create(['status' => DepositStatus::Active]);
         DepositAccount::factory()->create(['status' => DepositStatus::Closed]);
 
         $active = DepositAccount::active()->get();
 
-        expect($active->every(fn ($a) => $a->status === DepositStatus::Active))->toBeTrue();
+        expect($active->every(fn ($a): bool => $a->status === DepositStatus::Active))->toBeTrue();
     });
 
-    it('scope maturing filters correctly', function () {
+    it('scope maturing filters correctly', function (): void {
         DepositAccount::factory()->create([
             'status' => DepositStatus::Active,
             'maturity_date' => now()->subDay(),
@@ -1086,7 +1086,7 @@ describe('DepositAccount', function () {
         expect($maturing)->toHaveCount(1);
     });
 
-    it('isMatured returns true when maturity date is past', function () {
+    it('isMatured returns true when maturity date is past', function (): void {
         $account = DepositAccount::factory()->create([
             'maturity_date' => now()->subDay(),
         ]);
@@ -1094,7 +1094,7 @@ describe('DepositAccount', function () {
         expect($account->isMatured())->toBeTrue();
     });
 
-    it('isMatured returns false when maturity date is future', function () {
+    it('isMatured returns false when maturity date is future', function (): void {
         $account = DepositAccount::factory()->create([
             'maturity_date' => now()->addMonth(),
         ]);
@@ -1102,7 +1102,7 @@ describe('DepositAccount', function () {
         expect($account->isMatured())->toBeFalse();
     });
 
-    it('daysToMaturity returns correct value', function () {
+    it('daysToMaturity returns correct value', function (): void {
         $account = DepositAccount::factory()->create([
             'maturity_date' => now()->addDays(30),
         ]);
@@ -1110,7 +1110,7 @@ describe('DepositAccount', function () {
         expect($account->daysToMaturity())->toBe(30);
     });
 
-    it('daysToMaturity returns 0 for past dates', function () {
+    it('daysToMaturity returns 0 for past dates', function (): void {
         $account = DepositAccount::factory()->create([
             'maturity_date' => now()->subDays(10),
         ]);
@@ -1122,8 +1122,8 @@ describe('DepositAccount', function () {
 // ============================================================================
 // DepositTransaction
 // ============================================================================
-describe('DepositTransaction', function () {
-    it('can be created', function () {
+describe('DepositTransaction', function (): void {
+    it('can be created', function (): void {
         $account = DepositAccount::factory()->create();
 
         $txn = DepositTransaction::create([
@@ -1140,7 +1140,7 @@ describe('DepositTransaction', function () {
             ->and($txn->transaction_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $account = DepositAccount::factory()->create();
         $txn = DepositTransaction::create([
             'reference_number' => 'DTXN002',
@@ -1159,8 +1159,8 @@ describe('DepositTransaction', function () {
 // ============================================================================
 // DepositInterestAccrual
 // ============================================================================
-describe('DepositInterestAccrual', function () {
-    it('can be created', function () {
+describe('DepositInterestAccrual', function (): void {
+    it('can be created', function (): void {
         $account = DepositAccount::factory()->create();
 
         $accrual = DepositInterestAccrual::create([
@@ -1179,7 +1179,7 @@ describe('DepositInterestAccrual', function () {
             ->and($accrual->is_posted)->toBeTrue()->toBeBool();
     });
 
-    it('has depositAccount relationship', function () {
+    it('has depositAccount relationship', function (): void {
         $account = DepositAccount::factory()->create();
         $accrual = DepositInterestAccrual::create([
             'deposit_account_id' => $account->id,
@@ -1199,15 +1199,15 @@ describe('DepositInterestAccrual', function () {
 // ============================================================================
 // JournalEntry
 // ============================================================================
-describe('JournalEntry', function () {
-    it('can be created with factory', function () {
+describe('JournalEntry', function (): void {
+    it('can be created with factory', function (): void {
         $journal = JournalEntry::factory()->create();
 
         expect($journal)->toBeInstanceOf(JournalEntry::class)
             ->and($journal->journal_number)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $journal = JournalEntry::factory()->create([
             'source' => JournalSource::Manual,
             'status' => JournalStatus::Draft,
@@ -1219,7 +1219,7 @@ describe('JournalEntry', function () {
             ->and($journal->journal_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $journal = JournalEntry::factory()->create();
 
         expect($journal->lines())->toBeInstanceOf(HasMany::class)
@@ -1228,25 +1228,25 @@ describe('JournalEntry', function () {
             ->and($journal->reversalJournal())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('scope posted filters correctly', function () {
+    it('scope posted filters correctly', function (): void {
         JournalEntry::factory()->posted()->create();
         JournalEntry::factory()->create(['status' => JournalStatus::Draft]);
 
         $posted = JournalEntry::posted()->get();
 
-        expect($posted->every(fn ($j) => $j->status === JournalStatus::Posted))->toBeTrue();
+        expect($posted->every(fn ($j): bool => $j->status === JournalStatus::Posted))->toBeTrue();
     });
 
-    it('scope bySource filters correctly', function () {
+    it('scope bySource filters correctly', function (): void {
         JournalEntry::factory()->create(['source' => JournalSource::Manual]);
         JournalEntry::factory()->create(['source' => JournalSource::System]);
 
         $manual = JournalEntry::bySource(JournalSource::Manual)->get();
 
-        expect($manual->every(fn ($j) => $j->source === JournalSource::Manual))->toBeTrue();
+        expect($manual->every(fn ($j): bool => $j->source === JournalSource::Manual))->toBeTrue();
     });
 
-    it('scope byDateRange filters correctly', function () {
+    it('scope byDateRange filters correctly', function (): void {
         JournalEntry::factory()->create(['journal_date' => '2026-03-01']);
         JournalEntry::factory()->create(['journal_date' => '2026-04-15']);
 
@@ -1255,7 +1255,7 @@ describe('JournalEntry', function () {
         expect($range)->toHaveCount(1);
     });
 
-    it('isBalanced returns true when debits equal credits', function () {
+    it('isBalanced returns true when debits equal credits', function (): void {
         $journal = JournalEntry::factory()->create([
             'total_debit' => 1000000,
             'total_credit' => 1000000,
@@ -1264,7 +1264,7 @@ describe('JournalEntry', function () {
         expect($journal->isBalanced())->toBeTrue();
     });
 
-    it('isBalanced returns false when debits do not equal credits', function () {
+    it('isBalanced returns false when debits do not equal credits', function (): void {
         $journal = JournalEntry::factory()->create([
             'total_debit' => 1000000,
             'total_credit' => 999999,
@@ -1273,25 +1273,25 @@ describe('JournalEntry', function () {
         expect($journal->isBalanced())->toBeFalse();
     });
 
-    it('isDraft returns true for draft status', function () {
+    it('isDraft returns true for draft status', function (): void {
         $journal = JournalEntry::factory()->create(['status' => JournalStatus::Draft]);
 
         expect($journal->isDraft())->toBeTrue();
     });
 
-    it('isPosted returns true for posted status', function () {
+    it('isPosted returns true for posted status', function (): void {
         $journal = JournalEntry::factory()->posted()->create();
 
         expect($journal->isPosted())->toBeTrue();
     });
 
-    it('isReversed returns true for reversed status', function () {
+    it('isReversed returns true for reversed status', function (): void {
         $journal = JournalEntry::factory()->create(['status' => JournalStatus::Reversed]);
 
         expect($journal->isReversed())->toBeTrue();
     });
 
-    it('recalculateTotals sums lines', function () {
+    it('recalculateTotals sums lines', function (): void {
         $journal = JournalEntry::factory()->create([
             'total_debit' => 0,
             'total_credit' => 0,
@@ -1323,8 +1323,8 @@ describe('JournalEntry', function () {
 // ============================================================================
 // JournalEntryLine
 // ============================================================================
-describe('JournalEntryLine', function () {
-    it('can be created', function () {
+describe('JournalEntryLine', function (): void {
+    it('can be created', function (): void {
         $journal = JournalEntry::factory()->create();
         $coa = ChartOfAccount::factory()->create();
 
@@ -1339,7 +1339,7 @@ describe('JournalEntryLine', function () {
         expect($line)->toBeInstanceOf(JournalEntryLine::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $journal = JournalEntry::factory()->create();
         $coa = ChartOfAccount::factory()->create();
         $line = JournalEntryLine::create([
@@ -1359,8 +1359,8 @@ describe('JournalEntryLine', function () {
 // ============================================================================
 // GlBalance
 // ============================================================================
-describe('GlBalance', function () {
-    it('can be created', function () {
+describe('GlBalance', function (): void {
+    it('can be created', function (): void {
         $coa = ChartOfAccount::factory()->create();
         $branch = Branch::factory()->create();
 
@@ -1378,7 +1378,7 @@ describe('GlBalance', function () {
         expect($balance)->toBeInstanceOf(GlBalance::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $coa = ChartOfAccount::factory()->create();
         $branch = Branch::factory()->create();
         $balance = GlBalance::create([
@@ -1397,7 +1397,7 @@ describe('GlBalance', function () {
             ->and($balance->chartOfAccount->id)->toBe($coa->id);
     });
 
-    it('scope forPeriod filters correctly', function () {
+    it('scope forPeriod filters correctly', function (): void {
         $coa = ChartOfAccount::factory()->create();
         $branch = Branch::factory()->create();
         GlBalance::create([
@@ -1424,8 +1424,8 @@ describe('GlBalance', function () {
 // ============================================================================
 // GlDailyBalance
 // ============================================================================
-describe('GlDailyBalance', function () {
-    it('can be created', function () {
+describe('GlDailyBalance', function (): void {
+    it('can be created', function (): void {
         $coa = ChartOfAccount::factory()->create();
         $branch = Branch::factory()->create();
 
@@ -1443,7 +1443,7 @@ describe('GlDailyBalance', function () {
             ->and($balance->balance_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $coa = ChartOfAccount::factory()->create();
         $branch = Branch::factory()->create();
         $balance = GlDailyBalance::create([
@@ -1457,7 +1457,7 @@ describe('GlDailyBalance', function () {
             ->and($balance->branch())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('scope forDate filters correctly', function () {
+    it('scope forDate filters correctly', function (): void {
         $coa = ChartOfAccount::factory()->create();
         $branch = Branch::factory()->create();
         GlDailyBalance::create([
@@ -1480,15 +1480,15 @@ describe('GlDailyBalance', function () {
 // ============================================================================
 // LoanProduct
 // ============================================================================
-describe('LoanProduct', function () {
-    it('can be created with factory', function () {
+describe('LoanProduct', function (): void {
+    it('can be created with factory', function (): void {
         $product = LoanProduct::factory()->create();
 
         expect($product)->toBeInstanceOf(LoanProduct::class)
             ->and($product->code)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $product = LoanProduct::factory()->create([
             'loan_type' => LoanType::Kmk,
             'interest_type' => InterestType::Flat,
@@ -1499,7 +1499,7 @@ describe('LoanProduct', function () {
             ->and($product->is_active)->toBeBool();
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $product = LoanProduct::factory()->create();
 
         expect($product->accounts())->toBeInstanceOf(HasMany::class)
@@ -1508,7 +1508,7 @@ describe('LoanProduct', function () {
             ->and($product->glInterestIncome())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         LoanProduct::factory()->create(['is_active' => true]);
         LoanProduct::factory()->create(['is_active' => false]);
 
@@ -1521,8 +1521,8 @@ describe('LoanProduct', function () {
 // ============================================================================
 // LoanApplication
 // ============================================================================
-describe('LoanApplication', function () {
-    it('can be created with factory', function () {
+describe('LoanApplication', function (): void {
+    it('can be created with factory', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -1541,7 +1541,7 @@ describe('LoanApplication', function () {
             ->and($app->application_number)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $app = LoanApplication::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1555,7 +1555,7 @@ describe('LoanApplication', function () {
         expect($app->status)->toBe(LoanApplicationStatus::Submitted);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $app = LoanApplication::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1575,7 +1575,7 @@ describe('LoanApplication', function () {
             ->and($app->collaterals())->toBeInstanceOf(HasMany::class);
     });
 
-    it('scope pending filters correctly', function () {
+    it('scope pending filters correctly', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -1595,7 +1595,7 @@ describe('LoanApplication', function () {
 
         $pending = LoanApplication::pending()->get();
 
-        expect($pending->every(fn ($a) => in_array($a->status, [
+        expect($pending->every(fn ($a): bool => in_array($a->status, [
             LoanApplicationStatus::Submitted,
             LoanApplicationStatus::UnderReview,
         ])))->toBeTrue();
@@ -1605,8 +1605,8 @@ describe('LoanApplication', function () {
 // ============================================================================
 // LoanSchedule
 // ============================================================================
-describe('LoanSchedule', function () {
-    it('can be created with factory', function () {
+describe('LoanSchedule', function (): void {
+    it('can be created with factory', function (): void {
         $schedule = LoanSchedule::factory()->create();
 
         expect($schedule)->toBeInstanceOf(LoanSchedule::class)
@@ -1614,13 +1614,13 @@ describe('LoanSchedule', function () {
             ->and($schedule->is_paid)->toBeBool();
     });
 
-    it('has loanAccount relationship', function () {
+    it('has loanAccount relationship', function (): void {
         $schedule = LoanSchedule::factory()->create();
 
         expect($schedule->loanAccount())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('getRemainingPrincipal calculates correctly', function () {
+    it('getRemainingPrincipal calculates correctly', function (): void {
         $schedule = LoanSchedule::factory()->create([
             'principal_amount' => 1000000,
             'principal_paid' => 400000,
@@ -1629,7 +1629,7 @@ describe('LoanSchedule', function () {
         expect($schedule->getRemainingPrincipal())->toBe(600000.00);
     });
 
-    it('getRemainingInterest calculates correctly', function () {
+    it('getRemainingInterest calculates correctly', function (): void {
         $schedule = LoanSchedule::factory()->create([
             'interest_amount' => 100000,
             'interest_paid' => 60000,
@@ -1638,19 +1638,19 @@ describe('LoanSchedule', function () {
         expect($schedule->getRemainingInterest())->toBe(40000.00);
     });
 
-    it('isOverdue returns true for past unpaid', function () {
+    it('isOverdue returns true for past unpaid', function (): void {
         $schedule = LoanSchedule::factory()->overdue()->create();
 
         expect($schedule->isOverdue())->toBeTrue();
     });
 
-    it('isOverdue returns false for paid schedules', function () {
+    it('isOverdue returns false for paid schedules', function (): void {
         $schedule = LoanSchedule::factory()->paid()->create();
 
         expect($schedule->isOverdue())->toBeFalse();
     });
 
-    it('isOverdue returns false for future unpaid', function () {
+    it('isOverdue returns false for future unpaid', function (): void {
         $schedule = LoanSchedule::factory()->create([
             'due_date' => now()->addMonth(),
             'is_paid' => false,
@@ -1663,8 +1663,8 @@ describe('LoanSchedule', function () {
 // ============================================================================
 // LoanPayment
 // ============================================================================
-describe('LoanPayment', function () {
-    it('can be created', function () {
+describe('LoanPayment', function (): void {
+    it('can be created', function (): void {
         $loanAccount = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1691,7 +1691,7 @@ describe('LoanPayment', function () {
             ->and($payment->payment_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $loanAccount = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1721,8 +1721,8 @@ describe('LoanPayment', function () {
 // ============================================================================
 // LoanCollateral
 // ============================================================================
-describe('LoanCollateral', function () {
-    it('can be created', function () {
+describe('LoanCollateral', function (): void {
+    it('can be created', function (): void {
         $app = LoanApplication::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1747,7 +1747,7 @@ describe('LoanCollateral', function () {
             ->and($collateral->collateral_type)->toBe(CollateralType::Land);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $app = LoanApplication::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1772,8 +1772,8 @@ describe('LoanCollateral', function () {
 // ============================================================================
 // LoanAccount
 // ============================================================================
-describe('LoanAccount', function () {
-    it('can be created with factory', function () {
+describe('LoanAccount', function (): void {
+    it('can be created with factory', function (): void {
         $account = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1787,7 +1787,7 @@ describe('LoanAccount', function () {
             ->and($account->account_number)->toBeString();
     });
 
-    it('casts enums correctly', function () {
+    it('casts enums correctly', function (): void {
         $account = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1805,7 +1805,7 @@ describe('LoanAccount', function () {
             ->and($account->maturity_date)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $account = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1827,7 +1827,7 @@ describe('LoanAccount', function () {
             ->and($account->collaterals())->toBeInstanceOf(HasMany::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -1837,10 +1837,10 @@ describe('LoanAccount', function () {
 
         $active = LoanAccount::active()->get();
 
-        expect($active->every(fn ($a) => in_array($a->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue])))->toBeTrue();
+        expect($active->every(fn ($a): bool => in_array($a->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue])))->toBeTrue();
     });
 
-    it('scope byCollectibility filters correctly', function () {
+    it('scope byCollectibility filters correctly', function (): void {
         $customer = Customer::factory()->create([
             'branch_id' => Branch::factory(),
             'created_by' => User::factory(),
@@ -1850,10 +1850,10 @@ describe('LoanAccount', function () {
 
         $current = LoanAccount::byCollectibility(Collectibility::Current)->get();
 
-        expect($current->every(fn ($a) => $a->collectibility === Collectibility::Current))->toBeTrue();
+        expect($current->every(fn ($a): bool => $a->collectibility === Collectibility::Current))->toBeTrue();
     });
 
-    it('getNextUnpaidSchedule returns earliest unpaid', function () {
+    it('getNextUnpaidSchedule returns earliest unpaid', function (): void {
         $account = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1872,7 +1872,7 @@ describe('LoanAccount', function () {
             ->and($next->installment_number)->toBe(2);
     });
 
-    it('getNextUnpaidSchedule returns null when all paid', function () {
+    it('getNextUnpaidSchedule returns null when all paid', function (): void {
         $account = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1886,7 +1886,7 @@ describe('LoanAccount', function () {
         expect($account->getNextUnpaidSchedule())->toBeNull();
     });
 
-    it('getOverdueSchedules returns past due unpaid schedules', function () {
+    it('getOverdueSchedules returns past due unpaid schedules', function (): void {
         $account = LoanAccount::factory()->create([
             'customer_id' => Customer::factory()->create([
                 'branch_id' => Branch::factory(),
@@ -1909,21 +1909,21 @@ describe('LoanAccount', function () {
 // ============================================================================
 // Vault
 // ============================================================================
-describe('Vault', function () {
-    it('can be created with factory', function () {
+describe('Vault', function (): void {
+    it('can be created with factory', function (): void {
         $vault = Vault::factory()->create();
 
         expect($vault)->toBeInstanceOf(Vault::class)
             ->and($vault->code)->toBeString();
     });
 
-    it('casts correctly', function () {
+    it('casts correctly', function (): void {
         $vault = Vault::factory()->create();
 
         expect($vault->is_active)->toBeBool();
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $vault = Vault::factory()->create();
 
         expect($vault->branch())->toBeInstanceOf(BelongsTo::class)
@@ -1932,7 +1932,7 @@ describe('Vault', function () {
             ->and($vault->tellerSessions())->toBeInstanceOf(HasMany::class);
     });
 
-    it('scope active filters correctly', function () {
+    it('scope active filters correctly', function (): void {
         Vault::factory()->create(['is_active' => true]);
         Vault::factory()->inactive()->create();
 
@@ -1945,8 +1945,8 @@ describe('Vault', function () {
 // ============================================================================
 // VaultTransaction
 // ============================================================================
-describe('VaultTransaction', function () {
-    it('can be created', function () {
+describe('VaultTransaction', function (): void {
+    it('can be created', function (): void {
         $vault = Vault::factory()->create();
         $user = User::factory()->create();
 
@@ -1966,7 +1966,7 @@ describe('VaultTransaction', function () {
             ->and($txn->transaction_type)->toBe(VaultTransactionType::CashIn);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $vault = Vault::factory()->create();
         $user = User::factory()->create();
         $approver = User::factory()->create();
@@ -1993,14 +1993,14 @@ describe('VaultTransaction', function () {
 // ============================================================================
 // TellerSession
 // ============================================================================
-describe('TellerSession', function () {
-    it('can be created with factory', function () {
+describe('TellerSession', function (): void {
+    it('can be created with factory', function (): void {
         $session = TellerSession::factory()->create();
 
         expect($session)->toBeInstanceOf(TellerSession::class);
     });
 
-    it('casts enum and datetimes correctly', function () {
+    it('casts enum and datetimes correctly', function (): void {
         $session = TellerSession::factory()->create([
             'status' => TellerSessionStatus::Open,
         ]);
@@ -2009,7 +2009,7 @@ describe('TellerSession', function () {
             ->and($session->opened_at)->toBeInstanceOf(Carbon::class);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $session = TellerSession::factory()->create();
 
         expect($session->user())->toBeInstanceOf(BelongsTo::class)
@@ -2018,43 +2018,43 @@ describe('TellerSession', function () {
             ->and($session->transactions())->toBeInstanceOf(HasMany::class);
     });
 
-    it('isOpen returns true for open sessions', function () {
+    it('isOpen returns true for open sessions', function (): void {
         $session = TellerSession::factory()->create(['status' => TellerSessionStatus::Open]);
 
         expect($session->isOpen())->toBeTrue();
     });
 
-    it('isOpen returns false for closed sessions', function () {
+    it('isOpen returns false for closed sessions', function (): void {
         $session = TellerSession::factory()->closed()->create();
 
         expect($session->isOpen())->toBeFalse();
     });
 
-    it('scope open filters correctly', function () {
+    it('scope open filters correctly', function (): void {
         TellerSession::factory()->create(['status' => TellerSessionStatus::Open]);
         TellerSession::factory()->closed()->create();
 
         $open = TellerSession::open()->get();
 
-        expect($open->every(fn ($s) => $s->status === TellerSessionStatus::Open))->toBeTrue();
+        expect($open->every(fn ($s): bool => $s->status === TellerSessionStatus::Open))->toBeTrue();
     });
 
-    it('scope forUser filters correctly', function () {
+    it('scope forUser filters correctly', function (): void {
         $user = User::factory()->create();
         TellerSession::factory()->create(['user_id' => $user->id]);
         TellerSession::factory()->create();
 
         $sessions = TellerSession::forUser($user->id)->get();
 
-        expect($sessions->every(fn ($s) => $s->user_id === $user->id))->toBeTrue();
+        expect($sessions->every(fn ($s): bool => $s->user_id === $user->id))->toBeTrue();
     });
 });
 
 // ============================================================================
 // TellerTransaction
 // ============================================================================
-describe('TellerTransaction', function () {
-    it('can be created', function () {
+describe('TellerTransaction', function (): void {
+    it('can be created', function (): void {
         $session = TellerSession::factory()->create();
 
         $txn = TellerTransaction::create([
@@ -2077,7 +2077,7 @@ describe('TellerTransaction', function () {
             ->and($txn->needs_authorization)->toBeFalse()->toBeBool();
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $session = TellerSession::factory()->create();
         $txn = TellerTransaction::create([
             'reference_number' => 'TT002',
@@ -2099,7 +2099,7 @@ describe('TellerTransaction', function () {
             ->and($txn->reversedBy())->toBeInstanceOf(BelongsTo::class);
     });
 
-    it('isCashIn returns true for in direction', function () {
+    it('isCashIn returns true for in direction', function (): void {
         $session = TellerSession::factory()->create();
         $txn = TellerTransaction::create([
             'reference_number' => 'TT003',
@@ -2118,7 +2118,7 @@ describe('TellerTransaction', function () {
             ->and($txn->isCashOut())->toBeFalse();
     });
 
-    it('isCashOut returns true for out direction', function () {
+    it('isCashOut returns true for out direction', function (): void {
         $session = TellerSession::factory()->create();
         $txn = TellerTransaction::create([
             'reference_number' => 'TT004',
@@ -2141,8 +2141,8 @@ describe('TellerTransaction', function () {
 // ============================================================================
 // EodProcess
 // ============================================================================
-describe('EodProcess', function () {
-    it('can be created', function () {
+describe('EodProcess', function (): void {
+    it('can be created', function (): void {
         $user = User::factory()->create();
 
         $eod = EodProcess::create([
@@ -2158,7 +2158,7 @@ describe('EodProcess', function () {
             ->and($eod->status)->toBe(EodStatus::Pending);
     });
 
-    it('has relationships', function () {
+    it('has relationships', function (): void {
         $user = User::factory()->create();
         $eod = EodProcess::create([
             'process_date' => now(),
@@ -2173,7 +2173,7 @@ describe('EodProcess', function () {
             ->and($eod->startedBy->id)->toBe($user->id);
     });
 
-    it('isRunning returns true for running status', function () {
+    it('isRunning returns true for running status', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Running,
@@ -2187,7 +2187,7 @@ describe('EodProcess', function () {
             ->and($eod->isCompleted())->toBeFalse();
     });
 
-    it('isCompleted returns true for completed status', function () {
+    it('isCompleted returns true for completed status', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Completed,
@@ -2202,7 +2202,7 @@ describe('EodProcess', function () {
             ->and($eod->isRunning())->toBeFalse();
     });
 
-    it('progressPercentage calculates correctly', function () {
+    it('progressPercentage calculates correctly', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Running,
@@ -2214,7 +2214,7 @@ describe('EodProcess', function () {
         expect($eod->progressPercentage())->toBe(70);
     });
 
-    it('progressPercentage returns 0 when total_steps is 0', function () {
+    it('progressPercentage returns 0 when total_steps is 0', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Pending,
@@ -2226,7 +2226,7 @@ describe('EodProcess', function () {
         expect($eod->progressPercentage())->toBe(0);
     });
 
-    it('progressPercentage returns 100 when complete', function () {
+    it('progressPercentage returns 100 when complete', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Completed,
@@ -2242,8 +2242,8 @@ describe('EodProcess', function () {
 // ============================================================================
 // EodProcessStep
 // ============================================================================
-describe('EodProcessStep', function () {
-    it('can be created', function () {
+describe('EodProcessStep', function (): void {
+    it('can be created', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Running,
@@ -2270,7 +2270,7 @@ describe('EodProcessStep', function () {
             ->and($step->metadata)->toBeArray();
     });
 
-    it('has eodProcess relationship', function () {
+    it('has eodProcess relationship', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Running,
@@ -2289,7 +2289,7 @@ describe('EodProcessStep', function () {
             ->and($step->eodProcess->id)->toBe($eod->id);
     });
 
-    it('durationInSeconds calculates correctly', function () {
+    it('durationInSeconds calculates correctly', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Running,
@@ -2309,7 +2309,7 @@ describe('EodProcessStep', function () {
         expect($step->durationInSeconds())->toBe(120);
     });
 
-    it('durationInSeconds returns null when incomplete', function () {
+    it('durationInSeconds returns null when incomplete', function (): void {
         $eod = EodProcess::create([
             'process_date' => now(),
             'status' => EodStatus::Running,

@@ -32,16 +32,25 @@ class LoanPayment extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<LoanAccount, $this>
+     */
     public function loanAccount(): BelongsTo
     {
         return $this->belongsTo(LoanAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');
     }
 
+    /**
+     * @return BelongsTo<JournalEntry, $this>
+     */
     public function journalEntry(): BelongsTo
     {
         return $this->belongsTo(JournalEntry::class);

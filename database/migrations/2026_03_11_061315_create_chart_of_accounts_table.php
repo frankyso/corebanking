@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('chart_of_accounts', function (Blueprint $table) {
+        Schema::create('chart_of_accounts', function (Blueprint $table): void {
             $table->id();
             $table->string('account_code', 12)->unique();
             $table->string('account_name', 150);

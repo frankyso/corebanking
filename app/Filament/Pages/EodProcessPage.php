@@ -78,9 +78,9 @@ class EodProcessPage extends Page
                 ->color('primary')
                 ->requiresConfirmation()
                 ->modalHeading('Jalankan End of Day')
-                ->modalDescription(fn () => "Jalankan proses EOD untuk tanggal {$this->processDate}?")
-                ->visible(fn () => ! $this->currentProcess || $this->currentProcess->status === EodStatus::Failed)
-                ->action(function () {
+                ->modalDescription(fn (): string => "Jalankan proses EOD untuk tanggal {$this->processDate}?")
+                ->visible(fn (): bool => ! $this->currentProcess || $this->currentProcess->status === EodStatus::Failed)
+                ->action(function (): void {
                     try {
                         $process = app(EodService::class)->run(
                             processDate: Carbon::parse($this->processDate),

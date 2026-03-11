@@ -30,11 +30,17 @@ class EodProcess extends Model
         ];
     }
 
+    /**
+     * @return HasMany<EodProcessStep, $this>
+     */
     public function steps(): HasMany
     {
         return $this->hasMany(EodProcessStep::class)->orderBy('step_number');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function startedBy(): BelongsTo
     {
         return $this->belongsTo(User::class, 'started_by');

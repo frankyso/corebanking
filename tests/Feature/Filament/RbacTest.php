@@ -20,14 +20,14 @@ use Livewire\Livewire;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->branch = Branch::factory()->create();
     $this->otherBranch = Branch::factory()->create();
 });
 
 // ─── Role-based Menu Visibility ──────────────────────────────────────────
 
-it('denies access to teller dashboard without teller permission', function () {
+it('denies access to teller dashboard without teller permission', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'LoanOfficer', 'guard_name' => 'web']);
     Permission::firstOrCreate(['name' => 'loan-application.view', 'guard_name' => 'web']);
@@ -40,7 +40,7 @@ it('denies access to teller dashboard without teller permission', function () {
         ->assertForbidden();
 });
 
-it('allows teller to access teller dashboard', function () {
+it('allows teller to access teller dashboard', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'Teller', 'guard_name' => 'web']);
     Permission::firstOrCreate(['name' => 'teller.open-session', 'guard_name' => 'web']);
@@ -53,7 +53,7 @@ it('allows teller to access teller dashboard', function () {
         ->assertOk();
 });
 
-it('denies access to eod page without eod permission', function () {
+it('denies access to eod page without eod permission', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'Teller', 'guard_name' => 'web']);
     Permission::firstOrCreate(['name' => 'teller.open-session', 'guard_name' => 'web']);
@@ -66,7 +66,7 @@ it('denies access to eod page without eod permission', function () {
         ->assertForbidden();
 });
 
-it('denies access to report pages without report permission', function () {
+it('denies access to report pages without report permission', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'Teller', 'guard_name' => 'web']);
     Permission::firstOrCreate(['name' => 'teller.open-session', 'guard_name' => 'web']);
@@ -79,7 +79,7 @@ it('denies access to report pages without report permission', function () {
     Livewire::test(BalanceSheetPage::class)->assertForbidden();
 });
 
-it('denies access to resource list without view permission', function () {
+it('denies access to resource list without view permission', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'LimitedRole', 'guard_name' => 'web']);
     $user->assignRole($role);
@@ -89,7 +89,7 @@ it('denies access to resource list without view permission', function () {
     Livewire::test(ListBranches::class)->assertForbidden();
 });
 
-it('allows superadmin to access all pages', function () {
+it('allows superadmin to access all pages', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
     $user->assignRole($role);
@@ -107,7 +107,7 @@ it('allows superadmin to access all pages', function () {
 
 // ─── Branch-scoped Data Filtering ────────────────────────────────────────
 
-it('filters customers by branch for non-admin users', function () {
+it('filters customers by branch for non-admin users', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'CustomerService', 'guard_name' => 'web']);
     Permission::firstOrCreate(['name' => 'customer.view', 'guard_name' => 'web']);
@@ -128,7 +128,7 @@ it('filters customers by branch for non-admin users', function () {
 
 // ─── Dashboard Widgets ──────────────────────────────────────────────────
 
-it('can render bank overview widget', function () {
+it('can render bank overview widget', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
     $user->assignRole($role);
@@ -139,7 +139,7 @@ it('can render bank overview widget', function () {
         ->assertOk();
 });
 
-it('can render npl ratio widget', function () {
+it('can render npl ratio widget', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
     $user->assignRole($role);
@@ -150,7 +150,7 @@ it('can render npl ratio widget', function () {
         ->assertOk();
 });
 
-it('can render loan portfolio chart widget', function () {
+it('can render loan portfolio chart widget', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
     $user->assignRole($role);
@@ -161,7 +161,7 @@ it('can render loan portfolio chart widget', function () {
         ->assertOk();
 });
 
-it('can render pending approvals widget', function () {
+it('can render pending approvals widget', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
     $user->assignRole($role);
@@ -174,7 +174,7 @@ it('can render pending approvals widget', function () {
 
 // ─── View Pages with Infolist ────────────────────────────────────────────
 
-it('can render loan application view page with infolist', function () {
+it('can render loan application view page with infolist', function (): void {
     $user = User::factory()->create(['branch_id' => $this->branch->id, 'is_active' => true]);
     $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
     $user->assignRole($role);

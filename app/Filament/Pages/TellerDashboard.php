@@ -73,8 +73,8 @@ class TellerDashboard extends Page
                         ->required()
                         ->minValue(0),
                 ])
-                ->visible(fn () => ! $this->activeSession)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => ! $this->activeSession)
+                ->action(function (array $data): void {
                     try {
                         $vault = Vault::findOrFail($data['vault_id']);
                         app(TellerService::class)->openSession(
@@ -98,13 +98,13 @@ class TellerDashboard extends Page
                         ->label('Catatan Penutupan')
                         ->rows(3),
                 ])
-                ->visible(fn () => (bool) $this->activeSession)
+                ->visible(fn (): bool => (bool) $this->activeSession)
                 ->requiresConfirmation()
                 ->modalHeading('Tutup Sesi Teller')
-                ->modalDescription(fn () => $this->activeSession
+                ->modalDescription(fn (): string => $this->activeSession
                     ? 'Saldo kas saat ini: Rp '.number_format((float) $this->activeSession->current_balance, 0, ',', '.').'. Kas akan dikembalikan ke vault.'
                     : '')
-                ->action(function (array $data) {
+                ->action(function (array $data): void {
                     try {
                         app(TellerService::class)->closeSession(
                             session: $this->activeSession,
@@ -126,7 +126,7 @@ class TellerDashboard extends Page
                     Select::make('savings_account_id')
                         ->label('Rekening Tabungan')
                         ->options(SavingsAccount::query()->active()->with('customer')->get()->mapWithKeys(
-                            fn (SavingsAccount $acc) => [$acc->id => "{$acc->account_number} - {$acc->customer?->display_name}"]
+                            fn (SavingsAccount $acc): array => [$acc->id => "{$acc->account_number} - {$acc->customer?->display_name}"]
                         ))
                         ->searchable()
                         ->required(),
@@ -140,8 +140,8 @@ class TellerDashboard extends Page
                         ->label('Keterangan')
                         ->maxLength(255),
                 ])
-                ->visible(fn () => (bool) $this->activeSession)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => (bool) $this->activeSession)
+                ->action(function (array $data): void {
                     try {
                         $account = SavingsAccount::findOrFail($data['savings_account_id']);
                         app(TellerService::class)->processDeposit(
@@ -166,7 +166,7 @@ class TellerDashboard extends Page
                     Select::make('savings_account_id')
                         ->label('Rekening Tabungan')
                         ->options(SavingsAccount::query()->active()->with('customer')->get()->mapWithKeys(
-                            fn (SavingsAccount $acc) => [$acc->id => "{$acc->account_number} - {$acc->customer?->display_name}"]
+                            fn (SavingsAccount $acc): array => [$acc->id => "{$acc->account_number} - {$acc->customer?->display_name}"]
                         ))
                         ->searchable()
                         ->required(),
@@ -180,8 +180,8 @@ class TellerDashboard extends Page
                         ->label('Keterangan')
                         ->maxLength(255),
                 ])
-                ->visible(fn () => (bool) $this->activeSession)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => (bool) $this->activeSession)
+                ->action(function (array $data): void {
                     try {
                         $account = SavingsAccount::findOrFail($data['savings_account_id']);
                         app(TellerService::class)->processWithdrawal(
@@ -206,7 +206,7 @@ class TellerDashboard extends Page
                     Select::make('loan_account_id')
                         ->label('Rekening Kredit')
                         ->options(LoanAccount::query()->active()->with('customer')->get()->mapWithKeys(
-                            fn (LoanAccount $acc) => [$acc->id => "{$acc->account_number} - {$acc->customer?->display_name}"]
+                            fn (LoanAccount $acc): array => [$acc->id => "{$acc->account_number} - {$acc->customer?->display_name}"]
                         ))
                         ->searchable()
                         ->required(),
@@ -220,8 +220,8 @@ class TellerDashboard extends Page
                         ->label('Keterangan')
                         ->maxLength(255),
                 ])
-                ->visible(fn () => (bool) $this->activeSession)
-                ->action(function (array $data) {
+                ->visible(fn (): bool => (bool) $this->activeSession)
+                ->action(function (array $data): void {
                     try {
                         $loanAccount = LoanAccount::findOrFail($data['loan_account_id']);
                         app(TellerService::class)->processLoanPayment(

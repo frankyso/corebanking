@@ -77,7 +77,7 @@ use App\Models\Vault;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->branch = Branch::factory()->create();
     $this->user = User::factory()->create([
         'branch_id' => $this->branch->id,
@@ -90,17 +90,17 @@ beforeEach(function () {
 
 // ─── BranchResource ─────────────────────────────────────────────────────────
 
-it('can render branch list page', function () {
+it('can render branch list page', function (): void {
     Livewire::test(ListBranches::class)
         ->assertOk();
 });
 
-it('can render branch create page', function () {
+it('can render branch create page', function (): void {
     Livewire::test(CreateBranch::class)
         ->assertOk();
 });
 
-it('can render branch edit page', function () {
+it('can render branch edit page', function (): void {
     $branch = Branch::factory()->create();
 
     Livewire::test(EditBranch::class, ['record' => $branch->getRouteKey()])
@@ -109,17 +109,17 @@ it('can render branch edit page', function () {
 
 // ─── HolidayResource ────────────────────────────────────────────────────────
 
-it('can render holiday list page', function () {
+it('can render holiday list page', function (): void {
     Livewire::test(ListHolidays::class)
         ->assertOk();
 });
 
-it('can render holiday create page', function () {
+it('can render holiday create page', function (): void {
     Livewire::test(CreateHoliday::class)
         ->assertOk();
 });
 
-it('can render holiday edit page', function () {
+it('can render holiday edit page', function (): void {
     $holiday = Holiday::factory()->create();
 
     Livewire::test(EditHoliday::class, ['record' => $holiday->getRouteKey()])
@@ -128,17 +128,17 @@ it('can render holiday edit page', function () {
 
 // ─── SystemParameterResource ────────────────────────────────────────────────
 
-it('can render system parameter list page', function () {
+it('can render system parameter list page', function (): void {
     Livewire::test(ListSystemParameters::class)
         ->assertOk();
 });
 
-it('can render system parameter create page', function () {
+it('can render system parameter create page', function (): void {
     Livewire::test(CreateSystemParameter::class)
         ->assertOk();
 });
 
-it('can render system parameter edit page', function () {
+it('can render system parameter edit page', function (): void {
     $param = SystemParameter::factory()->create();
 
     Livewire::test(EditSystemParameter::class, ['record' => $param->getRouteKey()])
@@ -147,17 +147,17 @@ it('can render system parameter edit page', function () {
 
 // ─── UserResource ───────────────────────────────────────────────────────────
 
-it('can render user list page', function () {
+it('can render user list page', function (): void {
     Livewire::test(ListUsers::class)
         ->assertOk();
 });
 
-it('can render user create page', function () {
+it('can render user create page', function (): void {
     Livewire::test(CreateUser::class)
         ->assertOk();
 });
 
-it('can render user edit page', function () {
+it('can render user edit page', function (): void {
     $user = User::factory()->create([
         'branch_id' => $this->branch->id,
         'is_active' => true,
@@ -169,17 +169,17 @@ it('can render user edit page', function () {
 
 // ─── ChartOfAccountResource ────────────────────────────────────────────────
 
-it('can render chart of account list page', function () {
+it('can render chart of account list page', function (): void {
     Livewire::test(ListChartOfAccounts::class)
         ->assertOk();
 });
 
-it('can render chart of account create page', function () {
+it('can render chart of account create page', function (): void {
     Livewire::test(CreateChartOfAccount::class)
         ->assertOk();
 });
 
-it('can render chart of account edit page', function () {
+it('can render chart of account edit page', function (): void {
     $coa = ChartOfAccount::factory()->create();
 
     Livewire::test(EditChartOfAccount::class, ['record' => $coa->getRouteKey()])
@@ -188,17 +188,17 @@ it('can render chart of account edit page', function () {
 
 // ─── CustomerResource ──────────────────────────────────────────────────────
 
-it('can render customer list page', function () {
+it('can render customer list page', function (): void {
     Livewire::test(ListCustomers::class)
         ->assertOk();
 });
 
-it('can render customer create page', function () {
+it('can render customer create page', function (): void {
     Livewire::test(CreateCustomer::class)
         ->assertOk();
 });
 
-it('can render customer view page', function () {
+it('can render customer view page', function (): void {
     $customer = Customer::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->user->id,
@@ -211,17 +211,17 @@ it('can render customer view page', function () {
 
 // ─── SavingsProductResource ────────────────────────────────────────────────
 
-it('can render savings product list page', function () {
+it('can render savings product list page', function (): void {
     Livewire::test(ListSavingsProducts::class)
         ->assertOk();
 });
 
-it('can render savings product create page', function () {
+it('can render savings product create page', function (): void {
     Livewire::test(CreateSavingsProduct::class)
         ->assertOk();
 });
 
-it('can render savings product edit page', function () {
+it('can render savings product edit page', function (): void {
     $product = SavingsProduct::factory()->create();
 
     Livewire::test(EditSavingsProduct::class, ['record' => $product->getRouteKey()])
@@ -230,17 +230,17 @@ it('can render savings product edit page', function () {
 
 // ─── SavingsAccountResource ────────────────────────────────────────────────
 
-it('can render savings account list page', function () {
+it('can render savings account list page', function (): void {
     Livewire::test(ListSavingsAccounts::class)
         ->assertOk();
 });
 
-it('can render savings account create page', function () {
+it('can render savings account create page', function (): void {
     Livewire::test(CreateSavingsAccount::class)
         ->assertOk();
 });
 
-it('can render savings account view page', function () {
+it('can render savings account view page', function (): void {
     $account = SavingsAccount::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->user->id,
@@ -252,17 +252,17 @@ it('can render savings account view page', function () {
 
 // ─── DepositProductResource ────────────────────────────────────────────────
 
-it('can render deposit product list page', function () {
+it('can render deposit product list page', function (): void {
     Livewire::test(ListDepositProducts::class)
         ->assertOk();
 });
 
-it('can render deposit product create page', function () {
+it('can render deposit product create page', function (): void {
     Livewire::test(CreateDepositProduct::class)
         ->assertOk();
 });
 
-it('can render deposit product edit page', function () {
+it('can render deposit product edit page', function (): void {
     $product = DepositProduct::factory()->create();
 
     Livewire::test(EditDepositProduct::class, ['record' => $product->getRouteKey()])
@@ -271,17 +271,17 @@ it('can render deposit product edit page', function () {
 
 // ─── DepositAccountResource ────────────────────────────────────────────────
 
-it('can render deposit account list page', function () {
+it('can render deposit account list page', function (): void {
     Livewire::test(ListDepositAccounts::class)
         ->assertOk();
 });
 
-it('can render deposit account create page', function () {
+it('can render deposit account create page', function (): void {
     Livewire::test(CreateDepositAccount::class)
         ->assertOk();
 });
 
-it('can render deposit account view page', function () {
+it('can render deposit account view page', function (): void {
     $account = DepositAccount::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->user->id,
@@ -293,17 +293,17 @@ it('can render deposit account view page', function () {
 
 // ─── JournalEntryResource ──────────────────────────────────────────────────
 
-it('can render journal entry list page', function () {
+it('can render journal entry list page', function (): void {
     Livewire::test(ListJournalEntries::class)
         ->assertOk();
 });
 
-it('can render journal entry create page', function () {
+it('can render journal entry create page', function (): void {
     Livewire::test(CreateJournalEntry::class)
         ->assertOk();
 });
 
-it('can render journal entry view page', function () {
+it('can render journal entry view page', function (): void {
     $journal = JournalEntry::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->user->id,
@@ -315,17 +315,17 @@ it('can render journal entry view page', function () {
 
 // ─── LoanProductResource ───────────────────────────────────────────────────
 
-it('can render loan product list page', function () {
+it('can render loan product list page', function (): void {
     Livewire::test(ListLoanProducts::class)
         ->assertOk();
 });
 
-it('can render loan product create page', function () {
+it('can render loan product create page', function (): void {
     Livewire::test(CreateLoanProduct::class)
         ->assertOk();
 });
 
-it('can render loan product edit page', function () {
+it('can render loan product edit page', function (): void {
     $product = LoanProduct::factory()->create();
 
     Livewire::test(EditLoanProduct::class, ['record' => $product->getRouteKey()])
@@ -334,17 +334,17 @@ it('can render loan product edit page', function () {
 
 // ─── LoanApplicationResource ───────────────────────────────────────────────
 
-it('can render loan application list page', function () {
+it('can render loan application list page', function (): void {
     Livewire::test(ListLoanApplications::class)
         ->assertOk();
 });
 
-it('can render loan application create page', function () {
+it('can render loan application create page', function (): void {
     Livewire::test(CreateLoanApplication::class)
         ->assertOk();
 });
 
-it('can render loan application view page', function () {
+it('can render loan application view page', function (): void {
     $customer = Customer::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->user->id,
@@ -363,12 +363,12 @@ it('can render loan application view page', function () {
 
 // ─── LoanAccountResource ───────────────────────────────────────────────────
 
-it('can render loan account list page', function () {
+it('can render loan account list page', function (): void {
     Livewire::test(ListLoanAccounts::class)
         ->assertOk();
 });
 
-it('can render loan account view page', function () {
+it('can render loan account view page', function (): void {
     $customer = Customer::factory()->create([
         'branch_id' => $this->branch->id,
         'created_by' => $this->user->id,
@@ -387,17 +387,17 @@ it('can render loan account view page', function () {
 
 // ─── VaultResource ─────────────────────────────────────────────────────────
 
-it('can render vault list page', function () {
+it('can render vault list page', function (): void {
     Livewire::test(ListVaults::class)
         ->assertOk();
 });
 
-it('can render vault create page', function () {
+it('can render vault create page', function (): void {
     Livewire::test(CreateVault::class)
         ->assertOk();
 });
 
-it('can render vault edit page', function () {
+it('can render vault edit page', function (): void {
     $vault = Vault::factory()->create([
         'branch_id' => $this->branch->id,
     ]);

@@ -31,6 +31,9 @@ class SavingsInterestAccrual extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<SavingsAccount, $this>
+     */
     public function savingsAccount(): BelongsTo
     {
         return $this->belongsTo(SavingsAccount::class);

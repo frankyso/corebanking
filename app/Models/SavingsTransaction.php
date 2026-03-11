@@ -44,16 +44,25 @@ class SavingsTransaction extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<SavingsAccount, $this>
+     */
     public function savingsAccount(): BelongsTo
     {
         return $this->belongsTo(SavingsAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function reverser(): BelongsTo
     {
         return $this->belongsTo(User::class, 'reversed_by');

@@ -9,8 +9,8 @@ use App\Models\SavingsProduct;
 use App\Models\User;
 use App\Services\SavingsService;
 
-describe('SavingsService', function () {
-    beforeEach(function () {
+describe('SavingsService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(SavingsService::class);
 
         $this->branch = Branch::create([
@@ -37,8 +37,8 @@ describe('SavingsService', function () {
         ]);
     });
 
-    describe('open', function () {
-        it('creates an active account with initial deposit and generated account number', function () {
+    describe('open', function (): void {
+        it('creates an active account with initial deposit and generated account number', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -57,7 +57,7 @@ describe('SavingsService', function () {
                 ->and($account->savings_product_id)->toBe($this->product->id);
         });
 
-        it('creates an Opening transaction', function () {
+        it('creates an Opening transaction', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -75,7 +75,7 @@ describe('SavingsService', function () {
                 ->and((float) $transaction->balance_after)->toBe(200000.00);
         });
 
-        it('throws if initial deposit is below minimum opening balance', function () {
+        it('throws if initial deposit is below minimum opening balance', function (): void {
             expect(fn () => $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -86,8 +86,8 @@ describe('SavingsService', function () {
         });
     });
 
-    describe('deposit', function () {
-        beforeEach(function () {
+    describe('deposit', function (): void {
+        beforeEach(function (): void {
             $this->account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -97,7 +97,7 @@ describe('SavingsService', function () {
             );
         });
 
-        it('increases balance and creates a deposit transaction', function () {
+        it('increases balance and creates a deposit transaction', function (): void {
             $transaction = $this->service->deposit($this->account, 50000, $this->user);
 
             $this->account->refresh();
@@ -110,7 +110,7 @@ describe('SavingsService', function () {
                 ->and((float) $transaction->balance_after)->toBe(150000.00);
         });
 
-        it('throws if amount is zero or negative', function () {
+        it('throws if amount is zero or negative', function (): void {
             expect(fn () => $this->service->deposit($this->account, 0, $this->user))
                 ->toThrow(InvalidArgumentException::class);
 
@@ -118,14 +118,14 @@ describe('SavingsService', function () {
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('throws if account is not active', function () {
+        it('throws if account is not active', function (): void {
             $this->account->update(['status' => SavingsAccountStatus::Closed]);
 
             expect(fn () => $this->service->deposit($this->account, 50000, $this->user))
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('resets dormant status on deposit', function () {
+        it('resets dormant status on deposit', function (): void {
             $this->account->update([
                 'status' => SavingsAccountStatus::Dormant,
                 'dormant_at' => now(),
@@ -140,8 +140,8 @@ describe('SavingsService', function () {
         });
     });
 
-    describe('withdraw', function () {
-        beforeEach(function () {
+    describe('withdraw', function (): void {
+        beforeEach(function (): void {
             $this->account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -151,7 +151,7 @@ describe('SavingsService', function () {
             );
         });
 
-        it('decreases balance and creates a withdrawal transaction', function () {
+        it('decreases balance and creates a withdrawal transaction', function (): void {
             $transaction = $this->service->withdraw($this->account, 50000, $this->user);
 
             $this->account->refresh();
@@ -163,18 +163,18 @@ describe('SavingsService', function () {
                 ->and((float) $transaction->balance_after)->toBe(150000.00);
         });
 
-        it('throws if insufficient balance', function () {
+        it('throws if insufficient balance', function (): void {
             expect(fn () => $this->service->withdraw($this->account, 999999, $this->user))
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('throws if remaining balance would be below min_balance', function () {
+        it('throws if remaining balance would be below min_balance', function (): void {
             // Balance = 200000, min_balance = 25000, so max withdrawal = 175000
             expect(fn () => $this->service->withdraw($this->account, 180000, $this->user))
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('allows withdrawal when remaining equals exactly min_balance', function () {
+        it('allows withdrawal when remaining equals exactly min_balance', function (): void {
             // Balance = 200000, min_balance = 25000, withdraw 175000 => remaining = 25000
             $transaction = $this->service->withdraw($this->account, 175000, $this->user);
 
@@ -184,12 +184,12 @@ describe('SavingsService', function () {
                 ->and($transaction)->not->toBeNull();
         });
 
-        it('throws if amount is zero or negative', function () {
+        it('throws if amount is zero or negative', function (): void {
             expect(fn () => $this->service->withdraw($this->account, 0, $this->user))
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('throws if account is not active', function () {
+        it('throws if account is not active', function (): void {
             $this->account->update(['status' => SavingsAccountStatus::Frozen]);
 
             expect(fn () => $this->service->withdraw($this->account, 50000, $this->user))
@@ -197,8 +197,8 @@ describe('SavingsService', function () {
         });
     });
 
-    describe('hold', function () {
-        beforeEach(function () {
+    describe('hold', function (): void {
+        beforeEach(function (): void {
             $this->account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -208,7 +208,7 @@ describe('SavingsService', function () {
             );
         });
 
-        it('increases hold_amount and decreases available_balance', function () {
+        it('increases hold_amount and decreases available_balance', function (): void {
             $this->service->hold($this->account, 50000, $this->user);
 
             $this->account->refresh();
@@ -218,7 +218,7 @@ describe('SavingsService', function () {
                 ->and((float) $this->account->balance)->toBe(200000.00);
         });
 
-        it('creates a Hold transaction', function () {
+        it('creates a Hold transaction', function (): void {
             $this->service->hold($this->account, 50000, $this->user);
 
             $transaction = $this->account->transactions()
@@ -229,14 +229,14 @@ describe('SavingsService', function () {
                 ->and((float) $transaction->amount)->toBe(50000.00);
         });
 
-        it('throws if amount exceeds available balance', function () {
+        it('throws if amount exceeds available balance', function (): void {
             expect(fn () => $this->service->hold($this->account, 999999, $this->user))
                 ->toThrow(InvalidArgumentException::class);
         });
     });
 
-    describe('unhold', function () {
-        beforeEach(function () {
+    describe('unhold', function (): void {
+        beforeEach(function (): void {
             $this->account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -249,7 +249,7 @@ describe('SavingsService', function () {
             $this->account->refresh();
         });
 
-        it('decreases hold_amount and increases available_balance', function () {
+        it('decreases hold_amount and increases available_balance', function (): void {
             $this->service->unhold($this->account, 30000, $this->user);
 
             $this->account->refresh();
@@ -258,7 +258,7 @@ describe('SavingsService', function () {
                 ->and((float) $this->account->available_balance)->toBe(180000.00);
         });
 
-        it('creates an Unhold transaction', function () {
+        it('creates an Unhold transaction', function (): void {
             $this->service->unhold($this->account, 30000, $this->user);
 
             $transaction = $this->account->transactions()
@@ -269,14 +269,14 @@ describe('SavingsService', function () {
                 ->and((float) $transaction->amount)->toBe(30000.00);
         });
 
-        it('throws if amount exceeds hold_amount', function () {
+        it('throws if amount exceeds hold_amount', function (): void {
             expect(fn () => $this->service->unhold($this->account, 999999, $this->user))
                 ->toThrow(InvalidArgumentException::class);
         });
     });
 
-    describe('freeze', function () {
-        it('sets status to Frozen', function () {
+    describe('freeze', function (): void {
+        it('sets status to Frozen', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -290,7 +290,7 @@ describe('SavingsService', function () {
             expect($account->fresh()->status)->toBe(SavingsAccountStatus::Frozen);
         });
 
-        it('throws if account is not active', function () {
+        it('throws if account is not active', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -305,8 +305,8 @@ describe('SavingsService', function () {
         });
     });
 
-    describe('unfreeze', function () {
-        it('sets status back to Active when account is Frozen', function () {
+    describe('unfreeze', function (): void {
+        it('sets status back to Active when account is Frozen', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -321,7 +321,7 @@ describe('SavingsService', function () {
             expect($account->fresh()->status)->toBe(SavingsAccountStatus::Active);
         });
 
-        it('throws if account is not in Frozen status', function () {
+        it('throws if account is not in Frozen status', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -335,8 +335,8 @@ describe('SavingsService', function () {
         });
     });
 
-    describe('close', function () {
-        it('sets status to Closed and balance to 0', function () {
+    describe('close', function (): void {
+        it('sets status to Closed and balance to 0', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -357,7 +357,7 @@ describe('SavingsService', function () {
                 ->and($transaction->transaction_type)->toBe(SavingsTransactionType::Closing);
         });
 
-        it('throws if account has hold amount', function () {
+        it('throws if account has hold amount', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -373,7 +373,7 @@ describe('SavingsService', function () {
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('throws if account is Frozen', function () {
+        it('throws if account is Frozen', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -389,7 +389,7 @@ describe('SavingsService', function () {
                 ->toThrow(InvalidArgumentException::class);
         });
 
-        it('allows closing a Dormant account', function () {
+        it('allows closing a Dormant account', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -408,8 +408,8 @@ describe('SavingsService', function () {
         });
     });
 
-    describe('markDormant', function () {
-        it('sets status to Dormant for Active account', function () {
+    describe('markDormant', function (): void {
+        it('sets status to Dormant for Active account', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -426,7 +426,7 @@ describe('SavingsService', function () {
                 ->and($account->dormant_at)->not->toBeNull();
         });
 
-        it('does nothing for non-Active account', function () {
+        it('does nothing for non-Active account', function (): void {
             $account = $this->service->open(
                 product: $this->product,
                 customerId: $this->customer->id,

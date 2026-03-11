@@ -26,6 +26,9 @@ class DepositProductRate extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<DepositProduct, $this>
+     */
     public function depositProduct(): BelongsTo
     {
         return $this->belongsTo(DepositProduct::class);

@@ -29,7 +29,7 @@ class CreateSavingsAccount extends CreateRecord
                             ->active()
                             ->with(['individualDetail', 'corporateDetail'])
                             ->get()
-                            ->mapWithKeys(fn (Customer $customer) => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
+                            ->mapWithKeys(fn (Customer $customer): array => [$customer->id => "{$customer->cif_number} - {$customer->display_name}"])
                     )
                     ->searchable()
                     ->required(),
@@ -56,7 +56,7 @@ class CreateSavingsAccount extends CreateRecord
         $product = SavingsProduct::findOrFail($data['savings_product_id']);
 
         try {
-            return app(SavingsService::class)->open(
+            $record = app(SavingsService::class)->open(
                 product: $product,
                 customerId: $data['customer_id'],
                 branchId: $data['branch_id'],
@@ -71,6 +71,10 @@ class CreateSavingsAccount extends CreateRecord
                 ->send();
 
             $this->halt();
+
+            throw new \RuntimeException('Unreachable');
         }
+
+        return $record;
     }
 }

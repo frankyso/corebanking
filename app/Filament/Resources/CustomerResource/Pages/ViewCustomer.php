@@ -27,9 +27,9 @@ class ViewCustomer extends ViewRecord
                 ->requiresConfirmation()
                 ->modalHeading('Setujui Nasabah')
                 ->modalDescription('Apakah Anda yakin ingin menyetujui nasabah ini?')
-                ->visible(fn () => $this->record->approval_status === ApprovalStatus::Pending
+                ->visible(fn (): bool => $this->record->approval_status === ApprovalStatus::Pending
                     && $this->record->canBeApprovedBy(auth()->user()))
-                ->action(function () {
+                ->action(function (): void {
                     $service = app(CustomerService::class);
                     $result = $service->approve($this->record, auth()->user());
 
@@ -57,9 +57,9 @@ class ViewCustomer extends ViewRecord
                         ->required()
                         ->rows(3),
                 ])
-                ->visible(fn () => $this->record->approval_status === ApprovalStatus::Pending
+                ->visible(fn (): bool => $this->record->approval_status === ApprovalStatus::Pending
                     && $this->record->canBeApprovedBy(auth()->user()))
-                ->action(function (array $data) {
+                ->action(function (array $data): void {
                     $service = app(CustomerService::class);
                     $result = $service->reject($this->record, auth()->user(), $data['rejection_reason']);
 
@@ -82,8 +82,8 @@ class ViewCustomer extends ViewRecord
                 ->icon('heroicon-o-no-symbol')
                 ->color('danger')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === CustomerStatus::Active)
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === CustomerStatus::Active)
+                ->action(function (): void {
                     app(CustomerService::class)->block($this->record);
 
                     Notification::make()
@@ -98,8 +98,8 @@ class ViewCustomer extends ViewRecord
                 ->icon('heroicon-o-lock-open')
                 ->color('success')
                 ->requiresConfirmation()
-                ->visible(fn () => $this->record->status === CustomerStatus::Blocked)
-                ->action(function () {
+                ->visible(fn (): bool => $this->record->status === CustomerStatus::Blocked)
+                ->action(function (): void {
                     app(CustomerService::class)->unblock($this->record);
 
                     Notification::make()

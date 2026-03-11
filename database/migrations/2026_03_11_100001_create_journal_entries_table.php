@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('journal_entries', function (Blueprint $table) {
+        Schema::create('journal_entries', function (Blueprint $table): void {
             $table->id();
             $table->string('journal_number', 30)->unique();
             $table->date('journal_date');

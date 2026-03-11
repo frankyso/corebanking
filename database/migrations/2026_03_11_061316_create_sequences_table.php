@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('sequences', function (Blueprint $table) {
+        Schema::create('sequences', function (Blueprint $table): void {
             $table->id();
             $table->string('type', 50);
             $table->string('prefix', 20);

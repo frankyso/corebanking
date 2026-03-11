@@ -18,8 +18,8 @@ use App\Models\Vault;
 use App\Models\VaultTransaction;
 use App\Services\TellerService;
 
-describe('TellerService', function () {
-    beforeEach(function () {
+describe('TellerService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(TellerService::class);
 
         $this->branch = Branch::create([
@@ -43,8 +43,8 @@ describe('TellerService', function () {
         ]);
     });
 
-    describe('openSession', function () {
-        it('creates an open teller session with correct opening balance', function () {
+    describe('openSession', function (): void {
+        it('creates an open teller session with correct opening balance', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             expect($session)->toBeInstanceOf(TellerSession::class)
@@ -57,7 +57,7 @@ describe('TellerService', function () {
                 ->and($session->user_id)->toBe($this->teller->id);
         });
 
-        it('creates a vault transaction for initial cash draw', function () {
+        it('creates a vault transaction for initial cash draw', function (): void {
             $vaultBalanceBefore = (float) $this->vault->balance;
             $this->service->openSession($this->teller, $this->vault, 5000000);
 
@@ -68,15 +68,15 @@ describe('TellerService', function () {
             expect($vaultTx->transaction_type)->toBe(VaultTransactionType::TellerRequest);
         });
 
-        it('throws when teller already has an active session', function () {
+        it('throws when teller already has an active session', function (): void {
             $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $this->service->openSession($this->teller, $this->vault, 3000000);
         })->throws(InvalidArgumentException::class, 'Teller sudah memiliki sesi aktif');
     });
 
-    describe('closeSession', function () {
-        it('closes session and returns cash to vault', function () {
+    describe('closeSession', function (): void {
+        it('closes session and returns cash to vault', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
             $vaultBalanceBefore = (float) $this->vault->fresh()->balance;
 
@@ -91,7 +91,7 @@ describe('TellerService', function () {
             expect((float) $this->vault->balance)->toBe($vaultBalanceBefore + 5000000);
         });
 
-        it('throws when session is already closed', function () {
+        it('throws when session is already closed', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
             $this->service->closeSession($session, $this->teller);
 
@@ -99,8 +99,8 @@ describe('TellerService', function () {
         })->throws(InvalidArgumentException::class, 'Sesi sudah ditutup');
     });
 
-    describe('processDeposit', function () {
-        beforeEach(function () {
+    describe('processDeposit', function (): void {
+        beforeEach(function (): void {
             $this->session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $product = SavingsProduct::factory()->create([
@@ -124,7 +124,7 @@ describe('TellerService', function () {
             ]);
         });
 
-        it('deposits into savings account and creates teller transaction', function () {
+        it('deposits into savings account and creates teller transaction', function (): void {
             $tx = $this->service->processDeposit(
                 session: $this->session,
                 account: $this->savingsAccount,
@@ -145,7 +145,7 @@ describe('TellerService', function () {
                 ->and((float) $this->session->total_cash_in)->toBe(500000.00);
         });
 
-        it('throws when session is not open', function () {
+        it('throws when session is not open', function (): void {
             $this->service->closeSession($this->session, $this->teller);
 
             $this->service->processDeposit(
@@ -157,8 +157,8 @@ describe('TellerService', function () {
         })->throws(InvalidArgumentException::class, 'Sesi teller tidak aktif');
     });
 
-    describe('processWithdrawal', function () {
-        beforeEach(function () {
+    describe('processWithdrawal', function (): void {
+        beforeEach(function (): void {
             $this->session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $product = SavingsProduct::factory()->create([
@@ -182,7 +182,7 @@ describe('TellerService', function () {
             ]);
         });
 
-        it('withdraws from savings account and creates teller transaction', function () {
+        it('withdraws from savings account and creates teller transaction', function (): void {
             $tx = $this->service->processWithdrawal(
                 session: $this->session,
                 account: $this->savingsAccount,
@@ -202,7 +202,7 @@ describe('TellerService', function () {
                 ->and((float) $this->session->total_cash_out)->toBe(200000.00);
         });
 
-        it('throws when session teller cash is insufficient', function () {
+        it('throws when session teller cash is insufficient', function (): void {
             $this->service->processWithdrawal(
                 session: $this->session,
                 account: $this->savingsAccount,
@@ -212,8 +212,8 @@ describe('TellerService', function () {
         })->throws(InvalidArgumentException::class, 'Saldo kas teller tidak mencukupi');
     });
 
-    describe('processLoanPayment', function () {
-        it('processes loan payment and creates teller transaction', function () {
+    describe('processLoanPayment', function (): void {
+        it('processes loan payment and creates teller transaction', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $product = LoanProduct::factory()->create(['code' => 'KMK']);
@@ -251,8 +251,8 @@ describe('TellerService', function () {
         });
     });
 
-    describe('reverseTransaction', function () {
-        it('creates a reverse transaction with opposite direction', function () {
+    describe('reverseTransaction', function (): void {
+        it('creates a reverse transaction with opposite direction', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $product = SavingsProduct::factory()->create([
@@ -291,7 +291,7 @@ describe('TellerService', function () {
             expect($depositTx->is_reversed)->toBeTrue();
         });
 
-        it('throws when transaction is already reversed', function () {
+        it('throws when transaction is already reversed', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $product = SavingsProduct::factory()->create([
@@ -321,8 +321,8 @@ describe('TellerService', function () {
         })->throws(InvalidArgumentException::class, 'Transaksi sudah pernah dibatalkan');
     });
 
-    describe('requestCash', function () {
-        it('creates vault and teller transactions for cash request', function () {
+    describe('requestCash', function (): void {
+        it('creates vault and teller transactions for cash request', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
             $vaultBalanceBefore = (float) $this->vault->fresh()->balance;
 
@@ -340,8 +340,8 @@ describe('TellerService', function () {
         });
     });
 
-    describe('returnCash', function () {
-        it('creates vault and teller transactions for cash return', function () {
+    describe('returnCash', function (): void {
+        it('creates vault and teller transactions for cash return', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
             $vaultBalanceBefore = (float) $this->vault->fresh()->balance;
 
@@ -358,15 +358,15 @@ describe('TellerService', function () {
             expect((float) $this->vault->balance)->toBe($vaultBalanceBefore + 2000000);
         });
 
-        it('throws when amount exceeds session current balance', function () {
+        it('throws when amount exceeds session current balance', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $this->service->returnCash($session, $this->vault, 6000000, $this->teller);
         })->throws(InvalidArgumentException::class, 'Saldo kas teller tidak mencukupi');
     });
 
-    describe('needsAuthorization', function () {
-        it('returns true when amount is at or above limit', function () {
+    describe('needsAuthorization', function (): void {
+        it('returns true when amount is at or above limit', function (): void {
             SystemParameter::create([
                 'group' => 'teller',
                 'key' => 'authorization_limit',
@@ -378,7 +378,7 @@ describe('TellerService', function () {
                 ->and($this->service->needsAuthorization(60000000))->toBeTrue();
         });
 
-        it('returns false when amount is below limit', function () {
+        it('returns false when amount is below limit', function (): void {
             SystemParameter::create([
                 'group' => 'teller',
                 'key' => 'authorization_limit',
@@ -389,15 +389,15 @@ describe('TellerService', function () {
             expect($this->service->needsAuthorization(49999999))->toBeFalse();
         });
 
-        it('uses default limit when system parameter does not exist', function () {
+        it('uses default limit when system parameter does not exist', function (): void {
             // Default is 100000000
             expect($this->service->needsAuthorization(100000000))->toBeTrue()
                 ->and($this->service->needsAuthorization(99999999))->toBeFalse();
         });
     });
 
-    describe('getActiveSession', function () {
-        it('returns open session for the teller', function () {
+    describe('getActiveSession', function (): void {
+        it('returns open session for the teller', function (): void {
             $session = $this->service->openSession($this->teller, $this->vault, 5000000);
 
             $active = $this->service->getActiveSession($this->teller);
@@ -406,7 +406,7 @@ describe('TellerService', function () {
                 ->and($active->id)->toBe($session->id);
         });
 
-        it('returns null when teller has no open session', function () {
+        it('returns null when teller has no open session', function (): void {
             $active = $this->service->getActiveSession($this->teller);
 
             expect($active)->toBeNull();

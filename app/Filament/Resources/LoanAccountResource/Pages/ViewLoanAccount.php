@@ -28,7 +28,7 @@ class ViewLoanAccount extends ViewRecord
                         ->prefix('Rp')
                         ->required()
                         ->minValue(1)
-                        ->helperText(function () {
+                        ->helperText(function (): string {
                             $nextSchedule = $this->record->getNextUnpaidSchedule();
                             if (! $nextSchedule) {
                                 return 'Tidak ada angsuran tersisa';
@@ -42,8 +42,8 @@ class ViewLoanAccount extends ViewRecord
                         ->maxLength(255)
                         ->placeholder('Pembayaran angsuran'),
                 ])
-                ->visible(fn () => in_array($this->record->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]))
-                ->action(function (array $data) {
+                ->visible(fn (): bool => in_array($this->record->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]))
+                ->action(function (array $data): void {
                     try {
                         $payment = app(LoanService::class)->makePayment(
                             account: $this->record,
@@ -67,8 +67,8 @@ class ViewLoanAccount extends ViewRecord
                 ->icon('heroicon-o-clock')
                 ->color('warning')
                 ->requiresConfirmation()
-                ->visible(fn () => in_array($this->record->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]))
-                ->action(function () {
+                ->visible(fn (): bool => in_array($this->record->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]))
+                ->action(function (): void {
                     app(LoanService::class)->updateDpd($this->record);
                     app(LoanService::class)->updateCollectibility($this->record);
                     Notification::make()

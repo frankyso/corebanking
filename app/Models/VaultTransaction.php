@@ -30,16 +30,25 @@ class VaultTransaction extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Vault, $this>
+     */
     public function vault(): BelongsTo
     {
         return $this->belongsTo(Vault::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function approver(): BelongsTo
     {
         return $this->belongsTo(User::class, 'approved_by');

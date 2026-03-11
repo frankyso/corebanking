@@ -80,17 +80,11 @@ class AccountingService
 
     public function postJournal(JournalEntry $journal, User $approver): JournalEntry
     {
-        if ($journal->status !== JournalStatus::Draft) {
-            throw new \InvalidArgumentException('Jurnal harus berstatus Draft untuk diposting');
-        }
+        throw_if($journal->status !== JournalStatus::Draft, new \InvalidArgumentException('Jurnal harus berstatus Draft untuk diposting'));
 
-        if (! $journal->isBalanced()) {
-            throw new \InvalidArgumentException('Total debit dan kredit tidak seimbang');
-        }
+        throw_unless($journal->isBalanced(), new \InvalidArgumentException('Total debit dan kredit tidak seimbang'));
 
-        if (! $journal->canBeApprovedBy($approver)) {
-            throw new \InvalidArgumentException('Anda tidak dapat menyetujui jurnal yang Anda buat sendiri');
-        }
+        throw_unless($journal->canBeApprovedBy($approver), new \InvalidArgumentException('Anda tidak dapat menyetujui jurnal yang Anda buat sendiri'));
 
         return DB::transaction(function () use ($journal, $approver) {
             $journal->update([
@@ -109,9 +103,7 @@ class AccountingService
 
     public function reverseJournal(JournalEntry $journal, User $reverser, string $reason): JournalEntry
     {
-        if ($journal->status !== JournalStatus::Posted) {
-            throw new \InvalidArgumentException('Hanya jurnal yang sudah diposting yang dapat dibatalkan');
-        }
+        throw_if($journal->status !== JournalStatus::Posted, new \InvalidArgumentException('Hanya jurnal yang sudah diposting yang dapat dibatalkan'));
 
         return DB::transaction(function () use ($journal, $reverser, $reason) {
             $reversalLines = [];
@@ -165,7 +157,7 @@ class AccountingService
             return $this->calculateTrialBalanceFromJournals($year, $month, $branchId);
         }
 
-        return $balances->map(function (GlBalance $balance) {
+        return $balances->map(function (GlBalance $balance): array {
             return [
                 'account_code' => $balance->chartOfAccount->account_code,
                 'account_name' => $balance->chartOfAccount->account_name,
@@ -261,9 +253,7 @@ class AccountingService
      */
     protected function validateLines(array $lines): void
     {
-        if (count($lines) < 2) {
-            throw new \InvalidArgumentException('Jurnal harus memiliki minimal 2 baris');
-        }
+        throw_if(count($lines) < 2, new \InvalidArgumentException('Jurnal harus memiliki minimal 2 baris'));
 
         $totalDebit = '0';
         $totalCredit = '0';
@@ -272,26 +262,18 @@ class AccountingService
             $debit = (string) ($line['debit'] ?? 0);
             $credit = (string) ($line['credit'] ?? 0);
 
-            if ((float) $debit > 0 && (float) $credit > 0) {
-                throw new \InvalidArgumentException('Baris jurnal tidak boleh memiliki debit dan kredit sekaligus');
-            }
+            throw_if((float) $debit > 0 && (float) $credit > 0, new \InvalidArgumentException('Baris jurnal tidak boleh memiliki debit dan kredit sekaligus'));
 
-            if ((float) $debit == 0 && (float) $credit == 0) {
-                throw new \InvalidArgumentException('Baris jurnal harus memiliki debit atau kredit');
-            }
+            throw_if((float) $debit == 0 && (float) $credit == 0, new \InvalidArgumentException('Baris jurnal harus memiliki debit atau kredit'));
 
             $account = ChartOfAccount::find($line['account_id']);
-            if (! $account || $account->is_header) {
-                throw new \InvalidArgumentException('Akun tidak valid atau merupakan akun header');
-            }
+            throw_if(! $account || $account->is_header, new \InvalidArgumentException('Akun tidak valid atau merupakan akun header'));
 
             $totalDebit = bcadd($totalDebit, $debit, 2);
             $totalCredit = bcadd($totalCredit, $credit, 2);
         }
 
-        if (bccomp($totalDebit, $totalCredit, 2) !== 0) {
-            throw new \InvalidArgumentException("Total debit ({$totalDebit}) dan kredit ({$totalCredit}) tidak seimbang");
-        }
+        throw_if(bccomp($totalDebit, $totalCredit, 2) !== 0, new \InvalidArgumentException("Total debit ({$totalDebit}) dan kredit ({$totalCredit}) tidak seimbang"));
     }
 
     protected function updateGlBalances(JournalEntry $journal): void
@@ -449,7 +431,7 @@ class AccountingService
             $query->where('journal_entries.branch_id', $branchId);
         }
 
-        return collect($query->get())->map(fn ($row) => [
+        return collect($query->get())->map(fn ($row): array => [
             'account_code' => $row->account_code,
             'account_name' => $row->account_name,
             'account_group' => $row->account_group,

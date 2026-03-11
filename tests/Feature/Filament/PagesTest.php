@@ -12,7 +12,7 @@ use Illuminate\Support\Collection;
 use Livewire\Livewire;
 use Spatie\Permission\Models\Role;
 
-beforeEach(function () {
+beforeEach(function (): void {
     $this->branch = Branch::factory()->create();
     $this->user = User::factory()->create([
         'branch_id' => $this->branch->id,
@@ -25,12 +25,12 @@ beforeEach(function () {
 
 // ─── TrialBalancePage ──────────────────────────────────────────────────────
 
-it('can render trial balance page', function () {
+it('can render trial balance page', function (): void {
     Livewire::test(TrialBalancePage::class)
         ->assertOk();
 });
 
-it('trial balance page initializes with current year and month', function () {
+it('trial balance page initializes with current year and month', function (): void {
     Livewire::test(TrialBalancePage::class)
         ->assertSet('year', (int) now()->year)
         ->assertSet('month', (int) now()->month);
@@ -38,12 +38,12 @@ it('trial balance page initializes with current year and month', function () {
 
 // ─── IncomeStatementPage ───────────────────────────────────────────────────
 
-it('can render income statement page', function () {
+it('can render income statement page', function (): void {
     Livewire::test(IncomeStatementPage::class)
         ->assertOk();
 });
 
-it('income statement page initializes with current month date range', function () {
+it('income statement page initializes with current month date range', function (): void {
     Livewire::test(IncomeStatementPage::class)
         ->assertSet('startDate', now()->startOfMonth()->format('Y-m-d'))
         ->assertSet('endDate', now()->format('Y-m-d'));
@@ -51,43 +51,43 @@ it('income statement page initializes with current month date range', function (
 
 // ─── BalanceSheetPage ──────────────────────────────────────────────────────
 
-it('can render balance sheet page', function () {
+it('can render balance sheet page', function (): void {
     Livewire::test(BalanceSheetPage::class)
         ->assertOk();
 });
 
-it('balance sheet page initializes with today as report date', function () {
+it('balance sheet page initializes with today as report date', function (): void {
     Livewire::test(BalanceSheetPage::class)
         ->assertSet('reportDate', now()->format('Y-m-d'));
 });
 
 // ─── TellerDashboard ──────────────────────────────────────────────────────
 
-it('can render teller dashboard page', function () {
+it('can render teller dashboard page', function (): void {
     Livewire::test(TellerDashboard::class)
         ->assertOk();
 });
 
 // ─── EodProcessPage ───────────────────────────────────────────────────────
 
-it('can render eod process page', function () {
+it('can render eod process page', function (): void {
     Livewire::test(EodProcessPage::class)
         ->assertOk();
 });
 
-it('eod process page initializes with today as process date', function () {
+it('eod process page initializes with today as process date', function (): void {
     Livewire::test(EodProcessPage::class)
         ->assertSet('processDate', now()->toDateString());
 });
 
 // ─── LoanPortfolioReport ──────────────────────────────────────────────────
 
-it('can render loan portfolio report page', function () {
+it('can render loan portfolio report page', function (): void {
     Livewire::test(LoanPortfolioReport::class)
         ->assertOk();
 });
 
-it('loan portfolio report summary returns correct data structure', function () {
+it('loan portfolio report summary returns correct data structure', function (): void {
     $component = Livewire::test(LoanPortfolioReport::class);
 
     $summary = $component->instance()->summary;
@@ -103,7 +103,7 @@ it('loan portfolio report summary returns correct data structure', function () {
         ]);
 });
 
-it('loan portfolio report portfolioByCollectibility returns a collection', function () {
+it('loan portfolio report portfolioByCollectibility returns a collection', function (): void {
     $component = Livewire::test(LoanPortfolioReport::class);
 
     $portfolio = $component->instance()->portfolioByCollectibility;
@@ -111,7 +111,7 @@ it('loan portfolio report portfolioByCollectibility returns a collection', funct
     expect($portfolio)->toBeInstanceOf(Collection::class);
 });
 
-it('loan portfolio report portfolioByProduct returns a collection', function () {
+it('loan portfolio report portfolioByProduct returns a collection', function (): void {
     $component = Livewire::test(LoanPortfolioReport::class);
 
     $portfolio = $component->instance()->portfolioByProduct;

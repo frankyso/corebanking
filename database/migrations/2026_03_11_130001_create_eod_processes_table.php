@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('eod_processes', function (Blueprint $table) {
+        Schema::create('eod_processes', function (Blueprint $table): void {
             $table->id();
             $table->date('process_date')->unique();
             $table->string('status', 20)->default('pending');
