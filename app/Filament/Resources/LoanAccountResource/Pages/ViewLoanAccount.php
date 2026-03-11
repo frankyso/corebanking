@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\LoanAccountResource\Pages;
 
+use App\Actions\Loan\MakeLoanPayment;
+use App\Actions\Loan\UpdateLoanCollectibility;
+use App\Actions\Loan\UpdateLoanDpd;
+use App\DTOs\Loan\MakeLoanPaymentData;
 use App\Enums\LoanStatus;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\LoanAccountResource;
-use App\Services\LoanService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -45,19 +49,19 @@ class ViewLoanAccount extends ViewRecord
                 ->visible(fn (): bool => in_array($this->record->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]))
                 ->action(function (array $data): void {
                     try {
-                        $payment = app(LoanService::class)->makePayment(
+                        $payment = app(MakeLoanPayment::class)->execute(new MakeLoanPaymentData(
                             account: $this->record,
                             amount: (float) $data['amount'],
                             performer: auth()->user(),
                             description: $data['description'] ?? null,
-                        );
+                        ));
                         Notification::make()
                             ->title('Pembayaran berhasil')
                             ->body("Ref: {$payment->reference_number} | Pokok: Rp ".number_format((float) $payment->principal_portion, 0, ',', '.').' | Bunga: Rp '.number_format((float) $payment->interest_portion, 0, ',', '.'))
                             ->success()
                             ->send();
                         $this->refreshFormData(['outstanding_principal', 'total_principal_paid', 'total_interest_paid', 'last_payment_date', 'status']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -69,8 +73,8 @@ class ViewLoanAccount extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn (): bool => in_array($this->record->status, [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue]))
                 ->action(function (): void {
-                    app(LoanService::class)->updateDpd($this->record);
-                    app(LoanService::class)->updateCollectibility($this->record);
+                    app(UpdateLoanDpd::class)->execute($this->record);
+                    app(UpdateLoanCollectibility::class)->execute($this->record);
                     Notification::make()
                         ->title('DPD & Kolektibilitas diperbarui')
                         ->body("DPD: {$this->record->fresh()->dpd} | Kol: {$this->record->fresh()->collectibility->getLabel()}")

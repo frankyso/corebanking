@@ -684,7 +684,7 @@ it('returns correct Collectibility colors', function (Collectibility $case, stri
 })->with([
     'Current' => [Collectibility::Current, 'success'],
     'SpecialMention' => [Collectibility::SpecialMention, 'warning'],
-    'Substandard' => [Collectibility::Substandard, 'orange'],
+    'Substandard' => [Collectibility::Substandard, 'warning'],
     'Doubtful' => [Collectibility::Doubtful, 'danger'],
     'Loss' => [Collectibility::Loss, 'gray'],
 ]);

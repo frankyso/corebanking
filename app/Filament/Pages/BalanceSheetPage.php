@@ -2,7 +2,7 @@
 
 namespace App\Filament\Pages;
 
-use App\Services\AccountingService;
+use App\Services\AccountingReportService;
 use BackedEnum;
 use Carbon\Carbon;
 use Filament\Pages\Page;
@@ -38,7 +38,7 @@ class BalanceSheetPage extends Page
     #[Computed]
     public function balanceSheet(): array
     {
-        return app(AccountingService::class)->getBalanceSheet(Carbon::parse($this->reportDate));
+        return app(AccountingReportService::class)->getBalanceSheet(Carbon::parse($this->reportDate));
     }
 
     public function updatedReportDate(): void

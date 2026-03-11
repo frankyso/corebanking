@@ -2,9 +2,13 @@
 
 namespace App\Filament\Resources\DepositAccountResource\Pages;
 
+use App\Actions\Deposit\EarlyWithdrawDeposit;
+use App\Actions\Deposit\PledgeDeposit;
+use App\Actions\Deposit\ProcessDepositMaturity;
+use App\Actions\Deposit\UnpledgeDeposit;
 use App\Enums\DepositStatus;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\DepositAccountResource;
-use App\Services\DepositService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -27,10 +31,10 @@ class ViewDepositAccount extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === DepositStatus::Active && $this->record->isMatured())
                 ->action(function (): void {
                     try {
-                        app(DepositService::class)->processMaturity($this->record, auth()->user());
+                        app(ProcessDepositMaturity::class)->execute($this->record, auth()->user());
                         Notification::make()->title('Jatuh tempo berhasil diproses')->success()->send();
                         $this->refreshFormData(['status', 'principal_amount', 'interest_rate', 'placement_date', 'maturity_date', 'total_interest_paid', 'total_tax_paid']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -49,10 +53,10 @@ class ViewDepositAccount extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === DepositStatus::Active && ! $this->record->is_pledged)
                 ->action(function (): void {
                     try {
-                        app(DepositService::class)->earlyWithdrawal($this->record, auth()->user());
+                        app(EarlyWithdrawDeposit::class)->execute($this->record, auth()->user());
                         Notification::make()->title('Deposito berhasil dicairkan')->success()->send();
                         $this->refreshFormData(['status']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -70,10 +74,10 @@ class ViewDepositAccount extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === DepositStatus::Active && ! $this->record->is_pledged)
                 ->action(function (array $data): void {
                     try {
-                        app(DepositService::class)->pledge($this->record, $data['pledge_reference']);
+                        app(PledgeDeposit::class)->execute($this->record, $data['pledge_reference']);
                         Notification::make()->title('Deposito berhasil dijaminkan')->success()->send();
                         $this->refreshFormData(['is_pledged', 'pledge_reference']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -86,10 +90,10 @@ class ViewDepositAccount extends ViewRecord
                 ->visible(fn () => $this->record->is_pledged)
                 ->action(function (): void {
                     try {
-                        app(DepositService::class)->unpledge($this->record);
+                        app(UnpledgeDeposit::class)->execute($this->record);
                         Notification::make()->title('Jaminan berhasil dilepas')->success()->send();
                         $this->refreshFormData(['is_pledged', 'pledge_reference']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),

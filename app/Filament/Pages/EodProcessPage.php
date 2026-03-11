@@ -2,9 +2,11 @@
 
 namespace App\Filament\Pages;
 
+use App\Actions\Eod\RunEodProcess;
+use App\DTOs\Eod\EodProcessData;
 use App\Enums\EodStatus;
+use App\Exceptions\DomainException;
 use App\Models\EodProcess;
-use App\Services\EodService;
 use BackedEnum;
 use Carbon\Carbon;
 use Filament\Actions\Action;
@@ -61,7 +63,7 @@ class EodProcessPage extends Page
     #[Computed]
     public function stepNames(): array
     {
-        return app(EodService::class)->getStepNames();
+        return app(RunEodProcess::class)->getStepNames();
     }
 
     public function updatedProcessDate(): void
@@ -82,9 +84,11 @@ class EodProcessPage extends Page
                 ->visible(fn (): bool => ! $this->currentProcess || $this->currentProcess->status === EodStatus::Failed)
                 ->action(function (): void {
                     try {
-                        $process = app(EodService::class)->run(
-                            processDate: Carbon::parse($this->processDate),
-                            performer: auth()->user(),
+                        $process = app(RunEodProcess::class)->execute(
+                            new EodProcessData(
+                                processDate: Carbon::parse($this->processDate),
+                                performer: auth()->user(),
+                            ),
                         );
 
                         if ($process->status === EodStatus::Completed) {
@@ -102,7 +106,7 @@ class EodProcessPage extends Page
                         }
 
                         unset($this->currentProcess, $this->recentProcesses);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),

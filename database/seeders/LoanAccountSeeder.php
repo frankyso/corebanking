@@ -2,12 +2,16 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Loan\ApproveLoanApplication;
+use App\Actions\Loan\CreateLoanApplication;
+use App\Actions\Loan\DisburseLoan;
+use App\DTOs\Loan\ApproveLoanApplicationData;
+use App\DTOs\Loan\CreateLoanApplicationData;
 use App\Enums\CollateralType;
 use App\Enums\CustomerStatus;
 use App\Models\Customer;
 use App\Models\LoanProduct;
 use App\Models\User;
-use App\Services\LoanService;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -15,7 +19,6 @@ class LoanAccountSeeder extends Seeder
 {
     public function run(): void
     {
-        $loanService = app(LoanService::class);
         $admin = User::where('email', 'admin@corebanking.test')->first();
         $kmkProduct = LoanProduct::where('code', 'K01')->first();
         $kiProduct = LoanProduct::where('code', 'K02')->first();
@@ -93,7 +96,7 @@ class LoanAccountSeeder extends Seeder
                 continue;
             }
 
-            $application = $loanService->createApplication(
+            $application = app(CreateLoanApplication::class)->execute(new CreateLoanApplicationData(
                 product: $loan['product'],
                 customerId: $loan['customer']->id,
                 branchId: $admin->branch_id ?? 1,
@@ -101,15 +104,15 @@ class LoanAccountSeeder extends Seeder
                 requestedTenor: $loan['tenor'],
                 purpose: $loan['purpose'],
                 creator: $admin,
-            );
+            ));
 
             $application->collaterals()->create($loan['collateral']);
 
             if ($approver->id !== $admin->id) {
-                $loanService->approveApplication(
+                app(ApproveLoanApplication::class)->execute(new ApproveLoanApplicationData(
                     application: $application,
                     approver: $approver,
-                );
+                ));
             } else {
                 $application->update([
                     'status' => 'approved',
@@ -122,7 +125,7 @@ class LoanAccountSeeder extends Seeder
 
             $application->refresh();
 
-            $loanService->disburse(
+            app(DisburseLoan::class)->execute(
                 application: $application,
                 performer: $admin,
                 disbursementDate: Carbon::now()->subMonths(2),

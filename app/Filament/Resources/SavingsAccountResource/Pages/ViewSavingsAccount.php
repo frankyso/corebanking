@@ -2,9 +2,16 @@
 
 namespace App\Filament\Resources\SavingsAccountResource\Pages;
 
+use App\Actions\Savings\CloseSavingsAccount;
+use App\Actions\Savings\DepositToSavings;
+use App\Actions\Savings\FreezeSavingsAccount;
+use App\Actions\Savings\HoldSavingsBalance;
+use App\Actions\Savings\UnfreezeSavingsAccount;
+use App\Actions\Savings\UnholdSavingsBalance;
+use App\Actions\Savings\WithdrawFromSavings;
 use App\Enums\SavingsAccountStatus;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\SavingsAccountResource;
-use App\Services\SavingsService;
 use Filament\Actions\Action;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
@@ -34,7 +41,7 @@ class ViewSavingsAccount extends ViewRecord
                 ->visible(fn (): bool => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
                 ->action(function (array $data): void {
                     try {
-                        app(SavingsService::class)->deposit(
+                        app(DepositToSavings::class)->execute(
                             account: $this->record,
                             amount: (float) $data['amount'],
                             performer: auth()->user(),
@@ -43,7 +50,7 @@ class ViewSavingsAccount extends ViewRecord
 
                         Notification::make()->title('Setoran berhasil')->success()->send();
                         $this->refreshFormData(['balance', 'available_balance', 'status']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -65,7 +72,7 @@ class ViewSavingsAccount extends ViewRecord
                 ->visible(fn (): bool => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
                 ->action(function (array $data): void {
                     try {
-                        app(SavingsService::class)->withdraw(
+                        app(WithdrawFromSavings::class)->execute(
                             account: $this->record,
                             amount: (float) $data['amount'],
                             performer: auth()->user(),
@@ -74,7 +81,7 @@ class ViewSavingsAccount extends ViewRecord
 
                         Notification::make()->title('Penarikan berhasil')->success()->send();
                         $this->refreshFormData(['balance', 'available_balance']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -94,7 +101,7 @@ class ViewSavingsAccount extends ViewRecord
                 ->visible(fn (): bool => $this->record->status === SavingsAccountStatus::Active)
                 ->action(function (array $data): void {
                     try {
-                        app(SavingsService::class)->hold(
+                        app(HoldSavingsBalance::class)->execute(
                             account: $this->record,
                             amount: (float) $data['amount'],
                             performer: auth()->user(),
@@ -102,7 +109,7 @@ class ViewSavingsAccount extends ViewRecord
 
                         Notification::make()->title('Saldo berhasil diblokir')->success()->send();
                         $this->refreshFormData(['hold_amount', 'available_balance']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -122,7 +129,7 @@ class ViewSavingsAccount extends ViewRecord
                 ->visible(fn (): bool => (float) $this->record->hold_amount > 0)
                 ->action(function (array $data): void {
                     try {
-                        app(SavingsService::class)->unhold(
+                        app(UnholdSavingsBalance::class)->execute(
                             account: $this->record,
                             amount: (float) $data['amount'],
                             performer: auth()->user(),
@@ -130,7 +137,7 @@ class ViewSavingsAccount extends ViewRecord
 
                         Notification::make()->title('Blokir berhasil dibuka')->success()->send();
                         $this->refreshFormData(['hold_amount', 'available_balance']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),
@@ -142,9 +149,13 @@ class ViewSavingsAccount extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn (): bool => $this->record->status === SavingsAccountStatus::Active)
                 ->action(function (): void {
-                    app(SavingsService::class)->freeze($this->record);
-                    Notification::make()->title('Rekening dibekukan')->warning()->send();
-                    $this->refreshFormData(['status']);
+                    try {
+                        app(FreezeSavingsAccount::class)->execute($this->record);
+                        Notification::make()->title('Rekening dibekukan')->warning()->send();
+                        $this->refreshFormData(['status']);
+                    } catch (DomainException $e) {
+                        Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
+                    }
                 }),
 
             Action::make('unfreeze')
@@ -154,9 +165,13 @@ class ViewSavingsAccount extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn (): bool => $this->record->status === SavingsAccountStatus::Frozen)
                 ->action(function (): void {
-                    app(SavingsService::class)->unfreeze($this->record);
-                    Notification::make()->title('Bekuan dibuka')->success()->send();
-                    $this->refreshFormData(['status']);
+                    try {
+                        app(UnfreezeSavingsAccount::class)->execute($this->record);
+                        Notification::make()->title('Bekuan dibuka')->success()->send();
+                        $this->refreshFormData(['status']);
+                    } catch (DomainException $e) {
+                        Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
+                    }
                 }),
 
             Action::make('close')
@@ -169,10 +184,10 @@ class ViewSavingsAccount extends ViewRecord
                 ->visible(fn (): bool => in_array($this->record->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]))
                 ->action(function (): void {
                     try {
-                        app(SavingsService::class)->close($this->record, auth()->user());
+                        app(CloseSavingsAccount::class)->execute($this->record, auth()->user());
                         Notification::make()->title('Rekening ditutup')->warning()->send();
                         $this->refreshFormData(['status', 'balance', 'available_balance']);
-                    } catch (\InvalidArgumentException $e) {
+                    } catch (DomainException $e) {
                         Notification::make()->title('Gagal')->body($e->getMessage())->danger()->send();
                     }
                 }),

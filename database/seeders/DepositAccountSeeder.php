@@ -2,13 +2,14 @@
 
 namespace Database\Seeders;
 
+use App\Actions\Deposit\PlaceDeposit;
+use App\DTOs\Deposit\PlaceDepositData;
 use App\Enums\CustomerStatus;
 use App\Enums\InterestPaymentMethod;
 use App\Enums\RolloverType;
 use App\Models\Customer;
 use App\Models\DepositProduct;
 use App\Models\User;
-use App\Services\DepositService;
 use Carbon\Carbon;
 use Illuminate\Database\Seeder;
 
@@ -16,7 +17,7 @@ class DepositAccountSeeder extends Seeder
 {
     public function run(): void
     {
-        $depositService = app(DepositService::class);
+        $placeDeposit = app(PlaceDeposit::class);
         $admin = User::where('email', 'admin@corebanking.test')->first();
         $product = DepositProduct::where('code', 'D01')->first();
 
@@ -69,17 +70,19 @@ class DepositAccountSeeder extends Seeder
                 continue;
             }
 
-            $depositService->place(
-                product: $product,
-                customerId: $placement['customer']->id,
-                branchId: $admin->branch_id ?? 1,
-                principalAmount: $placement['principal'],
-                tenorMonths: $placement['tenor'],
-                interestPaymentMethod: $placement['method'],
-                rolloverType: $placement['rollover'],
-                savingsAccountId: null,
-                performer: $admin,
-                placementDate: Carbon::now(),
+            $placeDeposit->execute(
+                new PlaceDepositData(
+                    product: $product,
+                    customerId: $placement['customer']->id,
+                    branchId: $admin->branch_id ?? 1,
+                    principalAmount: $placement['principal'],
+                    tenorMonths: $placement['tenor'],
+                    interestPaymentMethod: $placement['method'],
+                    rolloverType: $placement['rollover'],
+                    savingsAccountId: null,
+                    performer: $admin,
+                    placementDate: Carbon::now(),
+                ),
             );
         }
     }

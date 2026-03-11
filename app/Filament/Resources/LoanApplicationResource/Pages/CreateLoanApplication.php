@@ -2,12 +2,14 @@
 
 namespace App\Filament\Resources\LoanApplicationResource\Pages;
 
+use App\Actions\Loan\CreateLoanApplication as CreateLoanApplicationAction;
+use App\DTOs\Loan\CreateLoanApplicationData;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\LoanApplicationResource;
 use App\Models\Branch;
 use App\Models\Customer;
 use App\Models\LoanProduct;
 use App\Models\User;
-use App\Services\LoanService;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
@@ -108,7 +110,7 @@ class CreateLoanApplication extends CreateRecord
         $product = LoanProduct::findOrFail($data['loan_product_id']);
 
         try {
-            $record = app(LoanService::class)->createApplication(
+            $record = app(CreateLoanApplicationAction::class)->execute(new CreateLoanApplicationData(
                 product: $product,
                 customerId: $data['customer_id'],
                 branchId: $data['branch_id'],
@@ -117,8 +119,8 @@ class CreateLoanApplication extends CreateRecord
                 purpose: $data['purpose'],
                 creator: auth()->user(),
                 loanOfficerId: $data['loan_officer_id'] ?? null,
-            );
-        } catch (\InvalidArgumentException $e) {
+            ));
+        } catch (DomainException $e) {
             Notification::make()
                 ->title('Gagal membuat permohonan')
                 ->body($e->getMessage())

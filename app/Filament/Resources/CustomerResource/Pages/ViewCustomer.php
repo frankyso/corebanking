@@ -2,10 +2,12 @@
 
 namespace App\Filament\Resources\CustomerResource\Pages;
 
+use App\Actions\Customer\ApproveCustomer;
+use App\Actions\Customer\RejectCustomer;
 use App\Enums\ApprovalStatus;
 use App\Enums\CustomerStatus;
+use App\Exceptions\DomainException;
 use App\Filament\Resources\CustomerResource;
-use App\Services\CustomerService;
 use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Forms\Components\Textarea;
@@ -30,19 +32,19 @@ class ViewCustomer extends ViewRecord
                 ->visible(fn (): bool => $this->record->approval_status === ApprovalStatus::Pending
                     && $this->record->canBeApprovedBy(auth()->user()))
                 ->action(function (): void {
-                    $service = app(CustomerService::class);
-                    $result = $service->approve($this->record, auth()->user());
+                    try {
+                        app(ApproveCustomer::class)->execute($this->record, auth()->user());
 
-                    if ($result) {
                         Notification::make()
                             ->title('Nasabah berhasil disetujui')
                             ->success()
                             ->send();
 
                         $this->refreshFormData(['status', 'approval_status', 'approved_by', 'approved_at']);
-                    } else {
+                    } catch (DomainException $e) {
                         Notification::make()
                             ->title('Gagal menyetujui nasabah')
+                            ->body($e->getMessage())
                             ->danger()
                             ->send();
                     }
@@ -60,19 +62,19 @@ class ViewCustomer extends ViewRecord
                 ->visible(fn (): bool => $this->record->approval_status === ApprovalStatus::Pending
                     && $this->record->canBeApprovedBy(auth()->user()))
                 ->action(function (array $data): void {
-                    $service = app(CustomerService::class);
-                    $result = $service->reject($this->record, auth()->user(), $data['rejection_reason']);
+                    try {
+                        app(RejectCustomer::class)->execute($this->record, auth()->user(), $data['rejection_reason']);
 
-                    if ($result) {
                         Notification::make()
                             ->title('Nasabah ditolak')
                             ->warning()
                             ->send();
 
                         $this->refreshFormData(['approval_status', 'rejection_reason']);
-                    } else {
+                    } catch (DomainException $e) {
                         Notification::make()
                             ->title('Gagal menolak nasabah')
+                            ->body($e->getMessage())
                             ->danger()
                             ->send();
                     }
@@ -84,7 +86,7 @@ class ViewCustomer extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn (): bool => $this->record->status === CustomerStatus::Active)
                 ->action(function (): void {
-                    app(CustomerService::class)->block($this->record);
+                    $this->record->block();
 
                     Notification::make()
                         ->title('Nasabah diblokir')
@@ -100,7 +102,7 @@ class ViewCustomer extends ViewRecord
                 ->requiresConfirmation()
                 ->visible(fn (): bool => $this->record->status === CustomerStatus::Blocked)
                 ->action(function (): void {
-                    app(CustomerService::class)->unblock($this->record);
+                    $this->record->unblock();
 
                     Notification::make()
                         ->title('Blokir nasabah dibuka')
