@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\SavingsAccountStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +15,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class SavingsAccount extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'account_number',
@@ -49,42 +51,62 @@ class SavingsAccount extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<Customer, $this>
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);
     }
 
+    /**
+     * @return BelongsTo<SavingsProduct, $this>
+     */
     public function savingsProduct(): BelongsTo
     {
         return $this->belongsTo(SavingsProduct::class);
     }
 
+    /**
+     * @return BelongsTo<Branch, $this>
+     */
     public function branch(): BelongsTo
     {
         return $this->belongsTo(Branch::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function creator(): BelongsTo
     {
         return $this->belongsTo(User::class, 'created_by');
     }
 
+    /**
+     * @return HasMany<SavingsTransaction, $this>
+     */
     public function transactions(): HasMany
     {
         return $this->hasMany(SavingsTransaction::class);
     }
 
+    /**
+     * @return HasMany<SavingsInterestAccrual, $this>
+     */
     public function interestAccruals(): HasMany
     {
         return $this->hasMany(SavingsInterestAccrual::class);
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('status', SavingsAccountStatus::Active);
     }
 
-    public function scopeByStatus($query, SavingsAccountStatus $status)
+    #[Scope]
+    protected function byStatus($query, SavingsAccountStatus $status)
     {
         return $query->where('status', $status);
     }

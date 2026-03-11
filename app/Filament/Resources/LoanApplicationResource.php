@@ -93,8 +93,8 @@ class LoanApplicationResource extends Resource
                         return $record->customer?->display_name ?? '-';
                     })
                     ->searchable(query: function ($query, string $search): void {
-                        $query->whereHas('customer', function ($q) use ($search) {
-                            $q->where(function ($q) use ($search) {
+                        $query->whereHas('customer', function ($q) use ($search): void {
+                            $q->where(function ($q) use ($search): void {
                                 $q->whereHas('individualDetail', fn ($q) => $q->where('full_name', 'ilike', "%{$search}%"))
                                     ->orWhereHas('corporateDetail', fn ($q) => $q->where('company_name', 'ilike', "%{$search}%"));
                             });

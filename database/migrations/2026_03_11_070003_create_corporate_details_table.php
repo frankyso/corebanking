@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('corporate_details', function (Blueprint $table) {
+        Schema::create('corporate_details', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->string('company_name', 200);
@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('contact_person_name', 100)->nullable();
             $table->string('contact_person_phone', 20)->nullable();
             $table->string('contact_person_position', 50)->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

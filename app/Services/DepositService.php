@@ -43,9 +43,7 @@ class DepositService
         }
 
         $rate = $product->getRateForTenorAndAmount($tenorMonths, $principalAmount);
-        if (! $rate) {
-            throw new \InvalidArgumentException("Tidak ada suku bunga untuk tenor {$tenorMonths} bulan dengan nominal tersebut");
-        }
+        throw_unless($rate, new \InvalidArgumentException("Tidak ada suku bunga untuk tenor {$tenorMonths} bulan dengan nominal tersebut"));
 
         return DB::transaction(function () use ($product, $customerId, $branchId, $principalAmount, $tenorMonths, $interestPaymentMethod, $rolloverType, $savingsAccountId, $performer, $placementDate, $rate) {
             $branchCode = $performer->branch?->code ?? '001';
@@ -117,13 +115,9 @@ class DepositService
 
     public function processMaturity(DepositAccount $account, User $performer): DepositAccount
     {
-        if ($account->status !== DepositStatus::Active) {
-            throw new \InvalidArgumentException('Deposito tidak dalam status aktif');
-        }
+        throw_if($account->status !== DepositStatus::Active, new \InvalidArgumentException('Deposito tidak dalam status aktif'));
 
-        if (! $account->isMatured()) {
-            throw new \InvalidArgumentException('Deposito belum jatuh tempo');
-        }
+        throw_unless($account->isMatured(), new \InvalidArgumentException('Deposito belum jatuh tempo'));
 
         return DB::transaction(function () use ($account, $performer) {
             if ($account->interest_payment_method === InterestPaymentMethod::Maturity) {
@@ -154,7 +148,7 @@ class DepositService
                 }
 
                 $account->update([
-                    'total_interest_paid' => bcadd($account->total_interest_paid, (string) $netInterest, 2),
+                    'total_interest_paid' => bcadd($account->total_interest_paid, $netInterest, 2),
                     'total_tax_paid' => bcadd($account->total_tax_paid, (string) $taxAmount, 2),
                     'last_interest_paid_at' => now(),
                 ]);
@@ -221,13 +215,9 @@ class DepositService
 
     public function earlyWithdrawal(DepositAccount $account, User $performer): DepositAccount
     {
-        if ($account->status !== DepositStatus::Active) {
-            throw new \InvalidArgumentException('Deposito tidak dalam status aktif');
-        }
+        throw_if($account->status !== DepositStatus::Active, new \InvalidArgumentException('Deposito tidak dalam status aktif'));
 
-        if ($account->is_pledged) {
-            throw new \InvalidArgumentException('Deposito sedang dijaminkan, tidak dapat dicairkan');
-        }
+        throw_if($account->is_pledged, new \InvalidArgumentException('Deposito sedang dijaminkan, tidak dapat dicairkan'));
 
         return DB::transaction(function () use ($account, $performer) {
             $product = $account->depositProduct;
@@ -262,13 +252,9 @@ class DepositService
 
     public function pledge(DepositAccount $account, string $pledgeReference): void
     {
-        if ($account->status !== DepositStatus::Active) {
-            throw new \InvalidArgumentException('Deposito tidak dalam status aktif');
-        }
+        throw_if($account->status !== DepositStatus::Active, new \InvalidArgumentException('Deposito tidak dalam status aktif'));
 
-        if ($account->is_pledged) {
-            throw new \InvalidArgumentException('Deposito sudah dijaminkan');
-        }
+        throw_if($account->is_pledged, new \InvalidArgumentException('Deposito sudah dijaminkan'));
 
         $account->update([
             'is_pledged' => true,
@@ -278,9 +264,7 @@ class DepositService
 
     public function unpledge(DepositAccount $account): void
     {
-        if (! $account->is_pledged) {
-            throw new \InvalidArgumentException('Deposito tidak sedang dijaminkan');
-        }
+        throw_unless($account->is_pledged, new \InvalidArgumentException('Deposito tidak sedang dijaminkan'));
 
         $account->update([
             'is_pledged' => false,
@@ -323,7 +307,7 @@ class DepositService
             return;
         }
 
-        DB::transaction(function () use ($account, $performer) {
+        DB::transaction(function () use ($account, $performer): void {
             $accruedInterest = (float) $account->accrued_interest;
             if ($accruedInterest <= 0) {
                 return;
@@ -352,7 +336,7 @@ class DepositService
 
             $account->update([
                 'accrued_interest' => 0,
-                'total_interest_paid' => bcadd($account->total_interest_paid, (string) $netInterest, 2),
+                'total_interest_paid' => bcadd($account->total_interest_paid, $netInterest, 2),
                 'total_tax_paid' => bcadd($account->total_tax_paid, (string) $taxAmount, 2),
                 'last_interest_paid_at' => now(),
             ]);

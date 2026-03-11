@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('individual_details', function (Blueprint $table) {
+        Schema::create('individual_details', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->string('nik', 16)->unique();
@@ -38,7 +38,7 @@ return new class extends Migration
             $table->decimal('monthly_income', 18, 2)->default(0);
             $table->string('source_of_fund', 50)->nullable();
             $table->string('transaction_purpose', 50)->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

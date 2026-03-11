@@ -56,7 +56,7 @@ class CustomerService
             return false;
         }
 
-        return DB::transaction(function () use ($customer, $approver) {
+        return DB::transaction(function () use ($customer, $approver): true {
             $customer->approve($approver);
             $customer->update(['status' => CustomerStatus::Active]);
 
@@ -70,7 +70,7 @@ class CustomerService
             return false;
         }
 
-        return DB::transaction(function () use ($customer, $approver, $reason) {
+        return DB::transaction(function () use ($customer, $approver, $reason): true {
             $customer->reject($approver, $reason);
 
             return true;

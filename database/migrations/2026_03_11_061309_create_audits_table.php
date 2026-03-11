@@ -14,7 +14,7 @@ return new class extends Migration
         $connection = config('audit.drivers.database.connection', config('database.default'));
         $table = config('audit.drivers.database.table', 'audits');
 
-        Schema::connection($connection)->create($table, function (Blueprint $table) {
+        Schema::connection($connection)->create($table, function (Blueprint $table): void {
 
             $morphPrefix = config('audit.user.morph_prefix', 'user');
 
@@ -29,7 +29,7 @@ return new class extends Migration
             $table->ipAddress('ip_address')->nullable();
             $table->string('user_agent', 1023)->nullable();
             $table->string('tags')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index([$morphPrefix.'_id', $morphPrefix.'_type']);
         });

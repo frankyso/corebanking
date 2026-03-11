@@ -58,7 +58,7 @@ class CreateJournalEntry extends CreateRecord
                                         ChartOfAccount::query()
                                             ->postable()
                                             ->get()
-                                            ->mapWithKeys(fn (ChartOfAccount $coa) => [$coa->id => "{$coa->account_code} - {$coa->account_name}"])
+                                            ->mapWithKeys(fn (ChartOfAccount $coa): array => [$coa->id => "{$coa->account_code} - {$coa->account_name}"])
                                     )
                                     ->searchable()
                                     ->required(),
@@ -86,11 +86,11 @@ class CreateJournalEntry extends CreateRecord
     protected function handleRecordCreation(array $data): Model
     {
         try {
-            return app(AccountingService::class)->createJournal(
+            $record = app(AccountingService::class)->createJournal(
                 journalDate: Carbon::parse($data['journal_date']),
                 description: $data['description'],
                 source: JournalSource::from($data['source']),
-                lines: collect($data['lines'])->map(fn (array $line) => [
+                lines: collect($data['lines'])->map(fn (array $line): array => [
                     'account_id' => $line['account_id'],
                     'description' => $line['description'] ?? null,
                     'debit' => (float) ($line['debit'] ?? 0),
@@ -107,6 +107,10 @@ class CreateJournalEntry extends CreateRecord
                 ->send();
 
             $this->halt();
+
+            throw new \RuntimeException('Unreachable');
         }
+
+        return $record;
     }
 }

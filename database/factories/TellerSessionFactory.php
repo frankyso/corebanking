@@ -42,7 +42,7 @@ class TellerSessionFactory extends Factory
         $cashOut = fake()->randomFloat(2, 500000, 15000000);
         $closingBalance = $openingBalance + $cashIn - $cashOut;
 
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'status' => TellerSessionStatus::Closed,
             'opening_balance' => $openingBalance,
             'current_balance' => $closingBalance,

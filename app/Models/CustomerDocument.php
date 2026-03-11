@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class CustomerDocument extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'customer_id',
         'type',
@@ -25,6 +28,9 @@ class CustomerDocument extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<Customer, $this>
+     */
     public function customer(): BelongsTo
     {
         return $this->belongsTo(Customer::class);

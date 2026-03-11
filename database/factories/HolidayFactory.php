@@ -21,14 +21,14 @@ class HolidayFactory extends Factory
 
     public function regional(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'type' => 'regional',
         ]);
     }
 
     public function onDate(string $date): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'date' => $date,
         ]);
     }

@@ -33,14 +33,14 @@ class ChartOfAccountFactory extends Factory
 
     public function header(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_header' => true,
         ]);
     }
 
     public function asset(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'account_group' => AccountGroup::Asset,
             'account_code' => '1'.fake()->unique()->numerify('####'),
             'normal_balance' => NormalBalance::Debit,
@@ -49,7 +49,7 @@ class ChartOfAccountFactory extends Factory
 
     public function liability(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'account_group' => AccountGroup::Liability,
             'account_code' => '2'.fake()->unique()->numerify('####'),
             'normal_balance' => NormalBalance::Credit,
@@ -58,7 +58,7 @@ class ChartOfAccountFactory extends Factory
 
     public function revenue(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'account_group' => AccountGroup::Revenue,
             'account_code' => '4'.fake()->unique()->numerify('####'),
             'normal_balance' => NormalBalance::Credit,
@@ -67,7 +67,7 @@ class ChartOfAccountFactory extends Factory
 
     public function expense(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'account_group' => AccountGroup::Expense,
             'account_code' => '5'.fake()->unique()->numerify('####'),
             'normal_balance' => NormalBalance::Debit,
@@ -76,14 +76,14 @@ class ChartOfAccountFactory extends Factory
 
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_active' => false,
         ]);
     }
 
     public function childOf(ChartOfAccount $parent): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'parent_id' => $parent->id,
             'account_group' => $parent->account_group,
             'normal_balance' => $parent->normal_balance,

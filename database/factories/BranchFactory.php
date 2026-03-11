@@ -29,7 +29,7 @@ class BranchFactory extends Factory
 
     public function headOffice(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_head_office' => true,
             'name' => 'Kantor Pusat',
         ]);
@@ -37,7 +37,7 @@ class BranchFactory extends Factory
 
     public function inactive(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_active' => false,
         ]);
     }

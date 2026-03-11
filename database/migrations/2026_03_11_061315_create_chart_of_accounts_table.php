@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('chart_of_accounts', function (Blueprint $table) {
+        Schema::create('chart_of_accounts', function (Blueprint $table): void {
             $table->id();
             $table->string('account_code', 12)->unique();
             $table->string('account_name', 150);
@@ -19,8 +19,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('normal_balance', 10);
             $table->text('description')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index('account_group');
             $table->index('level');

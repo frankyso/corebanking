@@ -24,7 +24,7 @@ class SystemParameterFactory extends Factory
 
     public function boolean(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'type' => 'boolean',
             'value' => fake()->randomElement(['true', 'false']),
         ]);
@@ -32,7 +32,7 @@ class SystemParameterFactory extends Factory
 
     public function integer(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'type' => 'integer',
             'value' => (string) fake()->numberBetween(1, 1000),
         ]);
@@ -40,7 +40,7 @@ class SystemParameterFactory extends Factory
 
     public function decimal(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'type' => 'decimal',
             'value' => (string) fake()->randomFloat(2, 0, 100),
         ]);
@@ -48,7 +48,7 @@ class SystemParameterFactory extends Factory
 
     public function readOnly(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'is_editable' => false,
         ]);
     }

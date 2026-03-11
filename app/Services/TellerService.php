@@ -29,9 +29,7 @@ class TellerService
             ->open()
             ->first();
 
-        if ($existingSession) {
-            throw new \InvalidArgumentException('Teller sudah memiliki sesi aktif');
-        }
+        throw_if($existingSession, new \InvalidArgumentException('Teller sudah memiliki sesi aktif'));
 
         return DB::transaction(function () use ($teller, $vault, $openingBalance) {
             $this->createVaultTransaction(
@@ -59,9 +57,7 @@ class TellerService
 
     public function closeSession(TellerSession $session, User $performer, ?string $notes = null): TellerSession
     {
-        if (! $session->isOpen()) {
-            throw new \InvalidArgumentException('Sesi sudah ditutup');
-        }
+        throw_unless($session->isOpen(), new \InvalidArgumentException('Sesi sudah ditutup'));
 
         return DB::transaction(function () use ($session, $performer, $notes) {
             $currentBalance = (float) $session->current_balance;
@@ -96,7 +92,7 @@ class TellerService
     ): TellerTransaction {
         $this->validateOpenSession($session);
 
-        return DB::transaction(function () use ($session, $account, $amount, $performer, $description) {
+        return DB::transaction(function () use ($session, $account, $amount, $performer, $description): TellerTransaction {
             $this->savingsService->deposit($account, $amount, $performer, $description);
 
             return $this->createTellerTransaction(
@@ -105,10 +101,10 @@ class TellerService
                 amount: $amount,
                 direction: 'in',
                 description: $description ?? "Setor tabungan {$account->account_number}",
+                performer: $performer,
                 customerId: $account->customer_id,
                 referenceType: 'savings_account',
                 referenceId: $account->id,
-                performer: $performer,
             );
         });
     }
@@ -122,11 +118,9 @@ class TellerService
     ): TellerTransaction {
         $this->validateOpenSession($session);
 
-        if ($amount > (float) $session->current_balance) {
-            throw new \InvalidArgumentException('Saldo kas teller tidak mencukupi');
-        }
+        throw_if($amount > (float) $session->current_balance, new \InvalidArgumentException('Saldo kas teller tidak mencukupi'));
 
-        return DB::transaction(function () use ($session, $account, $amount, $performer, $description) {
+        return DB::transaction(function () use ($session, $account, $amount, $performer, $description): TellerTransaction {
             $this->savingsService->withdraw($account, $amount, $performer, $description);
 
             return $this->createTellerTransaction(
@@ -135,10 +129,10 @@ class TellerService
                 amount: $amount,
                 direction: 'out',
                 description: $description ?? "Tarik tabungan {$account->account_number}",
+                performer: $performer,
                 customerId: $account->customer_id,
                 referenceType: 'savings_account',
                 referenceId: $account->id,
-                performer: $performer,
             );
         });
     }
@@ -152,7 +146,7 @@ class TellerService
     ): TellerTransaction {
         $this->validateOpenSession($session);
 
-        return DB::transaction(function () use ($session, $loanAccount, $amount, $performer, $description) {
+        return DB::transaction(function () use ($session, $loanAccount, $amount, $performer, $description): TellerTransaction {
             $payment = $this->loanService->makePayment($loanAccount, $amount, $performer, $description);
 
             return $this->createTellerTransaction(
@@ -161,24 +155,22 @@ class TellerService
                 amount: $amount,
                 direction: 'in',
                 description: $description ?? "Bayar angsuran {$loanAccount->account_number}",
+                performer: $performer,
                 customerId: $loanAccount->customer_id,
                 referenceType: 'loan_payment',
                 referenceId: $payment->id,
-                performer: $performer,
             );
         });
     }
 
     public function reverseTransaction(TellerTransaction $transaction, User $performer, string $reason): TellerTransaction
     {
-        if ($transaction->is_reversed) {
-            throw new \InvalidArgumentException('Transaksi sudah pernah dibatalkan');
-        }
+        throw_if($transaction->is_reversed, new \InvalidArgumentException('Transaksi sudah pernah dibatalkan'));
 
         $session = $transaction->tellerSession;
         $this->validateOpenSession($session);
 
-        return DB::transaction(function () use ($transaction, $session, $performer, $reason) {
+        return DB::transaction(function () use ($transaction, $session, $performer, $reason): TellerTransaction {
             $reverseDirection = $transaction->isCashIn() ? 'out' : 'in';
 
             $reversalTx = $this->createTellerTransaction(
@@ -187,10 +179,10 @@ class TellerService
                 amount: (float) $transaction->amount,
                 direction: $reverseDirection,
                 description: "Reversal: {$reason}",
+                performer: $performer,
                 customerId: $transaction->customer_id,
                 referenceType: $transaction->reference_type,
                 referenceId: $transaction->reference_id,
-                performer: $performer,
             );
 
             $transaction->update([
@@ -206,7 +198,7 @@ class TellerService
     {
         $this->validateOpenSession($session);
 
-        return DB::transaction(function () use ($session, $vault, $amount, $performer) {
+        return DB::transaction(function () use ($session, $vault, $amount, $performer): TellerTransaction {
             $this->createVaultTransaction(
                 vault: $vault,
                 type: VaultTransactionType::TellerRequest,
@@ -230,11 +222,9 @@ class TellerService
     {
         $this->validateOpenSession($session);
 
-        if ($amount > (float) $session->current_balance) {
-            throw new \InvalidArgumentException('Saldo kas teller tidak mencukupi');
-        }
+        throw_if($amount > (float) $session->current_balance, new \InvalidArgumentException('Saldo kas teller tidak mencukupi'));
 
-        return DB::transaction(function () use ($session, $vault, $amount, $performer) {
+        return DB::transaction(function () use ($session, $vault, $amount, $performer): TellerTransaction {
             $this->createVaultTransaction(
                 vault: $vault,
                 type: VaultTransactionType::TellerReturn,
@@ -351,9 +341,7 @@ class TellerService
 
     protected function validateOpenSession(TellerSession $session): void
     {
-        if (! $session->isOpen()) {
-            throw new \InvalidArgumentException('Sesi teller tidak aktif');
-        }
+        throw_unless($session->isOpen(), new \InvalidArgumentException('Sesi teller tidak aktif'));
     }
 
     protected function generateReference(): string

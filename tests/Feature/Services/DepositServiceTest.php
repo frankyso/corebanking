@@ -12,8 +12,8 @@ use App\Models\User;
 use App\Services\DepositService;
 use Carbon\Carbon;
 
-describe('DepositService', function () {
-    beforeEach(function () {
+describe('DepositService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(DepositService::class);
 
         $this->branch = Branch::create([
@@ -49,8 +49,8 @@ describe('DepositService', function () {
         ]);
     });
 
-    describe('place', function () {
-        it('creates an active deposit account with correct details', function () {
+    describe('place', function (): void {
+        it('creates an active deposit account with correct details', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -74,7 +74,7 @@ describe('DepositService', function () {
                 ->and($account->is_pledged)->toBeFalse();
         });
 
-        it('creates a placement transaction', function () {
+        it('creates a placement transaction', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -93,7 +93,7 @@ describe('DepositService', function () {
                 ->and((float) $tx->amount)->toBe(5000000.00);
         });
 
-        it('pays upfront interest when InterestPaymentMethod is Upfront', function () {
+        it('pays upfront interest when InterestPaymentMethod is Upfront', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -112,7 +112,7 @@ describe('DepositService', function () {
                 ->and((float) $account->total_tax_paid)->toBeGreaterThan(0);
         });
 
-        it('does not pay upfront interest for maturity payment method', function () {
+        it('does not pay upfront interest for maturity payment method', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -129,7 +129,7 @@ describe('DepositService', function () {
                 ->and((float) $account->total_interest_paid)->toBe(0.00);
         });
 
-        it('calculates maturity date from placement date plus tenor months', function () {
+        it('calculates maturity date from placement date plus tenor months', function (): void {
             $placementDate = Carbon::parse('2026-01-15');
 
             $account = $this->service->place(
@@ -149,7 +149,7 @@ describe('DepositService', function () {
                 ->and($account->maturity_date->format('Y-m-d'))->toBe('2027-01-15');
         });
 
-        it('throws when principal is below product minimum', function () {
+        it('throws when principal is below product minimum', function (): void {
             $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -163,7 +163,7 @@ describe('DepositService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Nominal minimal deposito');
 
-        it('throws when principal exceeds product maximum', function () {
+        it('throws when principal exceeds product maximum', function (): void {
             $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -177,7 +177,7 @@ describe('DepositService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Nominal maksimal deposito');
 
-        it('throws when no rate exists for the given tenor and amount', function () {
+        it('throws when no rate exists for the given tenor and amount', function (): void {
             $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -192,8 +192,8 @@ describe('DepositService', function () {
         })->throws(InvalidArgumentException::class, 'Tidak ada suku bunga untuk tenor');
     });
 
-    describe('processMaturity', function () {
-        it('pays interest at maturity and sets status to Matured', function () {
+    describe('processMaturity', function (): void {
+        it('pays interest at maturity and sets status to Matured', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -213,7 +213,7 @@ describe('DepositService', function () {
                 ->and((float) $matured->total_interest_paid)->toBeGreaterThan(0);
         });
 
-        it('triggers rollover when rollover type is not None', function () {
+        it('triggers rollover when rollover type is not None', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -235,7 +235,7 @@ describe('DepositService', function () {
                 ->and($result->placement_date->format('Y-m-d'))->toBe($oldMaturityDate);
         });
 
-        it('throws when deposit is not active', function () {
+        it('throws when deposit is not active', function (): void {
             $account = DepositAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'deposit_product_id' => $this->product->id,
@@ -246,7 +246,7 @@ describe('DepositService', function () {
             $this->service->processMaturity($account, $this->user);
         })->throws(InvalidArgumentException::class, 'Deposito tidak dalam status aktif');
 
-        it('throws when deposit has not yet matured', function () {
+        it('throws when deposit has not yet matured', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -263,8 +263,8 @@ describe('DepositService', function () {
         })->throws(InvalidArgumentException::class, 'Deposito belum jatuh tempo');
     });
 
-    describe('rollover', function () {
-        it('rolls over with PrincipalAndInterest adding net interest to principal', function () {
+    describe('rollover', function (): void {
+        it('rolls over with PrincipalAndInterest adding net interest to principal', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -286,8 +286,8 @@ describe('DepositService', function () {
         });
     });
 
-    describe('earlyWithdrawal', function () {
-        it('creates penalty and withdrawal transactions and sets status to Withdrawn', function () {
+    describe('earlyWithdrawal', function (): void {
+        it('creates penalty and withdrawal transactions and sets status to Withdrawn', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -307,7 +307,7 @@ describe('DepositService', function () {
             expect($account->transactions()->count())->toBe(3);
         });
 
-        it('throws when deposit is not active', function () {
+        it('throws when deposit is not active', function (): void {
             $account = DepositAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'deposit_product_id' => $this->product->id,
@@ -318,7 +318,7 @@ describe('DepositService', function () {
             $this->service->earlyWithdrawal($account, $this->user);
         })->throws(InvalidArgumentException::class, 'Deposito tidak dalam status aktif');
 
-        it('throws when deposit is pledged', function () {
+        it('throws when deposit is pledged', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -337,8 +337,8 @@ describe('DepositService', function () {
         })->throws(InvalidArgumentException::class, 'Deposito sedang dijaminkan');
     });
 
-    describe('pledge', function () {
-        it('sets is_pledged to true and stores pledge_reference', function () {
+    describe('pledge', function (): void {
+        it('sets is_pledged to true and stores pledge_reference', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -358,7 +358,7 @@ describe('DepositService', function () {
                 ->and($account->pledge_reference)->toBe('LOAN-001');
         });
 
-        it('throws when deposit is not active', function () {
+        it('throws when deposit is not active', function (): void {
             $account = DepositAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'deposit_product_id' => $this->product->id,
@@ -369,7 +369,7 @@ describe('DepositService', function () {
             $this->service->pledge($account, 'LOAN-001');
         })->throws(InvalidArgumentException::class, 'Deposito tidak dalam status aktif');
 
-        it('throws when deposit is already pledged', function () {
+        it('throws when deposit is already pledged', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -387,8 +387,8 @@ describe('DepositService', function () {
         })->throws(InvalidArgumentException::class, 'Deposito sudah dijaminkan');
     });
 
-    describe('unpledge', function () {
-        it('clears pledge flag and reference', function () {
+    describe('unpledge', function (): void {
+        it('clears pledge flag and reference', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -409,7 +409,7 @@ describe('DepositService', function () {
                 ->and($account->pledge_reference)->toBeNull();
         });
 
-        it('throws when deposit is not pledged', function () {
+        it('throws when deposit is not pledged', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -426,8 +426,8 @@ describe('DepositService', function () {
         })->throws(InvalidArgumentException::class, 'Deposito tidak sedang dijaminkan');
     });
 
-    describe('accrueDaily', function () {
-        it('creates an interest accrual record with correct amounts', function () {
+    describe('accrueDaily', function (): void {
+        it('creates an interest accrual record with correct amounts', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -452,7 +452,7 @@ describe('DepositService', function () {
             expect((float) $account->accrued_interest)->toBeGreaterThan(0);
         });
 
-        it('does nothing when deposit is not active', function () {
+        it('does nothing when deposit is not active', function (): void {
             $account = DepositAccount::factory()->create([
                 'customer_id' => $this->customer->id,
                 'deposit_product_id' => $this->product->id,
@@ -467,8 +467,8 @@ describe('DepositService', function () {
         });
     });
 
-    describe('payMonthlyInterest', function () {
-        it('pays accrued interest minus tax for monthly method', function () {
+    describe('payMonthlyInterest', function (): void {
+        it('pays accrued interest minus tax for monthly method', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -501,7 +501,7 @@ describe('DepositService', function () {
             expect($account->interestAccruals()->where('is_posted', false)->count())->toBe(0);
         });
 
-        it('does nothing when payment method is not monthly', function () {
+        it('does nothing when payment method is not monthly', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,
@@ -519,7 +519,7 @@ describe('DepositService', function () {
             expect((float) $account->total_interest_paid)->toBe(0.00);
         });
 
-        it('does nothing when accrued interest is zero', function () {
+        it('does nothing when accrued interest is zero', function (): void {
             $account = $this->service->place(
                 product: $this->product,
                 customerId: $this->customer->id,

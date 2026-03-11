@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('deposit_product_rates', function (Blueprint $table) {
+        Schema::create('deposit_product_rates', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('deposit_product_id')->constrained('deposit_products')->cascadeOnDelete();
             $table->integer('tenor_months');
@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('max_amount', 18, 2)->nullable();
             $table->decimal('interest_rate', 8, 5);
             $table->boolean('is_active')->default(true);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['deposit_product_id', 'tenor_months', 'min_amount'], 'deposit_rate_unique');
         });

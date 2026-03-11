@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('loan_schedules', function (Blueprint $table) {
+        Schema::create('loan_schedules', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('loan_account_id')->constrained('loan_accounts')->cascadeOnDelete();
             $table->integer('installment_number');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->decimal('penalty_paid', 18, 2)->default(0);
             $table->boolean('is_paid')->default(false);
             $table->date('paid_date')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['loan_account_id', 'installment_number']);
             $table->index('due_date');

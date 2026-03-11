@@ -25,7 +25,7 @@ class SchedulesRelationManager extends RelationManager
                     ->label('Jatuh Tempo')
                     ->date('d/m/Y')
                     ->sortable()
-                    ->color(fn ($record) => $record->isOverdue() ? 'danger' : null),
+                    ->color(fn ($record): ?string => $record->isOverdue() ? 'danger' : null),
                 TextColumn::make('principal_amount')
                     ->label('Pokok')
                     ->money('IDR')

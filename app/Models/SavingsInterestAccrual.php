@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class SavingsInterestAccrual extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'savings_account_id',
         'accrual_date',
@@ -31,6 +34,9 @@ class SavingsInterestAccrual extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<SavingsAccount, $this>
+     */
     public function savingsAccount(): BelongsTo
     {
         return $this->belongsTo(SavingsAccount::class);

@@ -3,6 +3,8 @@
 namespace App\Models;
 
 use App\Enums\InterestCalcMethod;
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -13,7 +15,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class SavingsProduct extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'code',
@@ -56,37 +58,56 @@ class SavingsProduct extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return HasMany<SavingsAccount, $this>
+     */
     public function accounts(): HasMany
     {
         return $this->hasMany(SavingsAccount::class);
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glSavings(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_savings_id');
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glInterestExpense(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_interest_expense_id');
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glInterestPayable(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_interest_payable_id');
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glAdminFeeIncome(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_admin_fee_income_id');
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function glTaxPayable(): BelongsTo
     {
         return $this->belongsTo(ChartOfAccount::class, 'gl_tax_payable_id');
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }

@@ -34,7 +34,7 @@ class LoanScheduleFactory extends Factory
 
     public function paid(): static
     {
-        return $this->state(function (array $attributes) {
+        return $this->state(function (array $attributes): array {
             return [
                 'is_paid' => true,
                 'principal_paid' => $attributes['principal_amount'],
@@ -46,7 +46,7 @@ class LoanScheduleFactory extends Factory
 
     public function overdue(): static
     {
-        return $this->state(fn (array $attributes) => [
+        return $this->state(fn (array $attributes): array => [
             'due_date' => fake()->dateTimeBetween('-3 months', '-1 day'),
             'is_paid' => false,
             'paid_date' => null,

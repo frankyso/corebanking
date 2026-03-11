@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('gl_daily_balances', function (Blueprint $table) {
+        Schema::create('gl_daily_balances', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('chart_of_account_id')->constrained('chart_of_accounts');
             $table->foreignId('branch_id')->nullable()->constrained('branches');
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('debit_total', 18, 2)->default(0);
             $table->decimal('credit_total', 18, 2)->default(0);
             $table->decimal('closing_balance', 18, 2)->default(0);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['chart_of_account_id', 'branch_id', 'balance_date'], 'gl_daily_balances_unique');
             $table->index('balance_date');

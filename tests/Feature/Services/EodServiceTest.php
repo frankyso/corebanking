@@ -23,8 +23,8 @@ use App\Models\Vault;
 use App\Services\EodService;
 use Carbon\Carbon;
 
-describe('EodService', function () {
-    beforeEach(function () {
+describe('EodService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(EodService::class);
 
         $this->branch = Branch::create([
@@ -42,8 +42,8 @@ describe('EodService', function () {
         $this->processDate = Carbon::parse('2026-03-10');
     });
 
-    describe('run', function () {
-        it('creates EodProcess and marks as Completed when all steps succeed', function () {
+    describe('run', function (): void {
+        it('creates EodProcess and marks as Completed when all steps succeed', function (): void {
             $process = $this->service->run($this->processDate, $this->user);
 
             expect($process->status)->toBe(EodStatus::Completed)
@@ -55,7 +55,7 @@ describe('EodService', function () {
             expect($process->steps()->count())->toBe(11);
         });
 
-        it('throws when EOD for that date is already completed', function () {
+        it('throws when EOD for that date is already completed', function (): void {
             EodProcess::create([
                 'process_date' => $this->processDate->toDateString(),
                 'status' => EodStatus::Completed,
@@ -69,7 +69,7 @@ describe('EodService', function () {
             $this->service->run($this->processDate, $this->user);
         })->throws(InvalidArgumentException::class, 'EOD untuk tanggal');
 
-        it('throws when EOD is currently running', function () {
+        it('throws when EOD is currently running', function (): void {
             EodProcess::create([
                 'process_date' => $this->processDate->toDateString(),
                 'status' => EodStatus::Running,
@@ -82,7 +82,7 @@ describe('EodService', function () {
             $this->service->run($this->processDate, $this->user);
         })->throws(InvalidArgumentException::class, 'EOD sedang berjalan');
 
-        it('records each step with records_processed count', function () {
+        it('records each step with records_processed count', function (): void {
             $process = $this->service->run($this->processDate, $this->user);
 
             $steps = $process->steps()->orderBy('step_number')->get();
@@ -95,8 +95,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('preCheck', function () {
-        it('fails when open teller sessions exist', function () {
+    describe('preCheck', function (): void {
+        it('fails when open teller sessions exist', function (): void {
             $vault = Vault::factory()->create(['branch_id' => $this->branch->id]);
 
             TellerSession::create([
@@ -119,8 +119,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('accrueSavingsInterest', function () {
-        it('processes all active savings accounts', function () {
+    describe('accrueSavingsInterest', function (): void {
+        it('processes all active savings accounts', function (): void {
             $product = SavingsProduct::factory()->create([
                 'code' => 'SAV',
                 'interest_rate' => 3.5,
@@ -151,8 +151,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('accrueDepositInterest', function () {
-        it('processes all active deposit accounts', function () {
+    describe('accrueDepositInterest', function (): void {
+        it('processes all active deposit accounts', function (): void {
             $product = DepositProduct::factory()->create(['code' => 'DEP']);
 
             DepositProductRate::create([
@@ -187,8 +187,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('accrueLoanInterest', function () {
-        it('accrues daily loan interest on all active loans', function () {
+    describe('accrueLoanInterest', function (): void {
+        it('accrues daily loan interest on all active loans', function (): void {
             $product = LoanProduct::factory()->create(['code' => 'KMK']);
             $customer = Customer::factory()->create([
                 'branch_id' => $this->branch->id,
@@ -218,8 +218,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('updateDpd and updateCollectibility', function () {
-        it('updates DPD and collectibility for overdue loan accounts', function () {
+    describe('updateDpd and updateCollectibility', function (): void {
+        it('updates DPD and collectibility for overdue loan accounts', function (): void {
             $product = LoanProduct::factory()->create(['code' => 'KRD']);
             $customer = Customer::factory()->create([
                 'branch_id' => $this->branch->id,
@@ -253,8 +253,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('checkDormancy', function () {
-        it('marks accounts as dormant when last transaction exceeds dormancy period', function () {
+    describe('checkDormancy', function (): void {
+        it('marks accounts as dormant when last transaction exceeds dormancy period', function (): void {
             SystemParameter::create([
                 'group' => 'savings',
                 'key' => 'dormant_period_days',
@@ -292,8 +292,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('postValidation', function () {
-        it('fails when negative savings balances exist', function () {
+    describe('postValidation', function (): void {
+        it('fails when negative savings balances exist', function (): void {
             $product = SavingsProduct::factory()->create(['code' => 'NEG']);
             $customer = Customer::factory()->create([
                 'branch_id' => $this->branch->id,
@@ -321,8 +321,8 @@ describe('EodService', function () {
         });
     });
 
-    describe('getStepNames', function () {
-        it('returns all 11 step names', function () {
+    describe('getStepNames', function (): void {
+        it('returns all 11 step names', function (): void {
             $steps = $this->service->getStepNames();
 
             expect($steps)->toHaveCount(11)

@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('customer_addresses', function (Blueprint $table) {
+        Schema::create('customer_addresses', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->string('type', 20)->default('domicile');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('province', 50);
             $table->string('postal_code', 5)->nullable();
             $table->boolean('is_primary')->default(false);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

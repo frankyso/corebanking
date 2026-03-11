@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('customer_documents', function (Blueprint $table) {
+        Schema::create('customer_documents', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('customer_id')->constrained('customers')->cascadeOnDelete();
             $table->string('type', 30);
@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('file_name', 255)->nullable();
             $table->date('expiry_date')->nullable();
             $table->boolean('is_verified')->default(false);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

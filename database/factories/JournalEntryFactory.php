@@ -20,9 +20,9 @@ class JournalEntryFactory extends Factory
     public function definition(): array
     {
         return [
-            'journal_number' => 'JRN'.now()->format('Ymd').str_pad((string) $this->faker->unique()->numberBetween(1, 99999), 5, '0', STR_PAD_LEFT),
-            'journal_date' => $this->faker->dateTimeBetween('-1 month', 'now'),
-            'description' => $this->faker->sentence(),
+            'journal_number' => 'JRN'.now()->format('Ymd').str_pad((string) fake()->unique()->numberBetween(1, 99999), 5, '0', STR_PAD_LEFT),
+            'journal_date' => fake()->dateTimeBetween('-1 month', 'now'),
+            'description' => fake()->sentence(),
             'source' => JournalSource::Manual,
             'status' => JournalStatus::Draft,
             'total_debit' => 0,
@@ -35,7 +35,7 @@ class JournalEntryFactory extends Factory
 
     public function posted(): static
     {
-        return $this->state(fn () => [
+        return $this->state(fn (): array => [
             'status' => JournalStatus::Posted,
             'approval_status' => ApprovalStatus::Approved,
             'posted_at' => now(),

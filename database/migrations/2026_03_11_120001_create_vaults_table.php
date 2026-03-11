@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('vaults', function (Blueprint $table) {
+        Schema::create('vaults', function (Blueprint $table): void {
             $table->id();
             $table->string('code', 10)->unique();
             $table->string('name', 100);
@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('maximum_balance', 18, 2)->default(0);
             $table->boolean('is_active')->default(true);
             $table->foreignId('custodian_id')->nullable()->constrained('users');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

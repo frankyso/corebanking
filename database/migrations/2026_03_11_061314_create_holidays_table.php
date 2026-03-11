@@ -8,12 +8,12 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('holidays', function (Blueprint $table) {
+        Schema::create('holidays', function (Blueprint $table): void {
             $table->id();
             $table->date('date')->unique();
             $table->string('name', 100);
             $table->string('type', 20)->default('national');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

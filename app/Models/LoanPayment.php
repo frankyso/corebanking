@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LoanPayment extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'reference_number',
         'loan_account_id',
@@ -32,16 +35,25 @@ class LoanPayment extends Model
         ];
     }
 
+    /**
+     * @return BelongsTo<LoanAccount, $this>
+     */
     public function loanAccount(): BelongsTo
     {
         return $this->belongsTo(LoanAccount::class);
     }
 
+    /**
+     * @return BelongsTo<User, $this>
+     */
     public function performer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'performed_by');
     }
 
+    /**
+     * @return BelongsTo<JournalEntry, $this>
+     */
     public function journalEntry(): BelongsTo
     {
         return $this->belongsTo(JournalEntry::class);

@@ -3,13 +3,13 @@
 use App\Models\Sequence;
 use App\Services\SequenceService;
 
-describe('SequenceService', function () {
-    beforeEach(function () {
+describe('SequenceService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(SequenceService::class);
     });
 
-    describe('generateCifNumber', function () {
-        it('generates correct format: branchCode + 2-digit year + 7-digit padded number', function () {
+    describe('generateCifNumber', function (): void {
+        it('generates correct format: branchCode + 2-digit year + 7-digit padded number', function (): void {
             $cif = $this->service->generateCifNumber('001');
 
             $year = date('y');
@@ -20,7 +20,7 @@ describe('SequenceService', function () {
                 ->toBe('0000001');
         });
 
-        it('increments the number on sequential calls', function () {
+        it('increments the number on sequential calls', function (): void {
             $cif1 = $this->service->generateCifNumber('001');
             $cif2 = $this->service->generateCifNumber('001');
 
@@ -30,7 +30,7 @@ describe('SequenceService', function () {
             expect($number2)->toBe($number1 + 1);
         });
 
-        it('maintains separate sequences for different branch codes', function () {
+        it('maintains separate sequences for different branch codes', function (): void {
             $cifA = $this->service->generateCifNumber('001');
             $cifB = $this->service->generateCifNumber('002');
 
@@ -39,8 +39,8 @@ describe('SequenceService', function () {
         });
     });
 
-    describe('generateAccountNumber', function () {
-        it('generates correct format: productCode + branchCode + 9-digit padded number', function () {
+    describe('generateAccountNumber', function (): void {
+        it('generates correct format: productCode + branchCode + 9-digit padded number', function (): void {
             $accountNumber = $this->service->generateAccountNumber('T01', '001');
 
             expect($accountNumber)
@@ -50,7 +50,7 @@ describe('SequenceService', function () {
                 ->toBe('000000001');
         });
 
-        it('increments the number on sequential calls', function () {
+        it('increments the number on sequential calls', function (): void {
             $acc1 = $this->service->generateAccountNumber('T01', '001');
             $acc2 = $this->service->generateAccountNumber('T01', '001');
 
@@ -61,8 +61,8 @@ describe('SequenceService', function () {
         });
     });
 
-    describe('generateJournalNumber', function () {
-        it('generates correct format: JRN + date + 5-digit padded number', function () {
+    describe('generateJournalNumber', function (): void {
+        it('generates correct format: JRN + date + 5-digit padded number', function (): void {
             $journal = $this->service->generateJournalNumber();
 
             $dateStr = date('Ymd');
@@ -73,7 +73,7 @@ describe('SequenceService', function () {
                 ->toBe('00001');
         });
 
-        it('increments the number on sequential calls', function () {
+        it('increments the number on sequential calls', function (): void {
             $jrn1 = $this->service->generateJournalNumber();
             $jrn2 = $this->service->generateJournalNumber();
 
@@ -84,8 +84,8 @@ describe('SequenceService', function () {
         });
     });
 
-    describe('concurrency', function () {
-        it('does not produce duplicate numbers across multiple rapid calls', function () {
+    describe('concurrency', function (): void {
+        it('does not produce duplicate numbers across multiple rapid calls', function (): void {
             $numbers = collect();
 
             for ($i = 0; $i < 20; $i++) {
@@ -95,7 +95,7 @@ describe('SequenceService', function () {
             expect($numbers->unique()->count())->toBe(20);
         });
 
-        it('creates a sequence record in the database', function () {
+        it('creates a sequence record in the database', function (): void {
             $this->service->generateCifNumber('001');
 
             $year = date('y');

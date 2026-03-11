@@ -68,16 +68,12 @@ class SavingsService
     ): SavingsTransaction {
         $this->validateActiveAccount($account);
 
-        if ($amount <= 0) {
-            throw new \InvalidArgumentException('Jumlah setoran harus lebih dari 0');
-        }
+        throw_if($amount <= 0, new \InvalidArgumentException('Jumlah setoran harus lebih dari 0'));
 
         $product = $account->savingsProduct;
-        if ($product->max_balance && bcadd($account->balance, (string) $amount, 2) > (float) $product->max_balance) {
-            throw new \InvalidArgumentException('Saldo melebihi batas maksimal');
-        }
+        throw_if($product->max_balance && bcadd($account->balance, (string) $amount, 2) > (float) $product->max_balance, new \InvalidArgumentException('Saldo melebihi batas maksimal'));
 
-        return DB::transaction(function () use ($account, $amount, $performer, $description) {
+        return DB::transaction(function () use ($account, $amount, $performer, $description): SavingsTransaction {
             $transaction = $this->createTransaction(
                 account: $account,
                 type: SavingsTransactionType::Deposit,
@@ -106,13 +102,9 @@ class SavingsService
     ): SavingsTransaction {
         $this->validateActiveAccount($account);
 
-        if ($amount <= 0) {
-            throw new \InvalidArgumentException('Jumlah penarikan harus lebih dari 0');
-        }
+        throw_if($amount <= 0, new \InvalidArgumentException('Jumlah penarikan harus lebih dari 0'));
 
-        if ($amount > (float) $account->available_balance) {
-            throw new \InvalidArgumentException('Saldo tidak mencukupi');
-        }
+        throw_if($amount > (float) $account->available_balance, new \InvalidArgumentException('Saldo tidak mencukupi'));
 
         $product = $account->savingsProduct;
         $remainingBalance = bcsub($account->balance, (string) $amount, 2);
@@ -122,7 +114,7 @@ class SavingsService
             );
         }
 
-        return DB::transaction(function () use ($account, $amount, $performer, $description) {
+        return DB::transaction(function () use ($account, $amount, $performer, $description): SavingsTransaction {
             $transaction = $this->createTransaction(
                 account: $account,
                 type: SavingsTransactionType::Withdrawal,
@@ -145,11 +137,9 @@ class SavingsService
     {
         $this->validateActiveAccount($account);
 
-        if ($amount > (float) $account->available_balance) {
-            throw new \InvalidArgumentException('Saldo tersedia tidak mencukupi untuk pemblokiran');
-        }
+        throw_if($amount > (float) $account->available_balance, new \InvalidArgumentException('Saldo tersedia tidak mencukupi untuk pemblokiran'));
 
-        DB::transaction(function () use ($account, $amount, $performer) {
+        DB::transaction(function () use ($account, $amount, $performer): void {
             $this->createTransaction(
                 account: $account,
                 type: SavingsTransactionType::Hold,
@@ -169,11 +159,9 @@ class SavingsService
     {
         $this->validateActiveAccount($account);
 
-        if ($amount > (float) $account->hold_amount) {
-            throw new \InvalidArgumentException('Jumlah melebihi saldo yang diblokir');
-        }
+        throw_if($amount > (float) $account->hold_amount, new \InvalidArgumentException('Jumlah melebihi saldo yang diblokir'));
 
-        DB::transaction(function () use ($account, $amount, $performer) {
+        DB::transaction(function () use ($account, $amount, $performer): void {
             $this->createTransaction(
                 account: $account,
                 type: SavingsTransactionType::Unhold,
@@ -197,23 +185,17 @@ class SavingsService
 
     public function unfreeze(SavingsAccount $account): void
     {
-        if ($account->status !== SavingsAccountStatus::Frozen) {
-            throw new \InvalidArgumentException('Rekening tidak dalam status dibekukan');
-        }
+        throw_if($account->status !== SavingsAccountStatus::Frozen, new \InvalidArgumentException('Rekening tidak dalam status dibekukan'));
         $account->update(['status' => SavingsAccountStatus::Active]);
     }
 
     public function close(SavingsAccount $account, User $performer): ?SavingsTransaction
     {
-        if (! in_array($account->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant])) {
-            throw new \InvalidArgumentException('Rekening tidak dapat ditutup');
-        }
+        throw_unless(in_array($account->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]), new \InvalidArgumentException('Rekening tidak dapat ditutup'));
 
-        if ((float) $account->hold_amount > 0) {
-            throw new \InvalidArgumentException('Rekening masih memiliki saldo diblokir');
-        }
+        throw_if((float) $account->hold_amount > 0, new \InvalidArgumentException('Rekening masih memiliki saldo diblokir'));
 
-        return DB::transaction(function () use ($account, $performer) {
+        return DB::transaction(function () use ($account, $performer): ?\App\Models\SavingsTransaction {
             $closingFee = (float) $account->savingsProduct->closing_fee;
             $remainingBalance = (float) $account->balance;
             $transaction = null;
@@ -286,8 +268,6 @@ class SavingsService
 
     protected function validateActiveAccount(SavingsAccount $account): void
     {
-        if (! in_array($account->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant])) {
-            throw new \InvalidArgumentException('Rekening tidak aktif');
-        }
+        throw_unless(in_array($account->status, [SavingsAccountStatus::Active, SavingsAccountStatus::Dormant]), new \InvalidArgumentException('Rekening tidak aktif'));
     }
 }

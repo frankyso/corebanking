@@ -123,68 +123,68 @@ class CreateCustomer extends CreateRecord
                 ->label('NIK')
                 ->maxLength(16)
                 ->required()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.full_name')
                 ->label('Nama Lengkap')
                 ->maxLength(150)
                 ->required()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.birth_place')
                 ->label('Tempat Lahir')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             DatePicker::make('individual.birth_date')
                 ->label('Tanggal Lahir')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             Select::make('individual.gender')
                 ->label('Jenis Kelamin')
                 ->options(Gender::class)
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             Select::make('individual.marital_status')
                 ->label('Status Perkawinan')
                 ->options(MaritalStatus::class)
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.mother_maiden_name')
                 ->label('Nama Ibu Kandung')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.religion')
                 ->label('Agama')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.education')
                 ->label('Pendidikan')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.nationality')
                 ->label('Kewarganegaraan')
                 ->default('IDN')
                 ->maxLength(3)
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.npwp')
                 ->label('NPWP')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.phone_mobile')
                 ->label('No. HP')
                 ->tel()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.email')
                 ->label('Email')
                 ->email()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.occupation')
                 ->label('Pekerjaan')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.employer_name')
                 ->label('Nama Perusahaan')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.monthly_income')
                 ->label('Penghasilan Bulanan')
                 ->numeric()
                 ->prefix('Rp')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.source_of_fund')
                 ->label('Sumber Dana')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
             TextInput::make('individual.transaction_purpose')
                 ->label('Tujuan Transaksi')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Individual->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Individual->value),
         ];
     }
 
@@ -195,69 +195,69 @@ class CreateCustomer extends CreateRecord
                 ->label('Nama Perusahaan')
                 ->maxLength(200)
                 ->required()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.legal_type')
                 ->label('Bentuk Badan Hukum')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.nib')
                 ->label('NIB')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.npwp_company')
                 ->label('NPWP Perusahaan')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.deed_number')
                 ->label('Nomor Akta')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             DatePicker::make('corporate.deed_date')
                 ->label('Tanggal Akta')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.sk_kemenkumham')
                 ->label('SK Kemenkumham')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.business_sector')
                 ->label('Sektor Usaha')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             Textarea::make('corporate.address_company')
                 ->label('Alamat Perusahaan')
                 ->rows(3)
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.city')
                 ->label('Kota')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.province')
                 ->label('Provinsi')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.postal_code')
                 ->label('Kode Pos')
                 ->maxLength(5)
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.phone_office')
                 ->label('Telepon Kantor')
                 ->tel()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.email')
                 ->label('Email')
                 ->email()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.annual_revenue')
                 ->label('Pendapatan Tahunan')
                 ->numeric()
                 ->prefix('Rp')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.total_employees')
                 ->label('Jumlah Karyawan')
                 ->numeric()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.contact_person_name')
                 ->label('Nama Contact Person')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.contact_person_phone')
                 ->label('Telepon Contact Person')
                 ->tel()
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
             TextInput::make('corporate.contact_person_position')
                 ->label('Jabatan Contact Person')
-                ->visible(fn (Get $get) => $get('customer_type') === CustomerType::Corporate->value),
+                ->visible(fn (Get $get): bool => $get('customer_type') === CustomerType::Corporate->value),
         ];
     }
 

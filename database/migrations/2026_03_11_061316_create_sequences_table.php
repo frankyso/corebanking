@@ -8,13 +8,13 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('sequences', function (Blueprint $table) {
+        Schema::create('sequences', function (Blueprint $table): void {
             $table->id();
             $table->string('type', 50);
             $table->string('prefix', 20);
             $table->unsignedInteger('last_number')->default(0);
             $table->unsignedTinyInteger('padding')->default(7);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['type', 'prefix']);
         });

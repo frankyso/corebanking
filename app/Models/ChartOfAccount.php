@@ -4,6 +4,9 @@ namespace App\Models;
 
 use App\Enums\AccountGroup;
 use App\Enums\NormalBalance;
+use App\Models\Concerns\HasMicrosecondTimestamps;
+use Illuminate\Database\Eloquent\Attributes\Scope;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,7 +17,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class ChartOfAccount extends Model implements AuditableContract
 {
-    use Auditable, HasFactory, SoftDeletes;
+    use Auditable, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'account_code',
@@ -39,33 +42,44 @@ class ChartOfAccount extends Model implements AuditableContract
         ];
     }
 
+    /**
+     * @return BelongsTo<ChartOfAccount, $this>
+     */
     public function parent(): BelongsTo
     {
         return $this->belongsTo(self::class, 'parent_id');
     }
 
+    /**
+     * @return HasMany<ChartOfAccount, $this>
+     */
     public function children(): HasMany
     {
         return $this->hasMany(self::class, 'parent_id');
     }
 
-    public function scopePostable($query)
+    #[Scope]
+    protected function postable($query)
     {
         return $query->where('is_header', false)->where('is_active', true);
     }
 
-    public function scopeByGroup($query, AccountGroup $group)
+    #[Scope]
+    protected function byGroup($query, AccountGroup $group)
     {
         return $query->where('account_group', $group);
     }
 
-    public function scopeActive($query)
+    #[Scope]
+    protected function active($query)
     {
         return $query->where('is_active', true);
     }
 
-    public function getFullNameAttribute(): string
+    protected function fullName(): Attribute
     {
-        return "{$this->account_code} - {$this->account_name}";
+        return Attribute::make(get: function (): string {
+            return "{$this->account_code} - {$this->account_name}";
+        });
     }
 }

@@ -13,8 +13,8 @@ use App\Models\JournalEntry;
 use App\Models\User;
 use App\Services\AccountingService;
 
-describe('AccountingService', function () {
-    beforeEach(function () {
+describe('AccountingService', function (): void {
+    beforeEach(function (): void {
         $this->service = app(AccountingService::class);
 
         $this->branch = Branch::create([
@@ -52,8 +52,8 @@ describe('AccountingService', function () {
         ]);
     });
 
-    describe('createJournal', function () {
-        it('creates a draft journal with correct lines and totals', function () {
+    describe('createJournal', function (): void {
+        it('creates a draft journal with correct lines and totals', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal test',
@@ -75,7 +75,7 @@ describe('AccountingService', function () {
                 ->and($journal->lines)->toHaveCount(2);
         });
 
-        it('creates an auto-posted journal when autoPost is true', function () {
+        it('creates an auto-posted journal when autoPost is true', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal auto post',
@@ -97,7 +97,7 @@ describe('AccountingService', function () {
             expect(GlDailyBalance::count())->toBeGreaterThanOrEqual(2);
         });
 
-        it('sets reference_type and reference_id when provided', function () {
+        it('sets reference_type and reference_id when provided', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal ref',
@@ -115,7 +115,7 @@ describe('AccountingService', function () {
                 ->and($journal->reference_id)->toBe(99);
         });
 
-        it('associates journal with branch when branchId is provided', function () {
+        it('associates journal with branch when branchId is provided', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal cabang',
@@ -131,7 +131,7 @@ describe('AccountingService', function () {
             expect($journal->branch_id)->toBe($this->branch->id);
         });
 
-        it('throws when fewer than 2 lines are provided', function () {
+        it('throws when fewer than 2 lines are provided', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal invalid',
@@ -143,7 +143,7 @@ describe('AccountingService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Jurnal harus memiliki minimal 2 baris');
 
-        it('throws when a line has both debit and credit', function () {
+        it('throws when a line has both debit and credit', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal invalid',
@@ -156,7 +156,7 @@ describe('AccountingService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Baris jurnal tidak boleh memiliki debit dan kredit sekaligus');
 
-        it('throws when a line has zero debit and zero credit', function () {
+        it('throws when a line has zero debit and zero credit', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal invalid',
@@ -169,7 +169,7 @@ describe('AccountingService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Baris jurnal harus memiliki debit atau kredit');
 
-        it('throws when account is a header account', function () {
+        it('throws when account is a header account', function (): void {
             $headerAccount = ChartOfAccount::factory()->header()->create();
 
             $this->service->createJournal(
@@ -184,7 +184,7 @@ describe('AccountingService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Akun tidak valid atau merupakan akun header');
 
-        it('throws when account does not exist', function () {
+        it('throws when account does not exist', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal invalid',
@@ -197,7 +197,7 @@ describe('AccountingService', function () {
             );
         })->throws(InvalidArgumentException::class, 'Akun tidak valid atau merupakan akun header');
 
-        it('throws when total debit does not equal total credit', function () {
+        it('throws when total debit does not equal total credit', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal invalid',
@@ -211,8 +211,8 @@ describe('AccountingService', function () {
         })->throws(InvalidArgumentException::class, 'Total debit');
     });
 
-    describe('postJournal', function () {
-        it('posts a draft journal and updates GL balances', function () {
+    describe('postJournal', function (): void {
+        it('posts a draft journal and updates GL balances', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal to post',
@@ -237,7 +237,7 @@ describe('AccountingService', function () {
                 ->and((float) $cashBalance->debit_total)->toBe(100000.00);
         });
 
-        it('throws when journal is not Draft', function () {
+        it('throws when journal is not Draft', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Auto posted',
@@ -253,7 +253,7 @@ describe('AccountingService', function () {
             $this->service->postJournal($journal, $this->approver);
         })->throws(InvalidArgumentException::class, 'Jurnal harus berstatus Draft untuk diposting');
 
-        it('throws when approver is the same as creator', function () {
+        it('throws when approver is the same as creator', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal self approve',
@@ -269,8 +269,8 @@ describe('AccountingService', function () {
         })->throws(InvalidArgumentException::class, 'Anda tidak dapat menyetujui jurnal yang Anda buat sendiri');
     });
 
-    describe('reverseJournal', function () {
-        it('creates a reversal journal with swapped debit/credit lines', function () {
+    describe('reverseJournal', function (): void {
+        it('creates a reversal journal with swapped debit/credit lines', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Jurnal to reverse',
@@ -296,7 +296,7 @@ describe('AccountingService', function () {
                 ->and($reversalJournal->lines)->toHaveCount(2);
         });
 
-        it('throws when journal is not Posted', function () {
+        it('throws when journal is not Posted', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Draft journal',
@@ -312,8 +312,8 @@ describe('AccountingService', function () {
         })->throws(InvalidArgumentException::class, 'Hanya jurnal yang sudah diposting yang dapat dibatalkan');
     });
 
-    describe('GL balance updates', function () {
-        it('creates GlBalance record for new account/period combination', function () {
+    describe('GL balance updates', function (): void {
+        it('creates GlBalance record for new account/period combination', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'GL test',
@@ -334,7 +334,7 @@ describe('AccountingService', function () {
                 ->and($cashGl->period_month)->toBe(now()->month);
         });
 
-        it('calculates closing_balance correctly for debit-normal accounts', function () {
+        it('calculates closing_balance correctly for debit-normal accounts', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Debit normal test',
@@ -352,7 +352,7 @@ describe('AccountingService', function () {
             expect((float) $cashGl->closing_balance)->toBe(100000.00);
         });
 
-        it('calculates closing_balance correctly for credit-normal accounts', function () {
+        it('calculates closing_balance correctly for credit-normal accounts', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Credit normal test',
@@ -370,7 +370,7 @@ describe('AccountingService', function () {
             expect((float) $liabilityGl->closing_balance)->toBe(100000.00);
         });
 
-        it('creates GlDailyBalance record with correct date', function () {
+        it('creates GlDailyBalance record with correct date', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Daily GL test',
@@ -388,7 +388,7 @@ describe('AccountingService', function () {
                 ->and($dailyBalance->balance_date->format('Y-m-d'))->toBe(now()->format('Y-m-d'));
         });
 
-        it('updates existing GlBalance with cumulative totals', function () {
+        it('updates existing GlBalance with cumulative totals', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'First journal',
@@ -419,8 +419,8 @@ describe('AccountingService', function () {
         });
     });
 
-    describe('getTrialBalance', function () {
-        it('returns trial balance from GlBalance records', function () {
+    describe('getTrialBalance', function (): void {
+        it('returns trial balance from GlBalance records', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Trial balance test',
@@ -441,7 +441,7 @@ describe('AccountingService', function () {
                 ->and((float) $cashEntry['debit'])->toBe(100000.00);
         });
 
-        it('calculates trial balance from journals when no GlBalance records exist', function () {
+        it('calculates trial balance from journals when no GlBalance records exist', function (): void {
             $journal = $this->service->createJournal(
                 journalDate: now(),
                 description: 'Fallback test',
@@ -461,7 +461,7 @@ describe('AccountingService', function () {
             expect($trialBalance)->toHaveCount(2);
         });
 
-        it('filters by branch', function () {
+        it('filters by branch', function (): void {
             $branch2 = Branch::create(['code' => '002', 'name' => 'Cabang 2', 'is_active' => true]);
 
             $this->service->createJournal(
@@ -482,8 +482,8 @@ describe('AccountingService', function () {
         });
     });
 
-    describe('getBalanceSheet', function () {
-        it('returns correct structure with assets, liabilities, and equity', function () {
+    describe('getBalanceSheet', function (): void {
+        it('returns correct structure with assets, liabilities, and equity', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Balance sheet test',
@@ -504,19 +504,19 @@ describe('AccountingService', function () {
                 ->and((float) $bs['total_liabilities'])->toBe(100000.00);
         });
 
-        it('excludes header and inactive accounts', function () {
+        it('excludes header and inactive accounts', function (): void {
             ChartOfAccount::factory()->header()->create(['account_group' => AccountGroup::Asset]);
             ChartOfAccount::factory()->inactive()->create(['account_group' => AccountGroup::Asset]);
 
             $bs = $this->service->getBalanceSheet(now());
 
             $accountCodes = collect($bs['assets'])->pluck('account_code');
-            expect($accountCodes)->not->toContain(fn ($code) => str_starts_with($code, 'HDR'));
+            expect($accountCodes)->not->toContain(fn ($code): bool => str_starts_with($code, 'HDR'));
         });
     });
 
-    describe('getIncomeStatement', function () {
-        it('returns correct structure with revenues and expenses', function () {
+    describe('getIncomeStatement', function (): void {
+        it('returns correct structure with revenues and expenses', function (): void {
             $this->service->createJournal(
                 journalDate: now(),
                 description: 'Income test',
@@ -549,7 +549,7 @@ describe('AccountingService', function () {
                 ->and((float) $is['net_income'])->toBe(60000.00);
         });
 
-        it('filters by date range', function () {
+        it('filters by date range', function (): void {
             $this->service->createJournal(
                 journalDate: now()->subMonth(),
                 description: 'Last month',

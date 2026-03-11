@@ -8,7 +8,7 @@ return new class extends Migration
 {
     public function up(): void
     {
-        Schema::create('loan_collaterals', function (Blueprint $table) {
+        Schema::create('loan_collaterals', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('loan_application_id')->nullable()->constrained('loan_applications');
             $table->foreignId('loan_account_id')->nullable()->constrained('loan_accounts');
@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('ownership_name')->nullable();
             $table->text('notes')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

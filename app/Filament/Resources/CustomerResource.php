@@ -74,11 +74,11 @@ class CustomerResource extends Resource
                     ->sortable(),
                 TextColumn::make('display_name')
                     ->label('Name')
-                    ->searchable(query: function ($query, string $search) {
+                    ->searchable(query: function ($query, string $search): void {
                         $query->whereHas('individualDetail', fn ($q) => $q->where('full_name', 'ilike', "%{$search}%"))
                             ->orWhereHas('corporateDetail', fn ($q) => $q->where('company_name', 'ilike', "%{$search}%"));
                     })
-                    ->sortable(query: function ($query, string $direction) {
+                    ->sortable(query: function ($query, string $direction): void {
                         $query->leftJoin('individual_details', 'customers.id', '=', 'individual_details.customer_id')
                             ->leftJoin('corporate_details', 'customers.id', '=', 'corporate_details.customer_id')
                             ->orderByRaw("COALESCE(individual_details.full_name, corporate_details.company_name) {$direction}");
