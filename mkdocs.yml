@@ -1,0 +1,105 @@
+site_name: Dokumentasi Core Banking BPR
+site_description: Panduan pengguna aplikasi Core Banking untuk Bank Perkreditan Rakyat
+site_url: https://core-banking-docs.test
+
+theme:
+  name: material
+  language: id
+  palette:
+    - scheme: default
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-7
+        name: Mode Gelap
+    - scheme: slate
+      primary: blue
+      accent: blue
+      toggle:
+        icon: material/brightness-4
+        name: Mode Terang
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - navigation.indexes
+    - search.suggest
+    - search.highlight
+    - content.tabs.link
+  icon:
+    logo: material/bank
+  font:
+    text: Inter
+    code: JetBrains Mono
+
+plugins:
+  - search:
+      lang: id
+  - glightbox:
+      touchNavigation: true
+      loop: false
+      effect: zoom
+      slide_effect: slide
+      width: 100%
+      height: auto
+      zoomable: true
+      draggable: true
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.tabbed:
+      alternate_style: true
+  - attr_list
+  - md_in_html
+  - tables
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+
+nav:
+  - Beranda: index.md
+  - Memulai:
+    - Login & Navigasi: memulai/login-navigasi.md
+    - Peran Pengguna: memulai/peran-pengguna.md
+    - Dashboard: memulai/dashboard.md
+  - Master Data:
+    - Cabang: master-data/cabang.md
+    - Bagan Akun: master-data/bagan-akun.md
+    - Hari Libur: master-data/hari-libur.md
+    - Nasabah: master-data/nasabah.md
+    - Produk Tabungan: master-data/produk-tabungan.md
+    - Rekening Tabungan: master-data/rekening-tabungan.md
+    - Produk Deposito: master-data/produk-deposito.md
+    - Rekening Deposito: master-data/rekening-deposito.md
+    - Produk Kredit: master-data/produk-kredit.md
+  - Teller:
+    - Dashboard Teller: teller/dashboard-teller.md
+    - Buka & Tutup Sesi: teller/buka-tutup-sesi.md
+    - Setor Tabungan: teller/setor-tabungan.md
+    - Tarik Tabungan: teller/tarik-tabungan.md
+    - Bayar Angsuran: teller/bayar-angsuran.md
+    - Vault / Brankas: teller/vault.md
+  - Kredit:
+    - Permohonan Kredit: kredit/permohonan-kredit.md
+    - Persetujuan & Pencairan: kredit/persetujuan-pencairan.md
+    - Rekening Kredit: kredit/rekening-kredit.md
+    - Jadwal Angsuran: kredit/jadwal-angsuran.md
+    - Kolektibilitas & CKPN: kredit/kolektibilitas-ckpn.md
+  - Akuntansi:
+    - Jurnal: akuntansi/jurnal.md
+    - Neraca Saldo: akuntansi/neraca-saldo.md
+    - Neraca: akuntansi/neraca.md
+    - Laba Rugi: akuntansi/laba-rugi.md
+  - Operasional:
+    - End of Day: operasional/end-of-day.md
+  - Laporan:
+    - Portofolio Kredit: laporan/portofolio-kredit.md
+  - Administrasi:
+    - Manajemen Pengguna: administrasi/manajemen-pengguna.md
+    - Parameter Sistem: administrasi/parameter-sistem.md
+  - Referensi:
+    - Matriks Hak Akses: referensi/matriks-hak-akses.md
+    - Glosarium: referensi/glosarium.md
