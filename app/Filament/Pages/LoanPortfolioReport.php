@@ -40,7 +40,9 @@ class LoanPortfolioReport extends Page
             ->orderBy('collectibility')
             ->get()
             ->map(function ($row): array {
-                $col = Collectibility::from($row->collectibility);
+                $col = $row->collectibility instanceof Collectibility
+                    ? $row->collectibility
+                    : Collectibility::from((int) $row->collectibility);
 
                 return [
                     'collectibility' => $col->getLabel(),
@@ -79,5 +81,15 @@ class LoanPortfolioReport extends Page
             'npl_amount' => (float) LoanAccount::whereIn('status', [LoanStatus::Active, LoanStatus::Current, LoanStatus::Overdue])
                 ->where('collectibility', '>=', 3)->sum('outstanding_principal'),
         ];
+    }
+
+    #[Computed]
+    public function nplRatio(): float
+    {
+        $summary = $this->summary;
+
+        return $summary['total_outstanding'] > 0
+            ? ($summary['npl_amount'] / $summary['total_outstanding']) * 100
+            : 0;
     }
 }

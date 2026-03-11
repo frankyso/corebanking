@@ -1,138 +1,156 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
-        {{-- Date Picker --}}
-        <div>
-            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">Tanggal Proses</label>
-            <input type="date" wire:model.live="processDate" class="rounded-lg border-gray-300 dark:border-gray-600 dark:bg-gray-700 dark:text-white">
-        </div>
+        {{-- Filter --}}
+        <x-filament::section>
+            <div class="flex flex-wrap gap-4 items-end">
+                <div class="w-56">
+                    <label for="processDate" class="text-sm font-medium text-gray-950 dark:text-white mb-1 block">Tanggal Proses</label>
+                    <input
+                        type="date"
+                        id="processDate"
+                        wire:model.live="processDate"
+                        class="w-full rounded-lg border-gray-300 bg-white shadow-sm transition duration-75 focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 dark:border-white/10 dark:bg-white/5 dark:text-white sm:text-sm"
+                    />
+                </div>
+            </div>
+        </x-filament::section>
 
         {{-- Current Process Status --}}
         @if ($this->currentProcess)
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-                <div class="px-4 py-3 flex justify-between items-center
-                    {{ $this->currentProcess->status->value === 'completed' ? 'bg-green-50 dark:bg-green-900/30' : '' }}
-                    {{ $this->currentProcess->status->value === 'failed' ? 'bg-red-50 dark:bg-red-900/30' : '' }}
-                    {{ $this->currentProcess->status->value === 'running' ? 'bg-yellow-50 dark:bg-yellow-900/30' : '' }}
-                    {{ $this->currentProcess->status->value === 'pending' ? 'bg-gray-50 dark:bg-gray-800' : '' }}
-                ">
-                    <h3 class="font-semibold text-gray-900 dark:text-gray-100">
-                        EOD {{ $this->currentProcess->process_date->format('d/m/Y') }}
-                    </h3>
-                    <span class="px-3 py-1 rounded-full text-sm font-medium
-                        {{ $this->currentProcess->status->value === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-200' : '' }}
-                        {{ $this->currentProcess->status->value === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-800 dark:text-red-200' : '' }}
-                        {{ $this->currentProcess->status->value === 'running' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-800 dark:text-yellow-200' : '' }}
-                        {{ $this->currentProcess->status->value === 'pending' ? 'bg-gray-100 text-gray-800 dark:bg-gray-800 dark:text-gray-200' : '' }}
-                    ">
-                        {{ $this->currentProcess->status->getLabel() }}
-                    </span>
-                </div>
+            <x-filament::section>
+                <x-slot name="heading">
+                    <div class="flex items-center justify-between w-full">
+                        <span>EOD {{ $this->currentProcess->process_date->format('d/m/Y') }}</span>
+                        <x-filament::badge :color="match($this->currentProcess->status->value) {
+                            'completed' => 'success',
+                            'failed' => 'danger',
+                            'running' => 'warning',
+                            default => 'gray',
+                        }">
+                            {{ $this->currentProcess->status->getLabel() }}
+                        </x-filament::badge>
+                    </div>
+                </x-slot>
 
                 {{-- Progress Bar --}}
-                <div class="px-4 py-2 bg-gray-50 dark:bg-gray-800/50">
-                    <div class="flex justify-between text-sm text-gray-600 dark:text-gray-400 mb-1">
+                <div class="mb-4">
+                    <div class="flex justify-between text-sm text-gray-500 dark:text-gray-400 mb-1.5">
                         <span>Progress</span>
-                        <span>{{ $this->currentProcess->completed_steps }}/{{ $this->currentProcess->total_steps }} langkah</span>
+                        <span class="font-medium">{{ $this->currentProcess->completed_steps }}/{{ $this->currentProcess->total_steps }} langkah</span>
                     </div>
-                    <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5">
-                        <div class="h-2.5 rounded-full {{ $this->currentProcess->status->value === 'failed' ? 'bg-red-600' : 'bg-green-600' }}"
-                            style="width: {{ $this->currentProcess->progressPercentage() }}%">
-                        </div>
+                    <div class="w-full bg-gray-200 dark:bg-white/10 rounded-full h-2.5 overflow-hidden">
+                        <div @class([
+                            'h-2.5 rounded-full transition-all duration-500',
+                            'bg-success-500' => $this->currentProcess->status->value !== 'failed',
+                            'bg-danger-500' => $this->currentProcess->status->value === 'failed',
+                        ]) style="width: {{ $this->currentProcess->progressPercentage() }}%"></div>
                     </div>
                 </div>
 
-                {{-- Steps --}}
-                <table class="w-full text-sm">
-                    <thead class="bg-gray-50 dark:bg-gray-800">
-                        <tr>
-                            <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400 w-12">#</th>
-                            <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Langkah</th>
-                            <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Status</th>
-                            <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Record</th>
-                            <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Durasi</th>
-                            <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Error</th>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach ($this->currentProcess->steps as $step)
-                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                                <td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ $step->step_number }}</td>
-                                <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $step->step_name }}</td>
-                                <td class="px-4 py-2">
-                                    <span class="px-2 py-1 rounded-full text-xs font-medium
-                                        {{ $step->status->value === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : '' }}
-                                        {{ $step->status->value === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' : '' }}
-                                        {{ $step->status->value === 'running' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' : '' }}
-                                        {{ $step->status->value === 'pending' ? 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' : '' }}
-                                    ">{{ $step->status->getLabel() }}</span>
-                                </td>
-                                <td class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">{{ $step->records_processed }}</td>
-                                <td class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">
-                                    @if ($step->durationInSeconds() !== null)
-                                        {{ $step->durationInSeconds() }}s
-                                    @else
-                                        -
-                                    @endif
-                                </td>
-                                <td class="px-4 py-2 text-red-600 dark:text-red-400 text-xs">
-                                    {{ $step->error_message ? Str::limit($step->error_message, 50) : '' }}
-                                </td>
+                {{-- Steps Table --}}
+                <div class="overflow-x-auto -mx-6 -mb-6">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="bg-gray-50 dark:bg-white/5">
+                                <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400 w-12">#</th>
+                                <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Langkah</th>
+                                <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Status</th>
+                                <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Record</th>
+                                <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Durasi</th>
+                                <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Error</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                            @foreach ($this->currentProcess->steps as $step)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+                                    <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ $step->step_number }}</td>
+                                    <td class="px-4 py-2 text-gray-950 dark:text-white font-medium">{{ $step->step_name }}</td>
+                                    <td class="px-4 py-2">
+                                        <x-filament::badge :color="match($step->status->value) {
+                                            'completed' => 'success',
+                                            'failed' => 'danger',
+                                            'running' => 'warning',
+                                            default => 'gray',
+                                        }" size="sm">
+                                            {{ $step->status->getLabel() }}
+                                        </x-filament::badge>
+                                    </td>
+                                    <td class="px-4 py-2 text-right tabular-nums text-gray-500 dark:text-gray-400">{{ number_format($step->records_processed) }}</td>
+                                    <td class="px-4 py-2 text-right tabular-nums text-gray-500 dark:text-gray-400">
+                                        {{ $step->durationInSeconds() !== null ? $step->durationInSeconds() . 's' : '-' }}
+                                    </td>
+                                    <td class="px-4 py-2 text-danger-600 dark:text-danger-400 text-xs max-w-xs truncate" title="{{ $step->error_message }}">
+                                        {{ $step->error_message ?? '' }}
+                                    </td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
 
+                {{-- Error Message --}}
                 @if ($this->currentProcess->error_message)
-                    <div class="px-4 py-3 bg-red-50 dark:bg-red-900/20 border-t border-red-200 dark:border-red-800">
-                        <p class="text-sm text-red-700 dark:text-red-300">
-                            <strong>Error:</strong> {{ $this->currentProcess->error_message }}
-                        </p>
+                    <div class="-mx-6 -mb-6 mt-4 bg-danger-50 dark:bg-danger-400/10 border-t border-danger-200 dark:border-danger-400/20 px-4 py-3">
+                        <div class="flex gap-2">
+                            <x-heroicon-o-exclamation-triangle style="width:1.25rem;height:1.25rem" class="text-danger-500 shrink-0 mt-0.5" />
+                            <div>
+                                <p class="text-sm font-medium text-danger-800 dark:text-danger-200">Error</p>
+                                <p class="text-sm text-danger-700 dark:text-danger-300 mt-0.5">{{ $this->currentProcess->error_message }}</p>
+                            </div>
+                        </div>
                     </div>
                 @endif
-            </div>
+            </x-filament::section>
         @endif
 
         {{-- Recent Processes --}}
-        <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-3">
-                <h3 class="font-semibold text-gray-900 dark:text-gray-100">Riwayat EOD</h3>
+        <x-filament::section heading="Riwayat EOD" icon="heroicon-o-clock">
+            <div class="overflow-x-auto -mx-6 -mb-6">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 dark:bg-white/5">
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Tanggal</th>
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Status</th>
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Progress</th>
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Dijalankan</th>
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Selesai</th>
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Oleh</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        @forelse ($this->recentProcesses as $process)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5 cursor-pointer"
+                                wire:click="$set('processDate', '{{ $process->process_date->toDateString() }}')">
+                                <td class="px-4 py-2 font-medium text-gray-950 dark:text-white">{{ $process->process_date->format('d/m/Y') }}</td>
+                                <td class="px-4 py-2">
+                                    <x-filament::badge :color="match($process->status->value) {
+                                        'completed' => 'success',
+                                        'failed' => 'danger',
+                                        'running' => 'warning',
+                                        default => 'gray',
+                                    }" size="sm">
+                                        {{ $process->status->getLabel() }}
+                                    </x-filament::badge>
+                                </td>
+                                <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ $process->completed_steps }}/{{ $process->total_steps }}</td>
+                                <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ $process->started_at?->format('H:i:s') ?? '-' }}</td>
+                                <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ $process->completed_at?->format('H:i:s') ?? '-' }}</td>
+                                <td class="px-4 py-2 text-gray-500 dark:text-gray-400">{{ $process->startedBy?->name ?? '-' }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                    <div class="flex flex-col items-center gap-1">
+                                        <x-heroicon-o-clock style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
+                                        <span>Belum ada riwayat EOD</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Tanggal</th>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Status</th>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Progress</th>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Dijalankan</th>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Selesai</th>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Oleh</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @forelse ($this->recentProcesses as $process)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50 cursor-pointer"
-                            wire:click="$set('processDate', '{{ $process->process_date->toDateString() }}')">
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $process->process_date->format('d/m/Y') }}</td>
-                            <td class="px-4 py-2">
-                                <span class="px-2 py-1 rounded-full text-xs font-medium
-                                    {{ $process->status->value === 'completed' ? 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300' : '' }}
-                                    {{ $process->status->value === 'failed' ? 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300' : '' }}
-                                    {{ $process->status->value === 'running' ? 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300' : '' }}
-                                    {{ $process->status->value === 'pending' ? 'bg-gray-100 text-gray-800 dark:bg-gray-900/30 dark:text-gray-300' : '' }}
-                                ">{{ $process->status->getLabel() }}</span>
-                            </td>
-                            <td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ $process->completed_steps }}/{{ $process->total_steps }}</td>
-                            <td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ $process->started_at?->format('H:i:s') ?? '-' }}</td>
-                            <td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ $process->completed_at?->format('H:i:s') ?? '-' }}</td>
-                            <td class="px-4 py-2 text-gray-600 dark:text-gray-400">{{ $process->startedBy?->name ?? '-' }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="6" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">Belum ada riwayat EOD</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        </x-filament::section>
     </div>
 </x-filament-panels::page>

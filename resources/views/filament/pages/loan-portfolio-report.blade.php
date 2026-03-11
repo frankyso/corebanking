@@ -1,109 +1,154 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         {{-- Summary Cards --}}
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-                <div class="text-sm text-gray-500 dark:text-gray-400">Total Rekening Aktif</div>
-                <div class="text-2xl font-bold text-gray-900 dark:text-gray-100">{{ number_format($this->summary['total_accounts']) }}</div>
-            </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-                <div class="text-sm text-gray-500 dark:text-gray-400">Total Outstanding</div>
-                <div class="text-2xl font-bold text-blue-600 dark:text-blue-400">Rp {{ number_format($this->summary['total_outstanding'], 0, ',', '.') }}</div>
-            </div>
-            <div class="rounded-xl border border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-4">
-                <div class="text-sm text-gray-500 dark:text-gray-400">Total CKPN</div>
-                <div class="text-2xl font-bold text-red-600 dark:text-red-400">Rp {{ number_format($this->summary['total_ckpn'], 0, ',', '.') }}</div>
-            </div>
-        </div>
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <x-filament::section>
+                <div class="flex items-center gap-3">
+                    <div class="rounded-lg bg-gray-100 p-2 dark:bg-white/5">
+                        <x-heroicon-o-document-text style="width:1.25rem;height:1.25rem" class="text-gray-500 dark:text-gray-400" />
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Rekening Aktif</p>
+                        <p class="text-2xl font-bold text-gray-950 dark:text-white tabular-nums">{{ number_format($this->summary['total_accounts']) }}</p>
+                    </div>
+                </div>
+            </x-filament::section>
 
-        @php
-            $nplRatio = $this->summary['total_outstanding'] > 0
-                ? ($this->summary['npl_amount'] / $this->summary['total_outstanding']) * 100
-                : 0;
-        @endphp
-        <div class="rounded-xl border-2 {{ $nplRatio <= 5 ? 'border-green-300 dark:border-green-600 bg-green-50 dark:bg-green-900/20' : 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/20' }} px-4 py-4">
-            <div class="flex justify-between font-bold text-lg">
-                <span>NPL Ratio (Kol 3-5)</span>
-                <span class="{{ $nplRatio <= 5 ? 'text-green-700 dark:text-green-300' : 'text-red-700 dark:text-red-300' }}">
-                    {{ number_format($nplRatio, 2) }}%
-                    ({{ $this->summary['npl_count'] }} rekening)
-                </span>
-            </div>
+            <x-filament::section>
+                <div class="flex items-center gap-3">
+                    <div class="rounded-lg bg-primary-50 p-2 dark:bg-primary-400/10">
+                        <x-heroicon-o-banknotes style="width:1.25rem;height:1.25rem" class="text-primary-500" />
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Outstanding</p>
+                        <p class="text-xl font-bold text-primary-600 dark:text-primary-400 tabular-nums">Rp {{ number_format($this->summary['total_outstanding'], 0, ',', '.') }}</p>
+                    </div>
+                </div>
+            </x-filament::section>
+
+            <x-filament::section>
+                <div class="flex items-center gap-3">
+                    <div class="rounded-lg bg-danger-50 p-2 dark:bg-danger-400/10">
+                        <x-heroicon-o-shield-exclamation style="width:1.25rem;height:1.25rem" class="text-danger-500" />
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total CKPN</p>
+                        <p class="text-xl font-bold text-danger-600 dark:text-danger-400 tabular-nums">Rp {{ number_format($this->summary['total_ckpn'], 0, ',', '.') }}</p>
+                    </div>
+                </div>
+            </x-filament::section>
+
+            {{-- NPL Ratio Card --}}
+            <x-filament::section>
+                <div class="flex items-center gap-3">
+                    <div @class([
+                        'rounded-lg p-2',
+                        'bg-success-50 dark:bg-success-400/10' => $this->nplRatio <= 5,
+                        'bg-danger-50 dark:bg-danger-400/10' => $this->nplRatio > 5,
+                    ])>
+                        <x-heroicon-o-chart-bar style="width:1.25rem;height:1.25rem" class="{{ $this->nplRatio <= 5 ? 'text-success-500' : 'text-danger-500' }}" />
+                    </div>
+                    <div>
+                        <p class="text-xs font-medium text-gray-500 dark:text-gray-400">NPL Ratio (Kol 3-5)</p>
+                        <p @class([
+                            'text-2xl font-bold tabular-nums',
+                            'text-success-600 dark:text-success-400' => $this->nplRatio <= 5,
+                            'text-danger-600 dark:text-danger-400' => $this->nplRatio > 5,
+                        ])>{{ number_format($this->nplRatio, 2) }}%</p>
+                        <p class="text-xs text-gray-500 dark:text-gray-400">{{ $this->summary['npl_count'] }} rekening</p>
+                    </div>
+                </div>
+            </x-filament::section>
         </div>
 
         {{-- By Collectibility --}}
-        <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-3">
-                <h3 class="font-semibold text-gray-900 dark:text-gray-100">Berdasarkan Kolektibilitas</h3>
+        <x-filament::section heading="Berdasarkan Kolektibilitas" icon="heroicon-o-chart-bar-square">
+            <div class="overflow-x-auto -mx-6 -mb-6">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 dark:bg-white/5">
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Kolektibilitas</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Jumlah</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Outstanding</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Tarif CKPN</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">CKPN</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        @php $totalOutstanding = 0; $totalCkpn = 0; $totalCount = 0; @endphp
+                        @forelse ($this->portfolioByCollectibility as $row)
+                            @php $totalOutstanding += $row['total_outstanding']; $totalCkpn += $row['total_ckpn']; $totalCount += $row['count']; @endphp
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+                                <td class="px-4 py-2">
+                                    <x-filament::badge :color="$row['color']" size="sm">
+                                        {{ $row['collectibility'] }}
+                                    </x-filament::badge>
+                                </td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-950 dark:text-white">{{ number_format($row['count']) }}</td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-950 dark:text-white">{{ number_format($row['total_outstanding'], 2, ',', '.') }}</td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-500 dark:text-gray-400">{{ $row['ckpn_rate'] }}%</td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-950 dark:text-white">{{ number_format($row['total_ckpn'], 2, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="5" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                    <div class="flex flex-col items-center gap-1">
+                                        <x-heroicon-o-document-magnifying-glass style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
+                                        <span>Tidak ada data</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                    @if ($this->portfolioByCollectibility->isNotEmpty())
+                        <tfoot>
+                            <tr class="bg-gray-100 dark:bg-white/5 font-semibold text-gray-950 dark:text-white">
+                                <td class="px-4 py-3">Total</td>
+                                <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totalCount) }}</td>
+                                <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totalOutstanding, 2, ',', '.') }}</td>
+                                <td class="px-4 py-3"></td>
+                                <td class="px-4 py-3 text-right tabular-nums">{{ number_format($totalCkpn, 2, ',', '.') }}</td>
+                            </tr>
+                        </tfoot>
+                    @endif
+                </table>
             </div>
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Kolektibilitas</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Jumlah</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Outstanding</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Tarif CKPN</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">CKPN</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @php $totalOutstanding = 0; $totalCkpn = 0; $totalCount = 0; @endphp
-                    @forelse ($this->portfolioByCollectibility as $row)
-                        @php $totalOutstanding += $row['total_outstanding']; $totalCkpn += $row['total_ckpn']; $totalCount += $row['count']; @endphp
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $row['collectibility'] }}</td>
-                            <td class="px-4 py-2 text-right text-gray-900 dark:text-gray-100">{{ number_format($row['count']) }}</td>
-                            <td class="px-4 py-2 text-right text-gray-900 dark:text-gray-100">{{ number_format($row['total_outstanding'], 2, ',', '.') }}</td>
-                            <td class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">{{ $row['ckpn_rate'] }}%</td>
-                            <td class="px-4 py-2 text-right text-gray-900 dark:text-gray-100">{{ number_format($row['total_ckpn'], 2, ',', '.') }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="5" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">Tidak ada data</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-                <tfoot class="bg-gray-50 dark:bg-gray-800 font-semibold">
-                    <tr>
-                        <td class="px-4 py-3">Total</td>
-                        <td class="px-4 py-3 text-right">{{ number_format($totalCount) }}</td>
-                        <td class="px-4 py-3 text-right">{{ number_format($totalOutstanding, 2, ',', '.') }}</td>
-                        <td class="px-4 py-3"></td>
-                        <td class="px-4 py-3 text-right">{{ number_format($totalCkpn, 2, ',', '.') }}</td>
-                    </tr>
-                </tfoot>
-            </table>
-        </div>
+        </x-filament::section>
 
         {{-- By Product --}}
-        <div class="rounded-xl border border-gray-200 dark:border-gray-700 overflow-hidden">
-            <div class="bg-gray-50 dark:bg-gray-800 px-4 py-3">
-                <h3 class="font-semibold text-gray-900 dark:text-gray-100">Berdasarkan Produk</h3>
+        <x-filament::section heading="Berdasarkan Produk" icon="heroicon-o-cube">
+            <div class="overflow-x-auto -mx-6 -mb-6">
+                <table class="w-full text-sm">
+                    <thead>
+                        <tr class="bg-gray-50 dark:bg-white/5">
+                            <th class="px-4 py-2.5 text-left text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Produk</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Jumlah</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Total Plafon</th>
+                            <th class="px-4 py-2.5 text-right text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Outstanding</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-white/5">
+                        @forelse ($this->portfolioByProduct as $row)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-white/5">
+                                <td class="px-4 py-2 font-medium text-gray-950 dark:text-white">{{ $row->product_name }}</td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-950 dark:text-white">{{ number_format($row->count) }}</td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-950 dark:text-white">{{ number_format($row->total_plafon, 2, ',', '.') }}</td>
+                                <td class="px-4 py-2 text-right tabular-nums text-gray-950 dark:text-white">{{ number_format($row->total_outstanding, 2, ',', '.') }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
+                                    <div class="flex flex-col items-center gap-1">
+                                        <x-heroicon-o-document-magnifying-glass style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
+                                        <span>Tidak ada data</span>
+                                    </div>
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
             </div>
-            <table class="w-full text-sm">
-                <thead class="bg-gray-50 dark:bg-gray-800">
-                    <tr>
-                        <th class="px-4 py-2 text-left text-gray-600 dark:text-gray-400">Produk</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Jumlah</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Total Plafon</th>
-                        <th class="px-4 py-2 text-right text-gray-600 dark:text-gray-400">Outstanding</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @forelse ($this->portfolioByProduct as $row)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-800/50">
-                            <td class="px-4 py-2 text-gray-900 dark:text-gray-100">{{ $row->product_name }}</td>
-                            <td class="px-4 py-2 text-right text-gray-900 dark:text-gray-100">{{ number_format($row->count) }}</td>
-                            <td class="px-4 py-2 text-right text-gray-900 dark:text-gray-100">{{ number_format($row->total_plafon, 2, ',', '.') }}</td>
-                            <td class="px-4 py-2 text-right text-gray-900 dark:text-gray-100">{{ number_format($row->total_outstanding, 2, ',', '.') }}</td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-4 py-4 text-center text-gray-500 dark:text-gray-400">Tidak ada data</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+        </x-filament::section>
     </div>
 </x-filament-panels::page>
