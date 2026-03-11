@@ -26,13 +26,13 @@ class PendingApprovalsWidget extends BaseWidget
             ->count();
 
         return [
-            Stat::make('Permohonan Kredit Pending', $pendingLoans)
-                ->description('Menunggu persetujuan')
-                ->icon('heroicon-o-document-plus')
+            Stat::make('Kredit Pending', $pendingLoans)
+                ->description($pendingLoans > 0 ? 'Menunggu persetujuan' : 'Tidak ada pending')
+                ->descriptionIcon($pendingLoans > 0 ? 'heroicon-m-clock' : 'heroicon-m-check-circle')
                 ->color($pendingLoans > 0 ? 'warning' : 'success'),
             Stat::make('Jurnal Draft', $pendingJournals)
-                ->description('Menunggu posting')
-                ->icon('heroicon-o-book-open')
+                ->description($pendingJournals > 0 ? 'Menunggu posting' : 'Semua sudah diposting')
+                ->descriptionIcon($pendingJournals > 0 ? 'heroicon-m-clock' : 'heroicon-m-check-circle')
                 ->color($pendingJournals > 0 ? 'warning' : 'success'),
         ];
     }

@@ -34,6 +34,17 @@ class CustomerResource extends Resource
 
     protected static ?int $navigationSort = 4;
 
+    protected static ?string $modelLabel = 'Nasabah';
+
+    protected static ?string $pluralModelLabel = 'Nasabah';
+
+    protected static ?string $recordTitleAttribute = 'cif_number';
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::count();
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema
@@ -66,14 +77,16 @@ class CustomerResource extends Resource
             ->columns([
                 TextColumn::make('cif_number')
                     ->label('CIF')
+                    ->description('Customer Information File')
                     ->searchable()
                     ->sortable()
                     ->copyable(),
                 TextColumn::make('customer_type')
+                    ->label('Tipe')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('display_name')
-                    ->label('Name')
+                    ->label('Nama')
                     ->searchable(query: function ($query, string $search): void {
                         $query->whereHas('individualDetail', fn ($q) => $q->where('full_name', 'ilike', "%{$search}%"))
                             ->orWhereHas('corporateDetail', fn ($q) => $q->where('company_name', 'ilike', "%{$search}%"));
@@ -84,15 +97,19 @@ class CustomerResource extends Resource
                             ->orderByRaw("COALESCE(individual_details.full_name, corporate_details.company_name) {$direction}");
                     }),
                 TextColumn::make('branch.name')
-                    ->label('Branch')
+                    ->label('Cabang')
                     ->sortable(),
                 TextColumn::make('status')
+                    ->label('Status')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('risk_rating')
+                    ->label('Risiko')
                     ->badge()
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('-'),
                 TextColumn::make('created_at')
+                    ->label('Terdaftar')
                     ->dateTime('d M Y')
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
@@ -107,7 +124,7 @@ class CustomerResource extends Resource
                     ->options(RiskRating::class),
                 SelectFilter::make('branch_id')
                     ->relationship('branch', 'name')
-                    ->label('Branch'),
+                    ->label('Cabang'),
             ])
             ->recordActions([
                 ViewAction::make(),

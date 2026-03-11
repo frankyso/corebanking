@@ -33,6 +33,16 @@ class LoanAccountResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Rekening Kredit';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', 'active')->count();
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Kredit aktif';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema->components([]);
@@ -123,6 +133,8 @@ class LoanAccountResource extends Resource
                     ->suffix('%'),
                 TextColumn::make('dpd')
                     ->label('DPD')
+                    ->headerTooltip('Days Past Due — hari keterlambatan')
+                    ->suffix(' hari')
                     ->sortable()
                     ->color(fn (int $state): string => match (true) {
                         $state <= 0 => 'success',
@@ -131,6 +143,7 @@ class LoanAccountResource extends Resource
                     }),
                 TextColumn::make('collectibility')
                     ->label('Kol.')
+                    ->headerTooltip('Kolektibilitas (Kol 1-5)')
                     ->badge(),
                 TextColumn::make('status')
                     ->label('Status')

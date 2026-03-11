@@ -41,6 +41,8 @@ class UserResource extends Resource
             ->components([
                 TextInput::make('employee_id')
                     ->label('ID Karyawan')
+                    ->helperText('Nomor induk karyawan dari HRD')
+                    ->placeholder('Contoh: EMP001')
                     ->maxLength(20)
                     ->unique(ignoreRecord: true),
                 TextInput::make('name')
@@ -55,6 +57,7 @@ class UserResource extends Resource
                 TextInput::make('password')
                     ->label('Kata Sandi')
                     ->password()
+                    ->helperText(fn (string $operation): string => $operation === 'edit' ? 'Kosongkan jika tidak ingin mengubah' : '')
                     ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                     ->dehydrated(fn (?string $state): bool => filled($state))
                     ->required(fn (string $operation): bool => $operation === 'create'),
@@ -81,7 +84,8 @@ class UserResource extends Resource
                 TextColumn::make('employee_id')
                     ->label('ID Karyawan')
                     ->searchable()
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('Belum diisi'),
                 TextColumn::make('name')
                     ->label('Nama')
                     ->searchable()
@@ -91,7 +95,8 @@ class UserResource extends Resource
                     ->sortable(),
                 TextColumn::make('branch.name')
                     ->label('Cabang')
-                    ->sortable(),
+                    ->sortable()
+                    ->placeholder('Belum ditentukan'),
                 TextColumn::make('roles.name')
                     ->label('Peran')
                     ->badge(),

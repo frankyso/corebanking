@@ -32,6 +32,21 @@ class LoanApplicationResource extends Resource
 
     protected static ?string $pluralModelLabel = 'Permohonan Kredit';
 
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::whereIn('status', ['pending', 'under_review'])->count() ?: null;
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'warning';
+    }
+
+    public static function getNavigationBadgeTooltip(): ?string
+    {
+        return 'Permohonan menunggu proses';
+    }
+
     public static function form(Schema $schema): Schema
     {
         return $schema->components([]);

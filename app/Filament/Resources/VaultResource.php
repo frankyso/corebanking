@@ -38,6 +38,7 @@ class VaultResource extends Resource
         return $schema
             ->components([
                 Section::make('Informasi Vault')
+                    ->description('Data dasar brankas untuk penyimpanan uang kas')
                     ->schema([
                         TextInput::make('code')
                             ->label('Kode Vault')
@@ -62,6 +63,7 @@ class VaultResource extends Resource
                     ])->columns(2),
 
                 Section::make('Ketentuan Saldo')
+                    ->description('Batas saldo kas yang diperbolehkan dalam vault')
                     ->schema([
                         TextInput::make('balance')
                             ->label('Saldo Saat Ini')

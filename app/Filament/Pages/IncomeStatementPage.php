@@ -21,6 +21,8 @@ class IncomeStatementPage extends Page
 
     protected static ?string $title = 'Laporan Laba Rugi';
 
+    protected ?string $subheading = 'Ringkasan pendapatan dan beban dalam periode tertentu';
+
     protected string $view = 'filament.pages.income-statement';
 
     public static function canAccess(): bool

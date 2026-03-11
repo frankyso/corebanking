@@ -40,6 +40,7 @@ class BranchResource extends Resource
             ->components([
                 TextInput::make('code')
                     ->label('Kode')
+                    ->helperText('3 digit kode unik cabang')
                     ->required()
                     ->maxLength(3)
                     ->minLength(3)
@@ -53,9 +54,11 @@ class BranchResource extends Resource
                     ->columnSpanFull(),
                 TextInput::make('city')
                     ->label('Kota')
+                    ->placeholder('Contoh: Surabaya')
                     ->maxLength(100),
                 TextInput::make('province')
                     ->label('Provinsi')
+                    ->placeholder('Contoh: Jawa Timur')
                     ->maxLength(100),
                 TextInput::make('postal_code')
                     ->label('Kode Pos')
@@ -63,14 +66,17 @@ class BranchResource extends Resource
                 TextInput::make('phone')
                     ->label('Telepon')
                     ->tel()
+                    ->placeholder('Contoh: 031-1234567')
                     ->maxLength(20),
                 Select::make('head_id')
                     ->label('Kepala Cabang')
                     ->relationship('head', 'name')
                     ->searchable()
-                    ->preload(),
+                    ->preload()
+                    ->placeholder('Pilih kepala cabang'),
                 Toggle::make('is_head_office')
-                    ->label('Kantor Pusat'),
+                    ->label('Kantor Pusat')
+                    ->helperText('Tandai jika ini adalah kantor pusat'),
                 Toggle::make('is_active')
                     ->label('Aktif')
                     ->default(true),
@@ -93,10 +99,12 @@ class BranchResource extends Resource
                     ->label('Kota')
                     ->sortable(),
                 TextColumn::make('head.name')
-                    ->label('Kepala Cabang'),
+                    ->label('Kepala Cabang')
+                    ->placeholder('Belum ditentukan'),
                 IconColumn::make('is_head_office')
                     ->boolean()
-                    ->label('KP'),
+                    ->label('KP')
+                    ->headerTooltip('Kantor Pusat'),
                 IconColumn::make('is_active')
                     ->boolean()
                     ->label('Aktif'),

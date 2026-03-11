@@ -23,6 +23,8 @@ class LoanPortfolioReport extends Page
 
     protected static ?string $title = 'Laporan Portofolio Kredit';
 
+    protected ?string $subheading = 'Kualitas kredit, kolektibilitas, dan cadangan kerugian (CKPN)';
+
     protected string $view = 'filament.pages.loan-portfolio-report';
 
     public static function canAccess(): bool
