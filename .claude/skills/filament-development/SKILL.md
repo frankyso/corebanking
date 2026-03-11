@@ -245,6 +245,91 @@ In `AdminPanelProvider.php`:
 ])
 ```
 
+## Custom Pages with Blade Views
+
+Custom pages use `protected string $view` to specify a Blade template. Key patterns:
+
+### Page Structure
+```php
+class MyPage extends Page
+{
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|UnitEnum|null $navigationGroup = 'Reports';
+    protected static ?int $navigationSort = 10;
+    protected static ?string $navigationLabel = 'My Report';
+    protected static ?string $title = 'My Report';
+    protected string $view = 'filament.pages.my-report';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('report.view') ?? false;
+    }
+
+    public string $reportDate;
+
+    public function mount(): void
+    {
+        $this->reportDate = now()->format('Y-m-d');
+    }
+
+    #[Computed]
+    public function reportData(): array
+    {
+        return app(MyService::class)->getData(Carbon::parse($this->reportDate));
+    }
+
+    public function updatedReportDate(): void
+    {
+        unset($this->reportData);
+    }
+}
+```
+
+### Blade View Patterns
+Use Filament blade components for consistent UI:
+
+```blade
+<x-filament-panels::page>
+    <div class="space-y-6">
+        {{-- Filters wrapped in section --}}
+        <x-filament::section>
+            <div class="flex flex-wrap gap-4 items-end">
+                <div class="w-56">
+                    <label for="reportDate" class="text-sm font-medium text-gray-950 dark:text-white mb-1 block">Label</label>
+                    <input type="date" id="reportDate" wire:model.live="reportDate"
+                        class="w-full rounded-lg border-gray-300 bg-white shadow-sm transition duration-75 focus:border-primary-500 focus:ring-1 focus:ring-inset focus:ring-primary-500 dark:border-white/10 dark:bg-white/5 dark:text-white sm:text-sm" />
+                </div>
+            </div>
+        </x-filament::section>
+
+        {{-- Data section with heading and icon --}}
+        <x-filament::section heading="Section Title" icon="heroicon-o-chart-bar">
+            <div class="overflow-x-auto -mx-6 -mb-6">
+                <table class="w-full text-sm">
+                    {{-- Table content --}}
+                </table>
+            </div>
+        </x-filament::section>
+    </div>
+</x-filament-panels::page>
+```
+
+### Key Blade Components
+- `<x-filament::section>` - Card wrapper with optional heading, icon, collapsible
+- `<x-filament::badge>` - Status badges with color prop (success, danger, warning, info, gray, primary)
+- Use `tabular-nums` class for numeric alignment in tables
+- Use `-mx-6 -mb-6` on table wrappers to extend to section edges
+- Table headers: `text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400`
+- Table rows: `divide-y divide-gray-100 dark:divide-white/5` with `hover:bg-gray-50 dark:hover:bg-white/5`
+
+### Enum Colors for Badges
+Filament badge supports: `success`, `danger`, `warning`, `info`, `gray`, `primary`. Do NOT use non-standard colors like `orange`.
+
+### Business Logic
+- Keep calculations in PHP `#[Computed]` properties, NOT in Blade views
+- Keep DB queries in PHP, never in `@php` blocks in Blade
+- Use `unset($this->computedProperty)` in `updated*` hooks to invalidate cache
+
 ## Common Pitfalls
 
 1. **Section** - Use `Filament\Schemas\Components\Section`, NOT `Filament\Forms\Components\Section`
@@ -254,3 +339,6 @@ In `AdminPanelProvider.php`:
 5. **Infolist for View pages** - Define `infolist()` method on resource for read-only view pages instead of disabled forms
 6. **NavigationIcon type** - Use `string|BackedEnum|null` type hint
 7. **NavigationGroup type** - Use `string|UnitEnum|null` type hint
+8. **Enum badge colors** - Only use standard Filament colors: success, danger, warning, info, gray, primary
+9. **DB queries in Blade** - Always move to `#[Computed]` properties in the page class
+10. **Custom page input styling** - Match Filament's design language with proper dark mode and ring/border classes

@@ -29,7 +29,7 @@ enum Collectibility: int implements HasColor, HasLabel
         return match ($this) {
             self::Current => 'success',
             self::SpecialMention => 'warning',
-            self::Substandard => 'orange',
+            self::Substandard => 'warning',
             self::Doubtful => 'danger',
             self::Loss => 'gray',
         };

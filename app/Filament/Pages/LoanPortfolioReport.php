@@ -80,4 +80,14 @@ class LoanPortfolioReport extends Page
                 ->where('collectibility', '>=', 3)->sum('outstanding_principal'),
         ];
     }
+
+    #[Computed]
+    public function nplRatio(): float
+    {
+        $summary = $this->summary;
+
+        return $summary['total_outstanding'] > 0
+            ? ($summary['npl_amount'] / $summary['total_outstanding']) * 100
+            : 0;
+    }
 }

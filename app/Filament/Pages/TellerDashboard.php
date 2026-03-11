@@ -15,6 +15,7 @@ use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Pages\Page;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection as BaseCollection;
 use Livewire\Attributes\Computed;
 use UnitEnum;
 
@@ -48,10 +49,21 @@ class TellerDashboard extends Page
     {
         $session = $this->activeSession;
         if (! $session) {
-            return collect();
+            return new Collection;
         }
 
         return $session->transactions()->with('customer')->latest()->limit(10)->get();
+    }
+
+    #[Computed]
+    public function previousSessions(): BaseCollection
+    {
+        return TellerSession::query()
+            ->forUser(auth()->id())
+            ->where('status', 'closed')
+            ->latest('closed_at')
+            ->limit(5)
+            ->get();
     }
 
     protected function getHeaderActions(): array
