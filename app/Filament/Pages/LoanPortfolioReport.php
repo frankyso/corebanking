@@ -13,7 +13,7 @@ use UnitEnum;
 
 class LoanPortfolioReport extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar-square';
 
     protected static string|UnitEnum|null $navigationGroup = 'Laporan';
 
@@ -24,6 +24,11 @@ class LoanPortfolioReport extends Page
     protected static ?string $title = 'Laporan Portofolio Kredit';
 
     protected string $view = 'filament.pages.loan-portfolio-report';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('report.view') ?? false;
+    }
 
     #[Computed]
     public function portfolioByCollectibility(): Collection

@@ -30,38 +30,49 @@ class BranchResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $modelLabel = 'Cabang';
+
+    protected static ?string $pluralModelLabel = 'Cabang';
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('code')
+                    ->label('Kode')
                     ->required()
                     ->maxLength(3)
                     ->minLength(3)
                     ->unique(ignoreRecord: true),
                 TextInput::make('name')
+                    ->label('Nama')
                     ->required()
                     ->maxLength(100),
                 Textarea::make('address')
+                    ->label('Alamat')
                     ->columnSpanFull(),
                 TextInput::make('city')
+                    ->label('Kota')
                     ->maxLength(100),
                 TextInput::make('province')
+                    ->label('Provinsi')
                     ->maxLength(100),
                 TextInput::make('postal_code')
+                    ->label('Kode Pos')
                     ->maxLength(10),
                 TextInput::make('phone')
+                    ->label('Telepon')
                     ->tel()
                     ->maxLength(20),
                 Select::make('head_id')
-                    ->label('Branch Head')
+                    ->label('Kepala Cabang')
                     ->relationship('head', 'name')
                     ->searchable()
                     ->preload(),
                 Toggle::make('is_head_office')
-                    ->label('Head Office'),
+                    ->label('Kantor Pusat'),
                 Toggle::make('is_active')
-                    ->label('Active')
+                    ->label('Aktif')
                     ->default(true),
             ]);
     }
@@ -71,25 +82,28 @@ class BranchResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('code')
+                    ->label('Kode')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('city')
+                    ->label('Kota')
                     ->sortable(),
                 TextColumn::make('head.name')
-                    ->label('Branch Head'),
+                    ->label('Kepala Cabang'),
                 IconColumn::make('is_head_office')
                     ->boolean()
-                    ->label('HO'),
+                    ->label('KP'),
                 IconColumn::make('is_active')
                     ->boolean()
-                    ->label('Active'),
+                    ->label('Aktif'),
             ])
             ->filters([
                 TernaryFilter::make('is_active')
-                    ->label('Active'),
+                    ->label('Aktif'),
             ])
             ->recordActions([
                 EditAction::make(),

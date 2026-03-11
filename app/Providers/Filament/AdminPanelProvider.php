@@ -11,7 +11,6 @@ use Filament\Pages\Dashboard;
 use Filament\Panel;
 use Filament\PanelProvider;
 use Filament\Support\Colors\Color;
-use Filament\Widgets\AccountWidget;
 use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
@@ -33,9 +32,22 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Blue,
             ])
             ->navigationGroups([
-                NavigationGroup::make('Dashboard'),
-                NavigationGroup::make('Master Data'),
-                NavigationGroup::make('Administration'),
+                NavigationGroup::make('Dashboard')
+                    ->icon('heroicon-o-home'),
+                NavigationGroup::make('Master Data')
+                    ->icon('heroicon-o-circle-stack'),
+                NavigationGroup::make('Teller')
+                    ->icon('heroicon-o-computer-desktop'),
+                NavigationGroup::make('Kredit')
+                    ->icon('heroicon-o-banknotes'),
+                NavigationGroup::make('Akuntansi')
+                    ->icon('heroicon-o-calculator'),
+                NavigationGroup::make('Operasional')
+                    ->icon('heroicon-o-cog-6-tooth'),
+                NavigationGroup::make('Laporan')
+                    ->icon('heroicon-o-chart-bar-square'),
+                NavigationGroup::make('Administrasi')
+                    ->icon('heroicon-o-shield-check'),
             ])
             ->spa()
             ->darkMode()
@@ -45,9 +57,7 @@ class AdminPanelProvider extends PanelProvider
                 Dashboard::class,
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
-            ->widgets([
-                AccountWidget::class,
-            ])
+            ->widgets([])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

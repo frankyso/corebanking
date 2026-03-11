@@ -35,42 +35,52 @@ class ChartOfAccountResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'account_name';
 
+    protected static ?string $modelLabel = 'Bagan Akun';
+
+    protected static ?string $pluralModelLabel = 'Bagan Akun';
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('account_code')
+                    ->label('Kode Akun')
                     ->required()
                     ->maxLength(12)
                     ->unique(ignoreRecord: true)
                     ->placeholder('1.01.01.000'),
                 TextInput::make('account_name')
+                    ->label('Nama Akun')
                     ->required()
                     ->maxLength(150),
                 Select::make('account_group')
+                    ->label('Kelompok Akun')
                     ->options(AccountGroup::class)
                     ->required(),
                 Select::make('parent_id')
-                    ->label('Parent Account')
+                    ->label('Akun Induk')
                     ->relationship('parent', 'account_name')
                     ->getOptionLabelFromRecordUsing(fn (ChartOfAccount $record) => "{$record->account_code} - {$record->account_name}")
                     ->searchable()
                     ->preload(),
                 TextInput::make('level')
+                    ->label('Level')
                     ->numeric()
                     ->required()
                     ->default(1)
                     ->minValue(1)
                     ->maxValue(4),
                 Select::make('normal_balance')
+                    ->label('Saldo Normal')
                     ->options(NormalBalance::class)
                     ->required(),
                 Toggle::make('is_header')
-                    ->label('Header Account'),
+                    ->label('Akun Header'),
                 Toggle::make('is_active')
-                    ->label('Active')
+                    ->label('Aktif')
                     ->default(true),
                 Textarea::make('description')
+                    ->label('Keterangan')
                     ->columnSpanFull(),
             ]);
     }
@@ -80,33 +90,38 @@ class ChartOfAccountResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('account_code')
+                    ->label('Kode Akun')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('account_name')
+                    ->label('Nama Akun')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('account_group')
+                    ->label('Kelompok')
                     ->badge()
                     ->sortable(),
                 TextColumn::make('level')
+                    ->label('Level')
                     ->sortable(),
                 TextColumn::make('normal_balance')
+                    ->label('Saldo Normal')
                     ->badge(),
                 IconColumn::make('is_header')
                     ->boolean()
                     ->label('Header'),
                 IconColumn::make('is_active')
                     ->boolean()
-                    ->label('Active'),
+                    ->label('Aktif'),
             ])
             ->defaultSort('account_code')
             ->filters([
                 SelectFilter::make('account_group')
                     ->options(AccountGroup::class),
                 TernaryFilter::make('is_header')
-                    ->label('Header Only'),
+                    ->label('Hanya Header'),
                 TernaryFilter::make('is_active')
-                    ->label('Active'),
+                    ->label('Aktif'),
             ])
             ->recordActions([
                 EditAction::make(),

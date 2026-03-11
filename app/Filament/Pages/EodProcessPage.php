@@ -16,7 +16,7 @@ use UnitEnum;
 
 class EodProcessPage extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-path';
 
     protected static string|UnitEnum|null $navigationGroup = 'Operasional';
 
@@ -27,6 +27,11 @@ class EodProcessPage extends Page
     protected static ?string $title = 'End of Day Process';
 
     protected string $view = 'filament.pages.eod-process';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('eod.execute') ?? false;
+    }
 
     public string $processDate = '';
 

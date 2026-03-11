@@ -27,19 +27,24 @@ class UserResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-users';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Administration';
+    protected static string|UnitEnum|null $navigationGroup = 'Administrasi';
 
     protected static ?int $navigationSort = 1;
+
+    protected static ?string $modelLabel = 'Pengguna';
+
+    protected static ?string $pluralModelLabel = 'Pengguna';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('employee_id')
-                    ->label('Employee ID')
+                    ->label('ID Karyawan')
                     ->maxLength(20)
                     ->unique(ignoreRecord: true),
                 TextInput::make('name')
+                    ->label('Nama')
                     ->required()
                     ->maxLength(255),
                 TextInput::make('email')
@@ -48,20 +53,23 @@ class UserResource extends Resource
                     ->unique(ignoreRecord: true)
                     ->maxLength(255),
                 TextInput::make('password')
+                    ->label('Kata Sandi')
                     ->password()
                     ->dehydrateStateUsing(fn (string $state): string => Hash::make($state))
                     ->dehydrated(fn (?string $state): bool => filled($state))
                     ->required(fn (string $operation): bool => $operation === 'create'),
                 Select::make('branch_id')
+                    ->label('Cabang')
                     ->relationship('branch', 'name')
                     ->searchable()
                     ->preload(),
                 Select::make('roles')
+                    ->label('Peran')
                     ->multiple()
                     ->relationship('roles', 'name')
                     ->preload(),
                 Toggle::make('is_active')
-                    ->label('Active')
+                    ->label('Aktif')
                     ->default(true),
             ]);
     }
@@ -71,31 +79,32 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('employee_id')
-                    ->label('Employee ID')
+                    ->label('ID Karyawan')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('email')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('branch.name')
-                    ->label('Branch')
+                    ->label('Cabang')
                     ->sortable(),
                 TextColumn::make('roles.name')
-                    ->label('Roles')
+                    ->label('Peran')
                     ->badge(),
                 IconColumn::make('is_active')
                     ->boolean()
-                    ->label('Active'),
+                    ->label('Aktif'),
             ])
             ->filters([
                 SelectFilter::make('branch_id')
                     ->relationship('branch', 'name')
-                    ->label('Branch'),
+                    ->label('Cabang'),
                 TernaryFilter::make('is_active')
-                    ->label('Active'),
+                    ->label('Aktif'),
             ])
             ->recordActions([
                 EditAction::make(),

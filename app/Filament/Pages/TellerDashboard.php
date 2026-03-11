@@ -32,6 +32,11 @@ class TellerDashboard extends Page
 
     protected string $view = 'filament.pages.teller-dashboard';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('teller.open-session') ?? false;
+    }
+
     #[Computed]
     public function activeSession(): ?TellerSession
     {

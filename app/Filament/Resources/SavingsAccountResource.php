@@ -11,7 +11,6 @@ use App\Models\SavingsAccount;
 use App\Models\SavingsProduct;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
@@ -133,9 +132,7 @@ class SavingsAccountResource extends Resource
                 ViewAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                BulkActionGroup::make([]),
             ]);
     }
 
@@ -157,6 +154,13 @@ class SavingsAccountResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['customer.individualDetail', 'customer.corporateDetail', 'savingsProduct', 'branch']);
+        $query = parent::getEloquentQuery()->with(['customer.individualDetail', 'customer.corporateDetail', 'savingsProduct', 'branch']);
+
+        $user = auth()->user();
+        if ($user && ! $user->hasAnyRole(['SuperAdmin', 'Auditor', 'Compliance', 'BranchManager'])) {
+            $query->where('branch_id', $user->branch_id);
+        }
+
+        return $query;
     }
 }

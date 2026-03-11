@@ -29,6 +29,7 @@ This project has domain-specific skills available. You MUST activate the relevan
 
 - `pest-testing` — Tests applications using the Pest 4 PHP framework. Activates when writing tests, creating unit or feature tests, adding assertions, testing Livewire components, browser testing, debugging test failures, working with datasets or mocking; or when the user mentions test, spec, TDD, expects, assertion, coverage, or needs to verify functionality works.
 - `tailwindcss-development` — Styles applications using Tailwind CSS v4 utilities. Activates when adding styles, restyling components, working with gradients, spacing, layout, flex, grid, responsive design, dark mode, colors, typography, or borders; or when the user mentions CSS, styling, classes, Tailwind, restyle, hero section, cards, buttons, or any visual/UI changes.
+- `filament-development` — Develops Filament v5 admin panels, resources, pages, widgets, and forms. Activates when creating or editing Filament resources, pages, widgets, relation managers, actions, tables, forms, infolists, navigation, or policies; or when the user mentions Filament, admin panel, resource, CRUD, dashboard widget, or Filament component.
 
 ## Conventions
 

@@ -75,6 +75,7 @@ use App\Models\SystemParameter;
 use App\Models\User;
 use App\Models\Vault;
 use Livewire\Livewire;
+use Spatie\Permission\Models\Role;
 
 beforeEach(function () {
     $this->branch = Branch::factory()->create();
@@ -82,6 +83,8 @@ beforeEach(function () {
         'branch_id' => $this->branch->id,
         'is_active' => true,
     ]);
+    $role = Role::firstOrCreate(['name' => 'SuperAdmin', 'guard_name' => 'web']);
+    $this->user->assignRole($role);
     $this->actingAs($this->user);
 });
 
