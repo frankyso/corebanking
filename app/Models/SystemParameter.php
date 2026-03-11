@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class SystemParameter extends Model implements AuditableContract
 {
-    use Auditable;
+    use Auditable, HasFactory;
 
     protected $fillable = [
         'group',
