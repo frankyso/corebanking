@@ -40,7 +40,9 @@ class LoanPortfolioReport extends Page
             ->orderBy('collectibility')
             ->get()
             ->map(function ($row) {
-                $col = Collectibility::from($row->collectibility);
+                $col = $row->collectibility instanceof Collectibility
+                    ? $row->collectibility
+                    : Collectibility::from((int) $row->collectibility);
 
                 return [
                     'collectibility' => $col->getLabel(),
