@@ -32,22 +32,14 @@ class AdminPanelProvider extends PanelProvider
                 'primary' => Color::Blue,
             ])
             ->navigationGroups([
-                NavigationGroup::make('Dashboard')
-                    ->icon('heroicon-o-home'),
-                NavigationGroup::make('Master Data')
-                    ->icon('heroicon-o-circle-stack'),
-                NavigationGroup::make('Teller')
-                    ->icon('heroicon-o-computer-desktop'),
-                NavigationGroup::make('Kredit')
-                    ->icon('heroicon-o-banknotes'),
-                NavigationGroup::make('Akuntansi')
-                    ->icon('heroicon-o-calculator'),
-                NavigationGroup::make('Operasional')
-                    ->icon('heroicon-o-cog-6-tooth'),
-                NavigationGroup::make('Laporan')
-                    ->icon('heroicon-o-chart-bar-square'),
-                NavigationGroup::make('Administrasi')
-                    ->icon('heroicon-o-shield-check'),
+                NavigationGroup::make('Dashboard'),
+                NavigationGroup::make('Master Data'),
+                NavigationGroup::make('Teller'),
+                NavigationGroup::make('Kredit'),
+                NavigationGroup::make('Akuntansi'),
+                NavigationGroup::make('Operasional'),
+                NavigationGroup::make('Laporan'),
+                NavigationGroup::make('Administrasi'),
             ])
             ->spa()
             ->darkMode()
