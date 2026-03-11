@@ -41,7 +41,7 @@ class EodService
 
     public function run(Carbon $processDate, User $performer): EodProcess
     {
-        $existing = EodProcess::where('process_date', $processDate->toDateString())->first();
+        $existing = EodProcess::whereDate('process_date', $processDate->toDateString())->first();
         if ($existing && $existing->isCompleted()) {
             throw new \InvalidArgumentException("EOD untuk tanggal {$processDate->format('d/m/Y')} sudah pernah dijalankan");
         }
@@ -163,7 +163,7 @@ class EodService
         $count = 0;
 
         foreach ($accounts as $account) {
-            $this->savingsInterestCalculator->accrueDaily($account, $date);
+            $this->savingsInterestCalculator->calculateDailyAccrual($account, $date);
             $count++;
         }
 
@@ -272,14 +272,14 @@ class EodService
 
         $dormantAccounts = SavingsAccount::where('status', SavingsAccountStatus::Active)
             ->where(function ($query) use ($cutoffDate) {
-                $query->where('last_transaction_date', '<', $cutoffDate)
-                    ->orWhereNull('last_transaction_date');
+                $query->where('last_transaction_at', '<', $cutoffDate)
+                    ->orWhereNull('last_transaction_at');
             })
             ->get();
 
         $count = 0;
         foreach ($dormantAccounts as $account) {
-            if ($account->last_transaction_date && $account->last_transaction_date < $cutoffDate) {
+            if ($account->last_transaction_at && $account->last_transaction_at < $cutoffDate) {
                 $account->update(['status' => SavingsAccountStatus::Dormant]);
                 $count++;
             }

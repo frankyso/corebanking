@@ -1,0 +1,925 @@
+<?php
+
+use App\Enums\AccountGroup;
+use App\Enums\ApprovalStatus;
+use App\Enums\CollateralType;
+use App\Enums\Collectibility;
+use App\Enums\CustomerStatus;
+use App\Enums\CustomerType;
+use App\Enums\DepositStatus;
+use App\Enums\EodStatus;
+use App\Enums\Gender;
+use App\Enums\InterestCalcMethod;
+use App\Enums\InterestPaymentMethod;
+use App\Enums\InterestType;
+use App\Enums\JournalSource;
+use App\Enums\JournalStatus;
+use App\Enums\LoanApplicationStatus;
+use App\Enums\LoanStatus;
+use App\Enums\LoanType;
+use App\Enums\MaritalStatus;
+use App\Enums\NormalBalance;
+use App\Enums\RiskRating;
+use App\Enums\RolloverType;
+use App\Enums\SavingsAccountStatus;
+use App\Enums\SavingsTransactionType;
+use App\Enums\TellerSessionStatus;
+use App\Enums\TellerTransactionType;
+use App\Enums\VaultTransactionType;
+
+// ============================================================================
+// AccountGroup
+// ============================================================================
+
+it('has exactly 5 AccountGroup cases', function () {
+    expect(AccountGroup::cases())->toHaveCount(5);
+});
+
+it('has correct AccountGroup backing values', function (AccountGroup $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Asset' => [AccountGroup::Asset, 'asset'],
+    'Liability' => [AccountGroup::Liability, 'liability'],
+    'Equity' => [AccountGroup::Equity, 'equity'],
+    'Revenue' => [AccountGroup::Revenue, 'revenue'],
+    'Expense' => [AccountGroup::Expense, 'expense'],
+]);
+
+it('returns correct AccountGroup labels', function (AccountGroup $case, string $label) {
+    expect($case->label())->toBe($label);
+})->with([
+    'Asset' => [AccountGroup::Asset, 'Aset'],
+    'Liability' => [AccountGroup::Liability, 'Kewajiban'],
+    'Equity' => [AccountGroup::Equity, 'Ekuitas'],
+    'Revenue' => [AccountGroup::Revenue, 'Pendapatan'],
+    'Expense' => [AccountGroup::Expense, 'Beban'],
+]);
+
+it('returns correct AccountGroup code prefixes', function (AccountGroup $case, string $prefix) {
+    expect($case->codePrefix())->toBe($prefix);
+})->with([
+    'Asset' => [AccountGroup::Asset, '1'],
+    'Liability' => [AccountGroup::Liability, '2'],
+    'Equity' => [AccountGroup::Equity, '3'],
+    'Revenue' => [AccountGroup::Revenue, '4'],
+    'Expense' => [AccountGroup::Expense, '5'],
+]);
+
+// ============================================================================
+// NormalBalance
+// ============================================================================
+
+it('has exactly 2 NormalBalance cases', function () {
+    expect(NormalBalance::cases())->toHaveCount(2);
+});
+
+it('has correct NormalBalance backing values', function (NormalBalance $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Debit' => [NormalBalance::Debit, 'debit'],
+    'Credit' => [NormalBalance::Credit, 'credit'],
+]);
+
+it('returns correct NormalBalance labels', function (NormalBalance $case, string $label) {
+    expect($case->label())->toBe($label);
+})->with([
+    'Debit' => [NormalBalance::Debit, 'Debit'],
+    'Credit' => [NormalBalance::Credit, 'Kredit'],
+]);
+
+// ============================================================================
+// ApprovalStatus
+// ============================================================================
+
+it('has exactly 3 ApprovalStatus cases', function () {
+    expect(ApprovalStatus::cases())->toHaveCount(3);
+});
+
+it('has correct ApprovalStatus backing values', function (ApprovalStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Pending' => [ApprovalStatus::Pending, 'pending'],
+    'Approved' => [ApprovalStatus::Approved, 'approved'],
+    'Rejected' => [ApprovalStatus::Rejected, 'rejected'],
+]);
+
+it('returns correct ApprovalStatus labels', function (ApprovalStatus $case, string $label) {
+    expect($case->label())->toBe($label);
+})->with([
+    'Pending' => [ApprovalStatus::Pending, 'Menunggu Persetujuan'],
+    'Approved' => [ApprovalStatus::Approved, 'Disetujui'],
+    'Rejected' => [ApprovalStatus::Rejected, 'Ditolak'],
+]);
+
+it('returns correct ApprovalStatus colors', function (ApprovalStatus $case, string $color) {
+    expect($case->color())->toBe($color);
+})->with([
+    'Pending' => [ApprovalStatus::Pending, 'warning'],
+    'Approved' => [ApprovalStatus::Approved, 'success'],
+    'Rejected' => [ApprovalStatus::Rejected, 'danger'],
+]);
+
+// ============================================================================
+// CustomerType
+// ============================================================================
+
+it('has exactly 2 CustomerType cases', function () {
+    expect(CustomerType::cases())->toHaveCount(2);
+});
+
+it('has correct CustomerType backing values', function (CustomerType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Individual' => [CustomerType::Individual, 'individual'],
+    'Corporate' => [CustomerType::Corporate, 'corporate'],
+]);
+
+it('returns correct CustomerType labels', function (CustomerType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Individual' => [CustomerType::Individual, 'Perorangan'],
+    'Corporate' => [CustomerType::Corporate, 'Badan Usaha'],
+]);
+
+// ============================================================================
+// CustomerStatus
+// ============================================================================
+
+it('has exactly 5 CustomerStatus cases', function () {
+    expect(CustomerStatus::cases())->toHaveCount(5);
+});
+
+it('has correct CustomerStatus backing values', function (CustomerStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'PendingApproval' => [CustomerStatus::PendingApproval, 'pending_approval'],
+    'Active' => [CustomerStatus::Active, 'active'],
+    'Inactive' => [CustomerStatus::Inactive, 'inactive'],
+    'Blocked' => [CustomerStatus::Blocked, 'blocked'],
+    'Closed' => [CustomerStatus::Closed, 'closed'],
+]);
+
+it('returns correct CustomerStatus labels', function (CustomerStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'PendingApproval' => [CustomerStatus::PendingApproval, 'Menunggu Persetujuan'],
+    'Active' => [CustomerStatus::Active, 'Aktif'],
+    'Inactive' => [CustomerStatus::Inactive, 'Tidak Aktif'],
+    'Blocked' => [CustomerStatus::Blocked, 'Diblokir'],
+    'Closed' => [CustomerStatus::Closed, 'Ditutup'],
+]);
+
+it('returns correct CustomerStatus colors', function (CustomerStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'PendingApproval' => [CustomerStatus::PendingApproval, 'warning'],
+    'Active' => [CustomerStatus::Active, 'success'],
+    'Inactive' => [CustomerStatus::Inactive, 'gray'],
+    'Blocked' => [CustomerStatus::Blocked, 'danger'],
+    'Closed' => [CustomerStatus::Closed, 'gray'],
+]);
+
+// ============================================================================
+// Gender
+// ============================================================================
+
+it('has exactly 2 Gender cases', function () {
+    expect(Gender::cases())->toHaveCount(2);
+});
+
+it('has correct Gender backing values', function (Gender $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Male' => [Gender::Male, 'M'],
+    'Female' => [Gender::Female, 'F'],
+]);
+
+it('returns correct Gender labels', function (Gender $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Male' => [Gender::Male, 'Laki-laki'],
+    'Female' => [Gender::Female, 'Perempuan'],
+]);
+
+// ============================================================================
+// MaritalStatus
+// ============================================================================
+
+it('has exactly 4 MaritalStatus cases', function () {
+    expect(MaritalStatus::cases())->toHaveCount(4);
+});
+
+it('has correct MaritalStatus backing values', function (MaritalStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Single' => [MaritalStatus::Single, 'single'],
+    'Married' => [MaritalStatus::Married, 'married'],
+    'Divorced' => [MaritalStatus::Divorced, 'divorced'],
+    'Widowed' => [MaritalStatus::Widowed, 'widowed'],
+]);
+
+it('returns correct MaritalStatus labels', function (MaritalStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Single' => [MaritalStatus::Single, 'Belum Menikah'],
+    'Married' => [MaritalStatus::Married, 'Menikah'],
+    'Divorced' => [MaritalStatus::Divorced, 'Cerai Hidup'],
+    'Widowed' => [MaritalStatus::Widowed, 'Cerai Mati'],
+]);
+
+// ============================================================================
+// RiskRating
+// ============================================================================
+
+it('has exactly 3 RiskRating cases', function () {
+    expect(RiskRating::cases())->toHaveCount(3);
+});
+
+it('has correct RiskRating backing values', function (RiskRating $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Low' => [RiskRating::Low, 'low'],
+    'Medium' => [RiskRating::Medium, 'medium'],
+    'High' => [RiskRating::High, 'high'],
+]);
+
+it('returns correct RiskRating labels', function (RiskRating $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Low' => [RiskRating::Low, 'Rendah'],
+    'Medium' => [RiskRating::Medium, 'Menengah'],
+    'High' => [RiskRating::High, 'Tinggi'],
+]);
+
+it('returns correct RiskRating colors', function (RiskRating $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Low' => [RiskRating::Low, 'success'],
+    'Medium' => [RiskRating::Medium, 'warning'],
+    'High' => [RiskRating::High, 'danger'],
+]);
+
+// ============================================================================
+// InterestCalcMethod
+// ============================================================================
+
+it('has exactly 3 InterestCalcMethod cases', function () {
+    expect(InterestCalcMethod::cases())->toHaveCount(3);
+});
+
+it('has correct InterestCalcMethod backing values', function (InterestCalcMethod $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'DailyBalance' => [InterestCalcMethod::DailyBalance, 'daily_balance'],
+    'AverageBalance' => [InterestCalcMethod::AverageBalance, 'average_balance'],
+    'LowestBalance' => [InterestCalcMethod::LowestBalance, 'lowest_balance'],
+]);
+
+it('returns correct InterestCalcMethod labels', function (InterestCalcMethod $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'DailyBalance' => [InterestCalcMethod::DailyBalance, 'Saldo Harian'],
+    'AverageBalance' => [InterestCalcMethod::AverageBalance, 'Saldo Rata-rata'],
+    'LowestBalance' => [InterestCalcMethod::LowestBalance, 'Saldo Terendah'],
+]);
+
+// ============================================================================
+// SavingsAccountStatus
+// ============================================================================
+
+it('has exactly 4 SavingsAccountStatus cases', function () {
+    expect(SavingsAccountStatus::cases())->toHaveCount(4);
+});
+
+it('has correct SavingsAccountStatus backing values', function (SavingsAccountStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Active' => [SavingsAccountStatus::Active, 'active'],
+    'Dormant' => [SavingsAccountStatus::Dormant, 'dormant'],
+    'Frozen' => [SavingsAccountStatus::Frozen, 'frozen'],
+    'Closed' => [SavingsAccountStatus::Closed, 'closed'],
+]);
+
+it('returns correct SavingsAccountStatus labels', function (SavingsAccountStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Active' => [SavingsAccountStatus::Active, 'Aktif'],
+    'Dormant' => [SavingsAccountStatus::Dormant, 'Dorman'],
+    'Frozen' => [SavingsAccountStatus::Frozen, 'Dibekukan'],
+    'Closed' => [SavingsAccountStatus::Closed, 'Ditutup'],
+]);
+
+it('returns correct SavingsAccountStatus colors', function (SavingsAccountStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Active' => [SavingsAccountStatus::Active, 'success'],
+    'Dormant' => [SavingsAccountStatus::Dormant, 'warning'],
+    'Frozen' => [SavingsAccountStatus::Frozen, 'danger'],
+    'Closed' => [SavingsAccountStatus::Closed, 'gray'],
+]);
+
+// ============================================================================
+// SavingsTransactionType
+// ============================================================================
+
+it('has exactly 10 SavingsTransactionType cases', function () {
+    expect(SavingsTransactionType::cases())->toHaveCount(10);
+});
+
+it('has correct SavingsTransactionType backing values', function (SavingsTransactionType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Deposit' => [SavingsTransactionType::Deposit, 'deposit'],
+    'Withdrawal' => [SavingsTransactionType::Withdrawal, 'withdrawal'],
+    'InterestCredit' => [SavingsTransactionType::InterestCredit, 'interest_credit'],
+    'AdminFee' => [SavingsTransactionType::AdminFee, 'admin_fee'],
+    'Tax' => [SavingsTransactionType::Tax, 'tax'],
+    'Transfer' => [SavingsTransactionType::Transfer, 'transfer'],
+    'Opening' => [SavingsTransactionType::Opening, 'opening'],
+    'Closing' => [SavingsTransactionType::Closing, 'closing'],
+    'Hold' => [SavingsTransactionType::Hold, 'hold'],
+    'Unhold' => [SavingsTransactionType::Unhold, 'unhold'],
+]);
+
+it('returns correct SavingsTransactionType labels', function (SavingsTransactionType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Deposit' => [SavingsTransactionType::Deposit, 'Setoran'],
+    'Withdrawal' => [SavingsTransactionType::Withdrawal, 'Penarikan'],
+    'InterestCredit' => [SavingsTransactionType::InterestCredit, 'Bunga'],
+    'AdminFee' => [SavingsTransactionType::AdminFee, 'Biaya Admin'],
+    'Tax' => [SavingsTransactionType::Tax, 'Pajak'],
+    'Transfer' => [SavingsTransactionType::Transfer, 'Transfer'],
+    'Opening' => [SavingsTransactionType::Opening, 'Pembukaan'],
+    'Closing' => [SavingsTransactionType::Closing, 'Penutupan'],
+    'Hold' => [SavingsTransactionType::Hold, 'Pemblokiran'],
+    'Unhold' => [SavingsTransactionType::Unhold, 'Pembukaan Blokir'],
+]);
+
+it('returns correct SavingsTransactionType colors', function (SavingsTransactionType $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Deposit' => [SavingsTransactionType::Deposit, 'success'],
+    'Withdrawal' => [SavingsTransactionType::Withdrawal, 'danger'],
+    'InterestCredit' => [SavingsTransactionType::InterestCredit, 'success'],
+    'AdminFee' => [SavingsTransactionType::AdminFee, 'danger'],
+    'Tax' => [SavingsTransactionType::Tax, 'danger'],
+    'Transfer' => [SavingsTransactionType::Transfer, 'info'],
+    'Opening' => [SavingsTransactionType::Opening, 'success'],
+    'Closing' => [SavingsTransactionType::Closing, 'danger'],
+    'Hold' => [SavingsTransactionType::Hold, 'danger'],
+    'Unhold' => [SavingsTransactionType::Unhold, 'success'],
+]);
+
+it('identifies credit SavingsTransactionTypes correctly', function (SavingsTransactionType $case) {
+    expect($case->isCredit())->toBeTrue()
+        ->and($case->isDebit())->toBeFalse();
+})->with([
+    'Deposit' => [SavingsTransactionType::Deposit],
+    'InterestCredit' => [SavingsTransactionType::InterestCredit],
+    'Opening' => [SavingsTransactionType::Opening],
+    'Unhold' => [SavingsTransactionType::Unhold],
+]);
+
+it('identifies debit SavingsTransactionTypes correctly', function (SavingsTransactionType $case) {
+    expect($case->isDebit())->toBeTrue()
+        ->and($case->isCredit())->toBeFalse();
+})->with([
+    'Withdrawal' => [SavingsTransactionType::Withdrawal],
+    'AdminFee' => [SavingsTransactionType::AdminFee],
+    'Tax' => [SavingsTransactionType::Tax],
+    'Closing' => [SavingsTransactionType::Closing],
+    'Hold' => [SavingsTransactionType::Hold],
+]);
+
+it('identifies Transfer as neither credit nor debit', function () {
+    expect(SavingsTransactionType::Transfer->isCredit())->toBeFalse()
+        ->and(SavingsTransactionType::Transfer->isDebit())->toBeFalse();
+});
+
+// ============================================================================
+// DepositStatus
+// ============================================================================
+
+it('has exactly 6 DepositStatus cases', function () {
+    expect(DepositStatus::cases())->toHaveCount(6);
+});
+
+it('has correct DepositStatus backing values', function (DepositStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Active' => [DepositStatus::Active, 'active'],
+    'Matured' => [DepositStatus::Matured, 'matured'],
+    'Withdrawn' => [DepositStatus::Withdrawn, 'withdrawn'],
+    'Rolled' => [DepositStatus::Rolled, 'rolled'],
+    'Pledged' => [DepositStatus::Pledged, 'pledged'],
+    'Closed' => [DepositStatus::Closed, 'closed'],
+]);
+
+it('returns correct DepositStatus labels', function (DepositStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Active' => [DepositStatus::Active, 'Aktif'],
+    'Matured' => [DepositStatus::Matured, 'Jatuh Tempo'],
+    'Withdrawn' => [DepositStatus::Withdrawn, 'Dicairkan'],
+    'Rolled' => [DepositStatus::Rolled, 'Diperpanjang'],
+    'Pledged' => [DepositStatus::Pledged, 'Dijaminkan'],
+    'Closed' => [DepositStatus::Closed, 'Ditutup'],
+]);
+
+it('returns correct DepositStatus colors', function (DepositStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Active' => [DepositStatus::Active, 'success'],
+    'Matured' => [DepositStatus::Matured, 'warning'],
+    'Withdrawn' => [DepositStatus::Withdrawn, 'gray'],
+    'Rolled' => [DepositStatus::Rolled, 'info'],
+    'Pledged' => [DepositStatus::Pledged, 'danger'],
+    'Closed' => [DepositStatus::Closed, 'gray'],
+]);
+
+// ============================================================================
+// InterestPaymentMethod
+// ============================================================================
+
+it('has exactly 3 InterestPaymentMethod cases', function () {
+    expect(InterestPaymentMethod::cases())->toHaveCount(3);
+});
+
+it('has correct InterestPaymentMethod backing values', function (InterestPaymentMethod $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Maturity' => [InterestPaymentMethod::Maturity, 'maturity'],
+    'Monthly' => [InterestPaymentMethod::Monthly, 'monthly'],
+    'Upfront' => [InterestPaymentMethod::Upfront, 'upfront'],
+]);
+
+it('returns correct InterestPaymentMethod labels', function (InterestPaymentMethod $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Maturity' => [InterestPaymentMethod::Maturity, 'Saat Jatuh Tempo'],
+    'Monthly' => [InterestPaymentMethod::Monthly, 'Bulanan'],
+    'Upfront' => [InterestPaymentMethod::Upfront, 'Di Muka'],
+]);
+
+// ============================================================================
+// RolloverType
+// ============================================================================
+
+it('has exactly 3 RolloverType cases', function () {
+    expect(RolloverType::cases())->toHaveCount(3);
+});
+
+it('has correct RolloverType backing values', function (RolloverType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'None' => [RolloverType::None, 'none'],
+    'PrincipalOnly' => [RolloverType::PrincipalOnly, 'principal_only'],
+    'PrincipalAndInterest' => [RolloverType::PrincipalAndInterest, 'principal_and_interest'],
+]);
+
+it('returns correct RolloverType labels', function (RolloverType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'None' => [RolloverType::None, 'Tidak Diperpanjang'],
+    'PrincipalOnly' => [RolloverType::PrincipalOnly, 'Pokok Saja'],
+    'PrincipalAndInterest' => [RolloverType::PrincipalAndInterest, 'Pokok + Bunga'],
+]);
+
+// ============================================================================
+// JournalStatus
+// ============================================================================
+
+it('has exactly 4 JournalStatus cases', function () {
+    expect(JournalStatus::cases())->toHaveCount(4);
+});
+
+it('has correct JournalStatus backing values', function (JournalStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Draft' => [JournalStatus::Draft, 'draft'],
+    'PendingApproval' => [JournalStatus::PendingApproval, 'pending_approval'],
+    'Posted' => [JournalStatus::Posted, 'posted'],
+    'Reversed' => [JournalStatus::Reversed, 'reversed'],
+]);
+
+it('returns correct JournalStatus labels', function (JournalStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Draft' => [JournalStatus::Draft, 'Draft'],
+    'PendingApproval' => [JournalStatus::PendingApproval, 'Menunggu Persetujuan'],
+    'Posted' => [JournalStatus::Posted, 'Terposting'],
+    'Reversed' => [JournalStatus::Reversed, 'Dibatalkan'],
+]);
+
+it('returns correct JournalStatus colors', function (JournalStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Draft' => [JournalStatus::Draft, 'gray'],
+    'PendingApproval' => [JournalStatus::PendingApproval, 'warning'],
+    'Posted' => [JournalStatus::Posted, 'success'],
+    'Reversed' => [JournalStatus::Reversed, 'danger'],
+]);
+
+// ============================================================================
+// JournalSource
+// ============================================================================
+
+it('has exactly 6 JournalSource cases', function () {
+    expect(JournalSource::cases())->toHaveCount(6);
+});
+
+it('has correct JournalSource backing values', function (JournalSource $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Manual' => [JournalSource::Manual, 'manual'],
+    'System' => [JournalSource::System, 'system'],
+    'Teller' => [JournalSource::Teller, 'teller'],
+    'Interest' => [JournalSource::Interest, 'interest'],
+    'Fee' => [JournalSource::Fee, 'fee'],
+    'Eod' => [JournalSource::Eod, 'eod'],
+]);
+
+it('returns correct JournalSource labels', function (JournalSource $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Manual' => [JournalSource::Manual, 'Manual'],
+    'System' => [JournalSource::System, 'Sistem'],
+    'Teller' => [JournalSource::Teller, 'Teller'],
+    'Interest' => [JournalSource::Interest, 'Bunga'],
+    'Fee' => [JournalSource::Fee, 'Biaya'],
+    'Eod' => [JournalSource::Eod, 'EOD'],
+]);
+
+it('returns correct JournalSource colors', function (JournalSource $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Manual' => [JournalSource::Manual, 'primary'],
+    'System' => [JournalSource::System, 'gray'],
+    'Teller' => [JournalSource::Teller, 'info'],
+    'Interest' => [JournalSource::Interest, 'success'],
+    'Fee' => [JournalSource::Fee, 'warning'],
+    'Eod' => [JournalSource::Eod, 'danger'],
+]);
+
+// ============================================================================
+// LoanType
+// ============================================================================
+
+it('has exactly 3 LoanType cases', function () {
+    expect(LoanType::cases())->toHaveCount(3);
+});
+
+it('has correct LoanType backing values', function (LoanType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Kmk' => [LoanType::Kmk, 'kmk'],
+    'Ki' => [LoanType::Ki, 'ki'],
+    'Kk' => [LoanType::Kk, 'kk'],
+]);
+
+it('returns correct LoanType labels', function (LoanType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Kmk' => [LoanType::Kmk, 'Kredit Modal Kerja'],
+    'Ki' => [LoanType::Ki, 'Kredit Investasi'],
+    'Kk' => [LoanType::Kk, 'Kredit Konsumsi'],
+]);
+
+// ============================================================================
+// InterestType
+// ============================================================================
+
+it('has exactly 3 InterestType cases', function () {
+    expect(InterestType::cases())->toHaveCount(3);
+});
+
+it('has correct InterestType backing values', function (InterestType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Flat' => [InterestType::Flat, 'flat'],
+    'Effective' => [InterestType::Effective, 'effective'],
+    'Annuity' => [InterestType::Annuity, 'annuity'],
+]);
+
+it('returns correct InterestType labels', function (InterestType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Flat' => [InterestType::Flat, 'Flat'],
+    'Effective' => [InterestType::Effective, 'Efektif'],
+    'Annuity' => [InterestType::Annuity, 'Anuitas'],
+]);
+
+// ============================================================================
+// LoanStatus
+// ============================================================================
+
+it('has exactly 6 LoanStatus cases', function () {
+    expect(LoanStatus::cases())->toHaveCount(6);
+});
+
+it('has correct LoanStatus backing values', function (LoanStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Active' => [LoanStatus::Active, 'active'],
+    'Current' => [LoanStatus::Current, 'current'],
+    'Overdue' => [LoanStatus::Overdue, 'overdue'],
+    'Restructured' => [LoanStatus::Restructured, 'restructured'],
+    'WrittenOff' => [LoanStatus::WrittenOff, 'written_off'],
+    'Closed' => [LoanStatus::Closed, 'closed'],
+]);
+
+it('returns correct LoanStatus labels', function (LoanStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Active' => [LoanStatus::Active, 'Aktif'],
+    'Current' => [LoanStatus::Current, 'Lancar'],
+    'Overdue' => [LoanStatus::Overdue, 'Menunggak'],
+    'Restructured' => [LoanStatus::Restructured, 'Restrukturisasi'],
+    'WrittenOff' => [LoanStatus::WrittenOff, 'Hapus Buku'],
+    'Closed' => [LoanStatus::Closed, 'Lunas'],
+]);
+
+it('returns correct LoanStatus colors', function (LoanStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Active' => [LoanStatus::Active, 'success'],
+    'Current' => [LoanStatus::Current, 'success'],
+    'Overdue' => [LoanStatus::Overdue, 'danger'],
+    'Restructured' => [LoanStatus::Restructured, 'warning'],
+    'WrittenOff' => [LoanStatus::WrittenOff, 'gray'],
+    'Closed' => [LoanStatus::Closed, 'info'],
+]);
+
+// ============================================================================
+// Collectibility
+// ============================================================================
+
+it('has exactly 5 Collectibility cases', function () {
+    expect(Collectibility::cases())->toHaveCount(5);
+});
+
+it('has correct Collectibility int backing values', function (Collectibility $case, int $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Current' => [Collectibility::Current, 1],
+    'SpecialMention' => [Collectibility::SpecialMention, 2],
+    'Substandard' => [Collectibility::Substandard, 3],
+    'Doubtful' => [Collectibility::Doubtful, 4],
+    'Loss' => [Collectibility::Loss, 5],
+]);
+
+it('returns correct Collectibility labels', function (Collectibility $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Current' => [Collectibility::Current, '1 - Lancar'],
+    'SpecialMention' => [Collectibility::SpecialMention, '2 - Dalam Perhatian Khusus'],
+    'Substandard' => [Collectibility::Substandard, '3 - Kurang Lancar'],
+    'Doubtful' => [Collectibility::Doubtful, '4 - Diragukan'],
+    'Loss' => [Collectibility::Loss, '5 - Macet'],
+]);
+
+it('returns correct Collectibility colors', function (Collectibility $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Current' => [Collectibility::Current, 'success'],
+    'SpecialMention' => [Collectibility::SpecialMention, 'warning'],
+    'Substandard' => [Collectibility::Substandard, 'orange'],
+    'Doubtful' => [Collectibility::Doubtful, 'danger'],
+    'Loss' => [Collectibility::Loss, 'gray'],
+]);
+
+it('returns correct Collectibility CKPN rates', function (Collectibility $case, float $rate) {
+    expect($case->ckpnRate())->toBe($rate);
+})->with([
+    'Current 1%' => [Collectibility::Current, 0.01],
+    'SpecialMention 5%' => [Collectibility::SpecialMention, 0.05],
+    'Substandard 15%' => [Collectibility::Substandard, 0.15],
+    'Doubtful 50%' => [Collectibility::Doubtful, 0.50],
+    'Loss 100%' => [Collectibility::Loss, 1.00],
+]);
+
+// ============================================================================
+// CollateralType
+// ============================================================================
+
+it('has exactly 7 CollateralType cases', function () {
+    expect(CollateralType::cases())->toHaveCount(7);
+});
+
+it('has correct CollateralType backing values', function (CollateralType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Land' => [CollateralType::Land, 'land'],
+    'Building' => [CollateralType::Building, 'building'],
+    'Vehicle' => [CollateralType::Vehicle, 'vehicle'],
+    'Deposit' => [CollateralType::Deposit, 'deposit'],
+    'Inventory' => [CollateralType::Inventory, 'inventory'],
+    'Machinery' => [CollateralType::Machinery, 'machinery'],
+    'Other' => [CollateralType::Other, 'other'],
+]);
+
+it('returns correct CollateralType labels', function (CollateralType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Land' => [CollateralType::Land, 'Tanah'],
+    'Building' => [CollateralType::Building, 'Bangunan'],
+    'Vehicle' => [CollateralType::Vehicle, 'Kendaraan'],
+    'Deposit' => [CollateralType::Deposit, 'Deposito'],
+    'Inventory' => [CollateralType::Inventory, 'Persediaan'],
+    'Machinery' => [CollateralType::Machinery, 'Mesin/Peralatan'],
+    'Other' => [CollateralType::Other, 'Lainnya'],
+]);
+
+// ============================================================================
+// LoanApplicationStatus
+// ============================================================================
+
+it('has exactly 7 LoanApplicationStatus cases', function () {
+    expect(LoanApplicationStatus::cases())->toHaveCount(7);
+});
+
+it('has correct LoanApplicationStatus backing values', function (LoanApplicationStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Draft' => [LoanApplicationStatus::Draft, 'draft'],
+    'Submitted' => [LoanApplicationStatus::Submitted, 'submitted'],
+    'UnderReview' => [LoanApplicationStatus::UnderReview, 'under_review'],
+    'Approved' => [LoanApplicationStatus::Approved, 'approved'],
+    'Rejected' => [LoanApplicationStatus::Rejected, 'rejected'],
+    'Disbursed' => [LoanApplicationStatus::Disbursed, 'disbursed'],
+    'Cancelled' => [LoanApplicationStatus::Cancelled, 'cancelled'],
+]);
+
+it('returns correct LoanApplicationStatus labels', function (LoanApplicationStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Draft' => [LoanApplicationStatus::Draft, 'Draft'],
+    'Submitted' => [LoanApplicationStatus::Submitted, 'Diajukan'],
+    'UnderReview' => [LoanApplicationStatus::UnderReview, 'Dalam Review'],
+    'Approved' => [LoanApplicationStatus::Approved, 'Disetujui'],
+    'Rejected' => [LoanApplicationStatus::Rejected, 'Ditolak'],
+    'Disbursed' => [LoanApplicationStatus::Disbursed, 'Dicairkan'],
+    'Cancelled' => [LoanApplicationStatus::Cancelled, 'Dibatalkan'],
+]);
+
+it('returns correct LoanApplicationStatus colors', function (LoanApplicationStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Draft' => [LoanApplicationStatus::Draft, 'gray'],
+    'Submitted' => [LoanApplicationStatus::Submitted, 'info'],
+    'UnderReview' => [LoanApplicationStatus::UnderReview, 'warning'],
+    'Approved' => [LoanApplicationStatus::Approved, 'success'],
+    'Rejected' => [LoanApplicationStatus::Rejected, 'danger'],
+    'Disbursed' => [LoanApplicationStatus::Disbursed, 'primary'],
+    'Cancelled' => [LoanApplicationStatus::Cancelled, 'gray'],
+]);
+
+// ============================================================================
+// VaultTransactionType
+// ============================================================================
+
+it('has exactly 6 VaultTransactionType cases', function () {
+    expect(VaultTransactionType::cases())->toHaveCount(6);
+});
+
+it('has correct VaultTransactionType backing values', function (VaultTransactionType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'InitialCash' => [VaultTransactionType::InitialCash, 'initial_cash'],
+    'CashIn' => [VaultTransactionType::CashIn, 'cash_in'],
+    'CashOut' => [VaultTransactionType::CashOut, 'cash_out'],
+    'TellerRequest' => [VaultTransactionType::TellerRequest, 'teller_request'],
+    'TellerReturn' => [VaultTransactionType::TellerReturn, 'teller_return'],
+    'Adjustment' => [VaultTransactionType::Adjustment, 'adjustment'],
+]);
+
+it('returns correct VaultTransactionType labels', function (VaultTransactionType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'InitialCash' => [VaultTransactionType::InitialCash, 'Saldo Awal'],
+    'CashIn' => [VaultTransactionType::CashIn, 'Kas Masuk'],
+    'CashOut' => [VaultTransactionType::CashOut, 'Kas Keluar'],
+    'TellerRequest' => [VaultTransactionType::TellerRequest, 'Permintaan Teller'],
+    'TellerReturn' => [VaultTransactionType::TellerReturn, 'Pengembalian Teller'],
+    'Adjustment' => [VaultTransactionType::Adjustment, 'Penyesuaian'],
+]);
+
+it('returns correct VaultTransactionType colors', function (VaultTransactionType $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'InitialCash' => [VaultTransactionType::InitialCash, 'gray'],
+    'CashIn' => [VaultTransactionType::CashIn, 'success'],
+    'CashOut' => [VaultTransactionType::CashOut, 'danger'],
+    'TellerRequest' => [VaultTransactionType::TellerRequest, 'danger'],
+    'TellerReturn' => [VaultTransactionType::TellerReturn, 'success'],
+    'Adjustment' => [VaultTransactionType::Adjustment, 'warning'],
+]);
+
+// ============================================================================
+// TellerTransactionType
+// ============================================================================
+
+it('has exactly 7 TellerTransactionType cases', function () {
+    expect(TellerTransactionType::cases())->toHaveCount(7);
+});
+
+it('has correct TellerTransactionType backing values', function (TellerTransactionType $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'SavingsDeposit' => [TellerTransactionType::SavingsDeposit, 'savings_deposit'],
+    'SavingsWithdrawal' => [TellerTransactionType::SavingsWithdrawal, 'savings_withdrawal'],
+    'LoanPayment' => [TellerTransactionType::LoanPayment, 'loan_payment'],
+    'CashRequest' => [TellerTransactionType::CashRequest, 'cash_request'],
+    'CashReturn' => [TellerTransactionType::CashReturn, 'cash_return'],
+    'Transfer' => [TellerTransactionType::Transfer, 'transfer'],
+    'Other' => [TellerTransactionType::Other, 'other'],
+]);
+
+it('returns correct TellerTransactionType labels', function (TellerTransactionType $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'SavingsDeposit' => [TellerTransactionType::SavingsDeposit, 'Setor Tabungan'],
+    'SavingsWithdrawal' => [TellerTransactionType::SavingsWithdrawal, 'Tarik Tabungan'],
+    'LoanPayment' => [TellerTransactionType::LoanPayment, 'Bayar Angsuran'],
+    'CashRequest' => [TellerTransactionType::CashRequest, 'Permintaan Kas'],
+    'CashReturn' => [TellerTransactionType::CashReturn, 'Pengembalian Kas'],
+    'Transfer' => [TellerTransactionType::Transfer, 'Transfer'],
+    'Other' => [TellerTransactionType::Other, 'Lainnya'],
+]);
+
+it('returns correct TellerTransactionType colors', function (TellerTransactionType $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'SavingsDeposit' => [TellerTransactionType::SavingsDeposit, 'success'],
+    'SavingsWithdrawal' => [TellerTransactionType::SavingsWithdrawal, 'danger'],
+    'LoanPayment' => [TellerTransactionType::LoanPayment, 'success'],
+    'CashRequest' => [TellerTransactionType::CashRequest, 'danger'],
+    'CashReturn' => [TellerTransactionType::CashReturn, 'success'],
+    'Transfer' => [TellerTransactionType::Transfer, 'info'],
+    'Other' => [TellerTransactionType::Other, 'gray'],
+]);
+
+// ============================================================================
+// TellerSessionStatus
+// ============================================================================
+
+it('has exactly 2 TellerSessionStatus cases', function () {
+    expect(TellerSessionStatus::cases())->toHaveCount(2);
+});
+
+it('has correct TellerSessionStatus backing values', function (TellerSessionStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Open' => [TellerSessionStatus::Open, 'open'],
+    'Closed' => [TellerSessionStatus::Closed, 'closed'],
+]);
+
+it('returns correct TellerSessionStatus labels', function (TellerSessionStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Open' => [TellerSessionStatus::Open, 'Aktif'],
+    'Closed' => [TellerSessionStatus::Closed, 'Ditutup'],
+]);
+
+it('returns correct TellerSessionStatus colors', function (TellerSessionStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Open' => [TellerSessionStatus::Open, 'success'],
+    'Closed' => [TellerSessionStatus::Closed, 'gray'],
+]);
+
+// ============================================================================
+// EodStatus
+// ============================================================================
+
+it('has exactly 4 EodStatus cases', function () {
+    expect(EodStatus::cases())->toHaveCount(4);
+});
+
+it('has correct EodStatus backing values', function (EodStatus $case, string $value) {
+    expect($case->value)->toBe($value);
+})->with([
+    'Pending' => [EodStatus::Pending, 'pending'],
+    'Running' => [EodStatus::Running, 'running'],
+    'Completed' => [EodStatus::Completed, 'completed'],
+    'Failed' => [EodStatus::Failed, 'failed'],
+]);
+
+it('returns correct EodStatus labels', function (EodStatus $case, string $label) {
+    expect($case->getLabel())->toBe($label);
+})->with([
+    'Pending' => [EodStatus::Pending, 'Menunggu'],
+    'Running' => [EodStatus::Running, 'Berjalan'],
+    'Completed' => [EodStatus::Completed, 'Selesai'],
+    'Failed' => [EodStatus::Failed, 'Gagal'],
+]);
+
+it('returns correct EodStatus colors', function (EodStatus $case, string $color) {
+    expect($case->getColor())->toBe($color);
+})->with([
+    'Pending' => [EodStatus::Pending, 'gray'],
+    'Running' => [EodStatus::Running, 'warning'],
+    'Completed' => [EodStatus::Completed, 'success'],
+    'Failed' => [EodStatus::Failed, 'danger'],
+]);
