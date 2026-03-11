@@ -1,3 +1,4 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         @if ($this->activeSession)
@@ -6,7 +7,7 @@
                 <x-filament::section>
                     <div class="flex items-center gap-3">
                         <div class="rounded-lg bg-gray-100 p-2 dark:bg-white/5">
-                            <x-heroicon-o-banknotes class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                            <x-heroicon-o-banknotes style="width:1.25rem;height:1.25rem" class="text-gray-500 dark:text-gray-400" />
                         </div>
                         <div>
                             <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Kas Awal</p>
@@ -20,7 +21,7 @@
                 <x-filament::section>
                     <div class="flex items-center gap-3">
                         <div class="rounded-lg bg-primary-50 p-2 dark:bg-primary-400/10">
-                            <x-heroicon-o-currency-dollar class="h-5 w-5 text-primary-500" />
+                            <x-heroicon-o-currency-dollar style="width:1.25rem;height:1.25rem" class="text-primary-500" />
                         </div>
                         <div>
                             <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Saldo Saat Ini</p>
@@ -34,7 +35,7 @@
                 <x-filament::section>
                     <div class="flex items-center gap-3">
                         <div class="rounded-lg bg-success-50 p-2 dark:bg-success-400/10">
-                            <x-heroicon-o-arrow-down-tray class="h-5 w-5 text-success-500" />
+                            <x-heroicon-o-arrow-down-tray style="width:1.25rem;height:1.25rem" class="text-success-500" />
                         </div>
                         <div>
                             <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Kas Masuk</p>
@@ -48,7 +49,7 @@
                 <x-filament::section>
                     <div class="flex items-center gap-3">
                         <div class="rounded-lg bg-danger-50 p-2 dark:bg-danger-400/10">
-                            <x-heroicon-o-arrow-up-tray class="h-5 w-5 text-danger-500" />
+                            <x-heroicon-o-arrow-up-tray style="width:1.25rem;height:1.25rem" class="text-danger-500" />
                         </div>
                         <div>
                             <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Kas Keluar</p>
@@ -64,7 +65,7 @@
             <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
                 <x-filament::section compact>
                     <div class="flex items-center gap-2 text-sm">
-                        <x-heroicon-o-hashtag class="h-4 w-4 text-gray-400" />
+                        <x-heroicon-o-hashtag style="width:1rem;height:1rem" class="text-gray-400" />
                         <span class="text-gray-500 dark:text-gray-400">Transaksi:</span>
                         <span class="font-semibold text-gray-950 dark:text-white">{{ $this->activeSession->transaction_count }}</span>
                     </div>
@@ -72,7 +73,7 @@
 
                 <x-filament::section compact>
                     <div class="flex items-center gap-2 text-sm">
-                        <x-heroicon-o-lock-closed class="h-4 w-4 text-gray-400" />
+                        <x-heroicon-o-lock-closed style="width:1rem;height:1rem" class="text-gray-400" />
                         <span class="text-gray-500 dark:text-gray-400">Vault:</span>
                         <span class="font-semibold text-gray-950 dark:text-white">{{ $this->activeSession->vault?->name ?? '-' }}</span>
                     </div>
@@ -80,7 +81,7 @@
 
                 <x-filament::section compact>
                     <div class="flex items-center gap-2 text-sm">
-                        <x-heroicon-o-clock class="h-4 w-4 text-gray-400" />
+                        <x-heroicon-o-clock style="width:1rem;height:1rem" class="text-gray-400" />
                         <span class="text-gray-500 dark:text-gray-400">Dibuka:</span>
                         <span class="font-semibold text-gray-950 dark:text-white">{{ $this->activeSession->opened_at->format('H:i') }}</span>
                     </div>
@@ -125,7 +126,7 @@
                                 <tr>
                                     <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                         <div class="flex flex-col items-center gap-1">
-                                            <x-heroicon-o-inbox class="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                                            <x-heroicon-o-inbox style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
                                             <span>Belum ada transaksi</span>
                                         </div>
                                     </td>
@@ -140,7 +141,7 @@
             <x-filament::section>
                 <div class="py-8 text-center">
                     <div class="mx-auto mb-4 rounded-full bg-gray-100 p-3 w-fit dark:bg-white/5">
-                        <x-heroicon-o-computer-desktop class="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                        <x-heroicon-o-computer-desktop style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
                     </div>
                     <h3 class="text-lg font-semibold text-gray-950 dark:text-white">Belum Ada Sesi Aktif</h3>
                     <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">Klik tombol "Buka Sesi" di atas untuk memulai transaksi teller.</p>

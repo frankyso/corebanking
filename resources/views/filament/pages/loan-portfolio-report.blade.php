@@ -1,3 +1,4 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         {{-- Summary Cards --}}
@@ -5,7 +6,7 @@
             <x-filament::section>
                 <div class="flex items-center gap-3">
                     <div class="rounded-lg bg-gray-100 p-2 dark:bg-white/5">
-                        <x-heroicon-o-document-text class="h-5 w-5 text-gray-500 dark:text-gray-400" />
+                        <x-heroicon-o-document-text style="width:1.25rem;height:1.25rem" class="text-gray-500 dark:text-gray-400" />
                     </div>
                     <div>
                         <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Rekening Aktif</p>
@@ -17,7 +18,7 @@
             <x-filament::section>
                 <div class="flex items-center gap-3">
                     <div class="rounded-lg bg-primary-50 p-2 dark:bg-primary-400/10">
-                        <x-heroicon-o-banknotes class="h-5 w-5 text-primary-500" />
+                        <x-heroicon-o-banknotes style="width:1.25rem;height:1.25rem" class="text-primary-500" />
                     </div>
                     <div>
                         <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total Outstanding</p>
@@ -29,7 +30,7 @@
             <x-filament::section>
                 <div class="flex items-center gap-3">
                     <div class="rounded-lg bg-danger-50 p-2 dark:bg-danger-400/10">
-                        <x-heroicon-o-shield-exclamation class="h-5 w-5 text-danger-500" />
+                        <x-heroicon-o-shield-exclamation style="width:1.25rem;height:1.25rem" class="text-danger-500" />
                     </div>
                     <div>
                         <p class="text-xs font-medium text-gray-500 dark:text-gray-400">Total CKPN</p>
@@ -46,7 +47,7 @@
                         'bg-success-50 dark:bg-success-400/10' => $this->nplRatio <= 5,
                         'bg-danger-50 dark:bg-danger-400/10' => $this->nplRatio > 5,
                     ])>
-                        <x-heroicon-o-chart-bar class="h-5 w-5 {{ $this->nplRatio <= 5 ? 'text-success-500' : 'text-danger-500' }}" />
+                        <x-heroicon-o-chart-bar style="width:1.25rem;height:1.25rem" class="{{ $this->nplRatio <= 5 ? 'text-success-500' : 'text-danger-500' }}" />
                     </div>
                     <div>
                         <p class="text-xs font-medium text-gray-500 dark:text-gray-400">NPL Ratio (Kol 3-5)</p>
@@ -93,7 +94,7 @@
                             <tr>
                                 <td colspan="5" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                     <div class="flex flex-col items-center gap-1">
-                                        <x-heroicon-o-document-magnifying-glass class="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                                        <x-heroicon-o-document-magnifying-glass style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
                                         <span>Tidak ada data</span>
                                     </div>
                                 </td>
@@ -139,7 +140,7 @@
                             <tr>
                                 <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                     <div class="flex flex-col items-center gap-1">
-                                        <x-heroicon-o-document-magnifying-glass class="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                                        <x-heroicon-o-document-magnifying-glass style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
                                         <span>Tidak ada data</span>
                                     </div>
                                 </td>

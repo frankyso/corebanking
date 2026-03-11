@@ -1,3 +1,4 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         {{-- Filter --}}
@@ -113,9 +114,9 @@
             <div class="flex justify-between items-center font-bold text-lg">
                 <div class="flex items-center gap-2">
                     @if ($isProfit)
-                        <x-heroicon-o-arrow-trending-up class="h-6 w-6 text-success-600 dark:text-success-400" />
+                        <x-heroicon-o-arrow-trending-up style="width:1.5rem;height:1.5rem" class="text-success-600 dark:text-success-400" />
                     @else
-                        <x-heroicon-o-arrow-trending-down class="h-6 w-6 text-danger-600 dark:text-danger-400" />
+                        <x-heroicon-o-arrow-trending-down style="width:1.5rem;height:1.5rem" class="text-danger-600 dark:text-danger-400" />
                     @endif
                     <span class="text-gray-950 dark:text-white">{{ $isProfit ? 'Laba Bersih' : 'Rugi Bersih' }}</span>
                 </div>

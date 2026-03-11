@@ -1,3 +1,4 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         {{-- Filter --}}
@@ -92,7 +93,7 @@
                 @if ($this->currentProcess->error_message)
                     <div class="-mx-6 -mb-6 mt-4 bg-danger-50 dark:bg-danger-400/10 border-t border-danger-200 dark:border-danger-400/20 px-4 py-3">
                         <div class="flex gap-2">
-                            <x-heroicon-o-exclamation-triangle class="h-5 w-5 text-danger-500 shrink-0 mt-0.5" />
+                            <x-heroicon-o-exclamation-triangle style="width:1.25rem;height:1.25rem" class="text-danger-500 shrink-0 mt-0.5" />
                             <div>
                                 <p class="text-sm font-medium text-danger-800 dark:text-danger-200">Error</p>
                                 <p class="text-sm text-danger-700 dark:text-danger-300 mt-0.5">{{ $this->currentProcess->error_message }}</p>
@@ -141,7 +142,7 @@
                             <tr>
                                 <td colspan="6" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                     <div class="flex flex-col items-center gap-1">
-                                        <x-heroicon-o-clock class="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                                        <x-heroicon-o-clock style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
                                         <span>Belum ada riwayat EOD</span>
                                     </div>
                                 </td>

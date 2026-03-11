@@ -1,3 +1,4 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         {{-- Filter --}}

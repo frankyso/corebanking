@@ -1,3 +1,4 @@
+@include('filament.partials.custom-page-styles')
 <x-filament-panels::page>
     <div class="space-y-6">
         {{-- Filter --}}
@@ -54,7 +55,7 @@
                             <tr>
                                 <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                     <div class="flex flex-col items-center gap-1">
-                                        <x-heroicon-o-document-magnifying-glass class="h-8 w-8 text-gray-400 dark:text-gray-500" />
+                                        <x-heroicon-o-document-magnifying-glass style="width:2rem;height:2rem" class="text-gray-400 dark:text-gray-500" />
                                         <span>Tidak ada data untuk periode ini</span>
                                     </div>
                                 </td>
