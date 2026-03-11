@@ -12,7 +12,6 @@ use App\Models\DepositAccount;
 use App\Models\DepositProduct;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\Select;
@@ -33,7 +32,7 @@ class DepositAccountResource extends Resource
 
     protected static string|UnitEnum|null $navigationGroup = 'Master Data';
 
-    protected static ?int $navigationSort = 8;
+    protected static ?int $navigationSort = 9;
 
     protected static ?string $modelLabel = 'Rekening Deposito';
 
@@ -161,9 +160,7 @@ class DepositAccountResource extends Resource
                 ViewAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                BulkActionGroup::make([]),
             ]);
     }
 
@@ -185,6 +182,13 @@ class DepositAccountResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['customer.individualDetail', 'customer.corporateDetail', 'depositProduct', 'branch']);
+        $query = parent::getEloquentQuery()->with(['customer.individualDetail', 'customer.corporateDetail', 'depositProduct', 'branch']);
+
+        $user = auth()->user();
+        if ($user && ! $user->hasAnyRole(['SuperAdmin', 'Auditor', 'Compliance', 'BranchManager'])) {
+            $query->where('branch_id', $user->branch_id);
+        }
+
+        return $query;
     }
 }

@@ -23,6 +23,11 @@ class TrialBalancePage extends Page
 
     protected string $view = 'filament.pages.trial-balance';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('report.view') ?? false;
+    }
+
     public int $year;
 
     public int $month;

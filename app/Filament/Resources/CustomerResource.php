@@ -141,6 +141,13 @@ class CustomerResource extends Resource
 
     public static function getEloquentQuery(): Builder
     {
-        return parent::getEloquentQuery()->with(['individualDetail', 'corporateDetail', 'branch']);
+        $query = parent::getEloquentQuery()->with(['individualDetail', 'corporateDetail', 'branch']);
+
+        $user = auth()->user();
+        if ($user && ! $user->hasAnyRole(['SuperAdmin', 'Auditor', 'Compliance', 'BranchManager'])) {
+            $query->where('branch_id', $user->branch_id);
+        }
+
+        return $query;
     }
 }

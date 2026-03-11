@@ -26,24 +26,32 @@ class SystemParameterResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
 
-    protected static string|UnitEnum|null $navigationGroup = 'Administration';
+    protected static string|UnitEnum|null $navigationGroup = 'Administrasi';
 
     protected static ?int $navigationSort = 3;
+
+    protected static ?string $modelLabel = 'Parameter Sistem';
+
+    protected static ?string $pluralModelLabel = 'Parameter Sistem';
 
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 TextInput::make('group')
+                    ->label('Grup')
                     ->required()
                     ->maxLength(50),
                 TextInput::make('key')
+                    ->label('Kunci')
                     ->required()
                     ->maxLength(100),
                 Textarea::make('value')
+                    ->label('Nilai')
                     ->required()
                     ->columnSpanFull(),
                 Select::make('type')
+                    ->label('Tipe')
                     ->options([
                         'string' => 'String',
                         'integer' => 'Integer',
@@ -54,9 +62,10 @@ class SystemParameterResource extends Resource
                     ->default('string')
                     ->required(),
                 TextInput::make('description')
+                    ->label('Keterangan')
                     ->maxLength(255),
                 Toggle::make('is_editable')
-                    ->label('Editable')
+                    ->label('Dapat Diubah')
                     ->default(true),
             ]);
     }
@@ -66,22 +75,27 @@ class SystemParameterResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('group')
+                    ->label('Grup')
                     ->searchable()
                     ->sortable()
                     ->badge(),
                 TextColumn::make('key')
+                    ->label('Kunci')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('value')
+                    ->label('Nilai')
                     ->limit(50),
                 TextColumn::make('type')
+                    ->label('Tipe')
                     ->badge(),
                 TextColumn::make('description')
+                    ->label('Keterangan')
                     ->limit(40)
                     ->toggleable(isToggledHiddenByDefault: true),
                 IconColumn::make('is_editable')
                     ->boolean()
-                    ->label('Editable'),
+                    ->label('Dapat Diubah'),
             ])
             ->filters([
                 SelectFilter::make('group')

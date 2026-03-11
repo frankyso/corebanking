@@ -23,6 +23,11 @@ class IncomeStatementPage extends Page
 
     protected string $view = 'filament.pages.income-statement';
 
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('report.view') ?? false;
+    }
+
     public string $startDate;
 
     public string $endDate;

@@ -11,7 +11,7 @@ use UnitEnum;
 
 class BalanceSheetPage extends Page
 {
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-chart-bar';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-table-cells';
 
     protected static string|UnitEnum|null $navigationGroup = 'Akuntansi';
 
@@ -22,6 +22,11 @@ class BalanceSheetPage extends Page
     protected static ?string $title = 'Neraca';
 
     protected string $view = 'filament.pages.balance-sheet';
+
+    public static function canAccess(): bool
+    {
+        return auth()->user()?->can('report.view') ?? false;
+    }
 
     public string $reportDate;
 

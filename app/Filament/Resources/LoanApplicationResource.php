@@ -8,9 +8,10 @@ use App\Filament\Resources\LoanApplicationResource\RelationManagers;
 use App\Models\LoanApplication;
 use BackedEnum;
 use Filament\Actions\BulkActionGroup;
-use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Infolists\Components\TextEntry;
 use Filament\Resources\Resource;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
@@ -21,7 +22,7 @@ class LoanApplicationResource extends Resource
 {
     protected static ?string $model = LoanApplication::class;
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-text';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-document-plus';
 
     protected static string|UnitEnum|null $navigationGroup = 'Kredit';
 
@@ -34,6 +35,44 @@ class LoanApplicationResource extends Resource
     public static function form(Schema $schema): Schema
     {
         return $schema->components([]);
+    }
+
+    public static function infolist(Schema $schema): Schema
+    {
+        return $schema
+            ->components([
+                Section::make('Data Permohonan')
+                    ->schema([
+                        TextEntry::make('application_number')->label('No. Permohonan'),
+                        TextEntry::make('customer.display_name')->label('Nasabah'),
+                        TextEntry::make('loanProduct.name')->label('Produk Kredit'),
+                        TextEntry::make('branch.name')->label('Cabang'),
+                        TextEntry::make('status')->label('Status')->badge(),
+                        TextEntry::make('created_at')->label('Tanggal Pengajuan')->dateTime('d M Y H:i'),
+                    ])
+                    ->columns(2),
+                Section::make('Detail Kredit')
+                    ->schema([
+                        TextEntry::make('requested_amount')->label('Jumlah Diminta')->money('IDR'),
+                        TextEntry::make('approved_amount')->label('Jumlah Disetujui')->money('IDR')->placeholder('-'),
+                        TextEntry::make('requested_tenor_months')->label('Tenor Diminta')->suffix(' bulan'),
+                        TextEntry::make('approved_tenor_months')->label('Tenor Disetujui')->suffix(' bulan')->placeholder('-'),
+                        TextEntry::make('interest_rate')->label('Suku Bunga')->suffix('%'),
+                        TextEntry::make('purpose')->label('Tujuan')->columnSpanFull(),
+                        TextEntry::make('notes')->label('Catatan')->columnSpanFull()->placeholder('-'),
+                    ])
+                    ->columns(2),
+                Section::make('Riwayat Proses')
+                    ->schema([
+                        TextEntry::make('loanOfficer.name')->label('Account Officer')->placeholder('-'),
+                        TextEntry::make('creator.name')->label('Dibuat Oleh'),
+                        TextEntry::make('approver.name')->label('Disetujui Oleh')->placeholder('-'),
+                        TextEntry::make('approved_at')->label('Tanggal Persetujuan')->dateTime('d M Y H:i')->placeholder('-'),
+                        TextEntry::make('disbursed_at')->label('Tanggal Pencairan')->dateTime('d M Y H:i')->placeholder('-'),
+                        TextEntry::make('rejection_reason')->label('Alasan Penolakan')->columnSpanFull()->placeholder('-'),
+                    ])
+                    ->columns(2),
+            ]);
     }
 
     public static function table(Table $table): Table
@@ -95,9 +134,7 @@ class LoanApplicationResource extends Resource
                 ViewAction::make(),
             ])
             ->toolbarActions([
-                BulkActionGroup::make([
-                    DeleteBulkAction::make(),
-                ]),
+                BulkActionGroup::make([]),
             ]);
     }
 

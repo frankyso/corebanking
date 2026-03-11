@@ -28,17 +28,24 @@ class HolidayResource extends Resource
 
     protected static ?int $navigationSort = 3;
 
+    protected static ?string $modelLabel = 'Hari Libur';
+
+    protected static ?string $pluralModelLabel = 'Hari Libur';
+
     public static function form(Schema $schema): Schema
     {
         return $schema
             ->components([
                 DatePicker::make('date')
+                    ->label('Tanggal')
                     ->required()
                     ->unique(ignoreRecord: true),
                 TextInput::make('name')
+                    ->label('Nama')
                     ->required()
                     ->maxLength(100),
                 Select::make('type')
+                    ->label('Tipe')
                     ->options([
                         'national' => 'Hari Libur Nasional',
                         'religious' => 'Hari Besar Keagamaan',
@@ -54,12 +61,15 @@ class HolidayResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('date')
+                    ->label('Tanggal')
                     ->date('d M Y')
                     ->sortable(),
                 TextColumn::make('name')
+                    ->label('Nama')
                     ->searchable()
                     ->sortable(),
                 TextColumn::make('type')
+                    ->label('Tipe')
                     ->badge()
                     ->sortable(),
             ])
