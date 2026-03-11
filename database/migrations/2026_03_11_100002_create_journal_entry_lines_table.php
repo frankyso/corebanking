@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->decimal('debit', 18, 2)->default(0);
             $table->decimal('credit', 18, 2)->default(0);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('chart_of_account_id');
         });

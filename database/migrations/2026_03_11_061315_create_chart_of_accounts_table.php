@@ -19,8 +19,8 @@ return new class extends Migration
             $table->boolean('is_active')->default(true);
             $table->string('normal_balance', 10);
             $table->text('description')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index('account_group');
             $table->index('level');

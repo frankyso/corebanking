@@ -21,11 +21,11 @@ return new class extends Migration
             $table->date('value_date');
             $table->foreignId('performed_by')->constrained('users');
             $table->foreignId('reversed_by')->nullable()->constrained('users');
-            $table->timestamp('reversed_at')->nullable();
+            $table->timestamp('reversed_at', precision: 6)->nullable();
             $table->string('reversal_reason')->nullable();
             $table->boolean('is_reversed')->default(false);
             $table->foreignId('journal_entry_id')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index(['savings_account_id', 'transaction_date']);
         });

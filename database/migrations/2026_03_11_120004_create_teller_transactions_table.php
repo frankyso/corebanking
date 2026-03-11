@@ -25,9 +25,9 @@ return new class extends Migration
             $table->foreignId('reversed_by_id')->nullable()->constrained('teller_transactions');
             $table->boolean('needs_authorization')->default(false);
             $table->foreignId('authorized_by')->nullable()->constrained('users');
-            $table->timestamp('authorized_at')->nullable();
+            $table->timestamp('authorized_at', precision: 6)->nullable();
             $table->foreignId('performed_by')->constrained('users');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('transaction_type');
             $table->index(['reference_type', 'reference_id']);

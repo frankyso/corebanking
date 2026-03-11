@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Enums\ApprovalStatus;
 use App\Enums\JournalSource;
 use App\Enums\JournalStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use App\Traits\HasApproval;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -17,7 +18,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class JournalEntry extends Model implements AuditableContract
 {
-    use Auditable, HasApproval, HasFactory, SoftDeletes;
+    use Auditable, HasApproval, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'journal_number',

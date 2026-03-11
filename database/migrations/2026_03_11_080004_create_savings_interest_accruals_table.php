@@ -18,7 +18,7 @@ return new class extends Migration
             $table->decimal('tax_amount', 18, 2)->default(0);
             $table->boolean('is_posted')->default(false);
             $table->date('posted_at')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['savings_account_id', 'accrual_date']);
             $table->index(['accrual_date', 'is_posted']);

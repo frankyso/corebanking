@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\EodStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class EodProcessStep extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'eod_process_id',
         'step_number',

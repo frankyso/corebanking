@@ -6,6 +6,7 @@ use App\Enums\ApprovalStatus;
 use App\Enums\CustomerStatus;
 use App\Enums\CustomerType;
 use App\Enums\RiskRating;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use App\Traits\HasApproval;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Casts\Attribute;
@@ -20,7 +21,7 @@ use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
 class Customer extends Model implements AuditableContract
 {
-    use Auditable, HasApproval, HasFactory, SoftDeletes;
+    use Auditable, HasApproval, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
 
     protected $fillable = [
         'cif_number',

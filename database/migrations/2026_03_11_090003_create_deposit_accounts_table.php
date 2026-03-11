@@ -30,8 +30,8 @@ return new class extends Migration
             $table->string('pledge_reference')->nullable();
             $table->foreignId('savings_account_id')->nullable()->constrained('savings_accounts');
             $table->foreignId('created_by')->constrained('users');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index(['maturity_date', 'status']);
         });

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Enums\TellerSessionStatus;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Attributes\Scope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class TellerSession extends Model
 {
-    use HasFactory;
+    use HasFactory, HasMicrosecondTimestamps;
 
     protected $fillable = [
         'user_id',

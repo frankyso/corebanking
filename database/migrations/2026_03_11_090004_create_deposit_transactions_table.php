@@ -18,7 +18,7 @@ return new class extends Migration
             $table->date('transaction_date');
             $table->foreignId('performed_by')->constrained('users');
             $table->foreignId('journal_entry_id')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index(['deposit_account_id', 'transaction_date']);
         });

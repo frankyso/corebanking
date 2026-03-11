@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('file_name', 255)->nullable();
             $table->date('expiry_date')->nullable();
             $table->boolean('is_verified')->default(false);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

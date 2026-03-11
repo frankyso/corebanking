@@ -38,7 +38,7 @@ return new class extends Migration
             $table->decimal('monthly_income', 18, 2)->default(0);
             $table->string('source_of_fund', 50)->nullable();
             $table->string('transaction_purpose', 50)->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

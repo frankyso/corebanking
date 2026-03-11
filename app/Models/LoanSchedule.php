@@ -2,13 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LoanSchedule extends Model
 {
-    use HasFactory;
+    use HasFactory, HasMicrosecondTimestamps;
 
     protected $fillable = [
         'loan_account_id',

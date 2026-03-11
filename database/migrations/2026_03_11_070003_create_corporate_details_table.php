@@ -32,7 +32,7 @@ return new class extends Migration
             $table->string('contact_person_name', 100)->nullable();
             $table->string('contact_person_phone', 20)->nullable();
             $table->string('contact_person_position', 50)->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

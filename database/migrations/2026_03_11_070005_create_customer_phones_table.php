@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('type', 20)->default('mobile');
             $table->string('number', 20);
             $table->boolean('is_primary')->default(false);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

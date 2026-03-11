@@ -19,11 +19,11 @@ return new class extends Migration
             $table->string('approval_status', 20)->default('pending');
             $table->foreignId('created_by')->nullable()->constrained('users')->nullOnDelete();
             $table->foreignId('approved_by')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamp('approved_at')->nullable();
+            $table->timestamp('approved_at', precision: 6)->nullable();
             $table->text('rejection_reason')->nullable();
 
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index('customer_type');
             $table->index('status');

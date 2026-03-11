@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DepositProductRate extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'deposit_product_id',
         'tenor_months',

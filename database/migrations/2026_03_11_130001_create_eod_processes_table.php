@@ -14,11 +14,11 @@ return new class extends Migration
             $table->string('status', 20)->default('pending');
             $table->integer('total_steps')->default(0);
             $table->integer('completed_steps')->default(0);
-            $table->timestamp('started_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('started_at', precision: 6)->nullable();
+            $table->timestamp('completed_at', precision: 6)->nullable();
             $table->text('error_message')->nullable();
             $table->foreignId('started_by')->nullable()->constrained('users');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('status');
         });

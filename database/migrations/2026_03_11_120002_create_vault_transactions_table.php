@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('description')->nullable();
             $table->foreignId('performed_by')->constrained('users');
             $table->foreignId('approved_by')->nullable()->constrained('users');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->index('transaction_type');
         });

@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DepositTransaction extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'reference_number',
         'deposit_account_id',

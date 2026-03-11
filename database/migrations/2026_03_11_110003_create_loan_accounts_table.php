@@ -33,8 +33,8 @@ return new class extends Migration
             $table->decimal('ckpn_amount', 18, 2)->default(0);
             $table->foreignId('loan_officer_id')->nullable()->constrained('users');
             $table->foreignId('created_by')->constrained('users');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
 
             $table->index('status');
             $table->index('collectibility');

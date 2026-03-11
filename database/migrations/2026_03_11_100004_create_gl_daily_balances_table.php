@@ -17,7 +17,7 @@ return new class extends Migration
             $table->decimal('debit_total', 18, 2)->default(0);
             $table->decimal('credit_total', 18, 2)->default(0);
             $table->decimal('closing_balance', 18, 2)->default(0);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['chart_of_account_id', 'branch_id', 'balance_date'], 'gl_daily_balances_unique');
             $table->index('balance_date');

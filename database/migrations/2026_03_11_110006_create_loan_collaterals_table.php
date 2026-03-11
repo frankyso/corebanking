@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('ownership_name')->nullable();
             $table->text('notes')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

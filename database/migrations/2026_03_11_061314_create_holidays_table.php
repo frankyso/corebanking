@@ -13,7 +13,7 @@ return new class extends Migration
             $table->date('date')->unique();
             $table->string('name', 100);
             $table->string('type', 20)->default('national');
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

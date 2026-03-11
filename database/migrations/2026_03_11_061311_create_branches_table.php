@@ -20,8 +20,8 @@ return new class extends Migration
             $table->boolean('is_head_office')->default(false);
             $table->boolean('is_active')->default(true);
             $table->foreignId('head_id')->nullable()->constrained('users')->nullOnDelete();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
         });
     }
 };

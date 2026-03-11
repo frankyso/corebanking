@@ -31,8 +31,8 @@ return new class extends Migration
             $table->foreignId('gl_interest_payable_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('gl_admin_fee_income_id')->nullable()->constrained('chart_of_accounts');
             $table->foreignId('gl_tax_payable_id')->nullable()->constrained('chart_of_accounts');
-            $table->timestamps();
-            $table->softDeletes();
+            $table->timestamps(precision: 6);
+            $table->softDeletes(precision: 6);
         });
     }
 };

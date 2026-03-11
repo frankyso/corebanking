@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\TellerTransactionType;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class TellerTransaction extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'reference_number',
         'teller_session_id',

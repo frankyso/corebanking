@@ -15,11 +15,11 @@ return new class extends Migration
             $table->string('step_name', 100);
             $table->string('status', 20)->default('pending');
             $table->integer('records_processed')->default(0);
-            $table->timestamp('started_at')->nullable();
-            $table->timestamp('completed_at')->nullable();
+            $table->timestamp('started_at', precision: 6)->nullable();
+            $table->timestamp('completed_at', precision: 6)->nullable();
             $table->text('error_message')->nullable();
             $table->json('metadata')->nullable();
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['eod_process_id', 'step_number']);
         });

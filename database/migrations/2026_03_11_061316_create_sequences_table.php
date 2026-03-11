@@ -14,7 +14,7 @@ return new class extends Migration
             $table->string('prefix', 20);
             $table->unsignedInteger('last_number')->default(0);
             $table->unsignedTinyInteger('padding')->default(7);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['type', 'prefix']);
         });

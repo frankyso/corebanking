@@ -207,7 +207,7 @@ class EodService
     protected function processDepositMaturity(Carbon $date): int
     {
         $maturedDeposits = DepositAccount::where('status', DepositStatus::Active)
-            ->where('maturity_date', '<=', $date)
+            ->where('maturity_date', '<=', $date->format('Y-m-d'))
             ->get();
 
         $count = 0;

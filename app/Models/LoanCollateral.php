@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\CollateralType;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class LoanCollateral extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'loan_application_id',
         'loan_account_id',

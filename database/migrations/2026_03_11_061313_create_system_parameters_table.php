@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('type', 20)->default('string');
             $table->string('description', 255)->nullable();
             $table->boolean('is_editable')->default(true);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
 
             $table->unique(['group', 'key']);
         });

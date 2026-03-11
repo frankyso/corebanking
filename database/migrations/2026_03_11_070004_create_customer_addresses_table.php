@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('province', 50);
             $table->string('postal_code', 5)->nullable();
             $table->boolean('is_primary')->default(false);
-            $table->timestamps();
+            $table->timestamps(precision: 6);
         });
     }
 };

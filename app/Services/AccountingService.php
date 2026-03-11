@@ -361,7 +361,7 @@ class AccountingService
             ->join('journal_entries', 'journal_entries.id', '=', 'journal_entry_lines.journal_entry_id')
             ->where('journal_entry_lines.chart_of_account_id', $account->id)
             ->where('journal_entries.status', JournalStatus::Posted->value)
-            ->where('journal_entries.journal_date', '<=', $date);
+            ->where('journal_entries.journal_date', '<=', $date->format('Y-m-d'));
 
         if ($branchId) {
             $query->where('journal_entries.branch_id', $branchId);
@@ -382,7 +382,7 @@ class AccountingService
             ->join('journal_entries', 'journal_entries.id', '=', 'journal_entry_lines.journal_entry_id')
             ->where('journal_entry_lines.chart_of_account_id', $account->id)
             ->where('journal_entries.status', JournalStatus::Posted->value)
-            ->whereBetween('journal_entries.journal_date', [$startDate, $endDate]);
+            ->whereBetween('journal_entries.journal_date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')]);
 
         if ($branchId) {
             $query->where('journal_entries.branch_id', $branchId);
@@ -416,7 +416,7 @@ class AccountingService
             ->join('journal_entries', 'journal_entries.id', '=', 'journal_entry_lines.journal_entry_id')
             ->join('chart_of_accounts', 'chart_of_accounts.id', '=', 'journal_entry_lines.chart_of_account_id')
             ->where('journal_entries.status', JournalStatus::Posted->value)
-            ->whereBetween('journal_entries.journal_date', [$startDate, $endDate])
+            ->whereBetween('journal_entries.journal_date', [$startDate->format('Y-m-d'), $endDate->format('Y-m-d')])
             ->groupBy('chart_of_accounts.id', 'chart_of_accounts.account_code', 'chart_of_accounts.account_name', 'chart_of_accounts.account_group')
             ->select([
                 'chart_of_accounts.account_code',

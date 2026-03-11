@@ -3,11 +3,14 @@
 namespace App\Models;
 
 use App\Enums\VaultTransactionType;
+use App\Models\Concerns\HasMicrosecondTimestamps;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class VaultTransaction extends Model
 {
+    use HasMicrosecondTimestamps;
+
     protected $fillable = [
         'reference_number',
         'vault_id',
