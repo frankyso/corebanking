@@ -1,5 +1,7 @@
 <?php
 
+pest()->group('legacy');
+
 use App\Enums\AccountGroup;
 use App\Enums\ApprovalStatus;
 use App\Enums\CollateralType;

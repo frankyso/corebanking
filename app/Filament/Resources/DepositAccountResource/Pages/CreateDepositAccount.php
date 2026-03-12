@@ -105,8 +105,12 @@ class CreateDepositAccount extends CreateRecord
                     branchId: $data['branch_id'],
                     principalAmount: (float) $data['principal_amount'],
                     tenorMonths: (int) $data['tenor_months'],
-                    interestPaymentMethod: InterestPaymentMethod::from($data['interest_payment_method']),
-                    rolloverType: RolloverType::from($data['rollover_type']),
+                    interestPaymentMethod: $data['interest_payment_method'] instanceof InterestPaymentMethod
+                        ? $data['interest_payment_method']
+                        : InterestPaymentMethod::from($data['interest_payment_method']),
+                    rolloverType: $data['rollover_type'] instanceof RolloverType
+                        ? $data['rollover_type']
+                        : RolloverType::from($data['rollover_type']),
                     savingsAccountId: $data['savings_account_id'] ?? null,
                     performer: auth()->user(),
                     placementDate: $data['placement_date'] ? Carbon::parse($data['placement_date']) : null,

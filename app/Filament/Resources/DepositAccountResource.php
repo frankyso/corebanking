@@ -40,7 +40,7 @@ class DepositAccountResource extends Resource
 
     public static function getNavigationBadge(): ?string
     {
-        return (string) static::getModel()::where('status', 'active')->count();
+        return (string) static::getModel()::where('status', 'active')->count() ?: null;
     }
 
     public static function getNavigationBadgeTooltip(): ?string
