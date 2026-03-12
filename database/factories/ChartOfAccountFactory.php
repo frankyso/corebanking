@@ -74,6 +74,15 @@ class ChartOfAccountFactory extends Factory
         ]);
     }
 
+    public function equity(): static
+    {
+        return $this->state(fn (array $attributes): array => [
+            'account_group' => AccountGroup::Equity,
+            'account_code' => '3'.fake()->unique()->numerify('####'),
+            'normal_balance' => NormalBalance::Credit,
+        ]);
+    }
+
     public function inactive(): static
     {
         return $this->state(fn (array $attributes): array => [

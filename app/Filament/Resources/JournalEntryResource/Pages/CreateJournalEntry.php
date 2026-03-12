@@ -91,7 +91,9 @@ class CreateJournalEntry extends CreateRecord
             $record = app(CreateJournalEntryAction::class)->execute(new CreateJournalData(
                 journalDate: Carbon::parse($data['journal_date']),
                 description: $data['description'],
-                source: JournalSource::from($data['source']),
+                source: $data['source'] instanceof JournalSource
+                    ? $data['source']
+                    : JournalSource::from($data['source']),
                 lines: collect($data['lines'])->map(fn (array $line): array => [
                     'account_id' => $line['account_id'],
                     'description' => $line['description'] ?? null,
