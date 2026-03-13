@@ -29,6 +29,7 @@ class SavingsAccountFactory extends Factory
             'hold_amount' => 0,
             'available_balance' => $balance,
             'accrued_interest' => 0,
+            'total_tax_paid' => 0,
             'opened_at' => fake()->dateTimeBetween('-1 year', 'now'),
             'last_transaction_at' => fake()->dateTimeBetween('-30 days', 'now'),
             'created_by' => User::query()->inRandomOrder()->value('id') ?? 1,

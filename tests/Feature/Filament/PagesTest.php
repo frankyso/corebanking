@@ -1,9 +1,11 @@
 <?php
 
+use App\Filament\Pages\AuditTrailPage;
 use App\Filament\Pages\BalanceSheetPage;
 use App\Filament\Pages\EodProcessPage;
 use App\Filament\Pages\IncomeStatementPage;
 use App\Filament\Pages\LoanPortfolioReport;
+use App\Filament\Pages\PphReportPage;
 use App\Filament\Pages\TellerDashboard;
 use App\Filament\Pages\TrialBalancePage;
 use App\Models\Branch;
@@ -117,4 +119,32 @@ it('loan portfolio report portfolioByProduct returns a collection', function ():
     $portfolio = $component->instance()->portfolioByProduct;
 
     expect($portfolio)->toBeInstanceOf(Collection::class);
+});
+
+// ─── AuditTrailPage ──────────────────────────────────────────────────────
+
+it('can render audit trail page', function (): void {
+    Livewire::test(AuditTrailPage::class)
+        ->assertOk();
+});
+
+it('audit trail page initializes with default filters', function (): void {
+    Livewire::test(AuditTrailPage::class)
+        ->assertSet('dateFrom', now()->subDays(7)->format('Y-m-d'))
+        ->assertSet('dateTo', now()->format('Y-m-d'))
+        ->assertSet('modelType', '')
+        ->assertSet('eventType', '');
+});
+
+// ─── PphReportPage ───────────────────────────────────────────────────────
+
+it('can render PPh report page', function (): void {
+    Livewire::test(PphReportPage::class)
+        ->assertOk();
+});
+
+it('PPh report page initializes with current year', function (): void {
+    Livewire::test(PphReportPage::class)
+        ->assertSet('year', (int) now()->year)
+        ->assertSet('month', 0);
 });

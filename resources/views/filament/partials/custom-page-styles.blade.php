@@ -69,6 +69,7 @@
     .leading-tight { line-height: 1.25; }
     .leading-snug { line-height: 1.375; }
     .leading-relaxed { line-height: 1.625; }
+    .line-through { text-decoration: line-through; }
 
     /* Sizing */
     .w-full { width: 100%; }
