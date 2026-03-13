@@ -1,0 +1,32 @@
+meta {
+  name: List
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/notifications
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+params:query {
+  ~page: 1
+}
+
+docs {
+  # List Notifications
+
+  Menampilkan semua notifikasi untuk pengguna (paginated, 20 per halaman).
+
+  **Security**: AUTH (Bearer Token)
+}

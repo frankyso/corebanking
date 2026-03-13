@@ -1,0 +1,28 @@
+meta {
+  name: Account Detail
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/deposits/{{deposit_account_number}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Deposit Account Detail
+
+  Menampilkan detail rekening deposito tertentu.
+
+  **Security**: AUTH (Bearer Token)
+}

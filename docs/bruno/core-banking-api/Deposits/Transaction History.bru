@@ -1,0 +1,28 @@
+meta {
+  name: Transaction History
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/deposits/{{deposit_account_number}}/transactions
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Deposit Transaction History
+
+  Menampilkan riwayat transaksi deposito (penempatan, pencairan, perpanjangan bunga).
+
+  **Security**: AUTH (Bearer Token)
+}

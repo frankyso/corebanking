@@ -1,0 +1,36 @@
+meta {
+  name: Add Favorite
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/transfers/favorites
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+body:json {
+  {
+    "account_number": "SA-0000002",
+    "alias": "Rekening Ibu"
+  }
+}
+
+docs {
+  # Add Transfer Favorite
+
+  Menambahkan rekening ke daftar favorit transfer.
+
+  **Security**: AUTH (Bearer Token)
+}

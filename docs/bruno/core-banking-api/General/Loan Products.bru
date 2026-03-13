@@ -1,0 +1,28 @@
+meta {
+  name: Loan Products
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/products/loans
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Loan Products
+
+  Menampilkan daftar produk pinjaman yang tersedia.
+
+  **Security**: AUTH (Bearer Token)
+}

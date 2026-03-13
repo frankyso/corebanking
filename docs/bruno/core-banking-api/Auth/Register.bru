@@ -1,0 +1,42 @@
+meta {
+  name: Register
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{base_url}}/auth/register
+  body: json
+  auth: none
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+}
+
+body:json {
+  {
+    "cif_number": "CIF-0000001",
+    "phone_number": "{{phone_number}}",
+    "pin": "{{pin}}",
+    "otp_code": "{{otp_code}}"
+  }
+}
+
+docs {
+  # Register Mobile User
+
+  Mendaftarkan nasabah sebagai pengguna mobile banking.
+  Memerlukan CIF number yang valid, nomor telepon yang cocok, dan OTP yang sudah diverifikasi.
+
+  **Security**: PUBLIC (rate-limited 5/menit)
+
+  **Response** (201):
+  ```json
+  {
+    "data": { ... },
+    "message": "Registrasi berhasil."
+  }
+  ```
+}

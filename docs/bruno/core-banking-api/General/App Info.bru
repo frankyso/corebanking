@@ -1,0 +1,36 @@
+meta {
+  name: App Info
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/system/app-info
+  body: none
+  auth: none
+}
+
+headers {
+  Accept: application/json
+}
+
+docs {
+  # App Info
+
+  Menampilkan informasi umum aplikasi (versi, maintenance mode).
+  Endpoint public tanpa autentikasi.
+
+  **Security**: PUBLIC
+
+  **Response** (200):
+  ```json
+  {
+    "data": {
+      "app_name": "Core Banking",
+      "version": "1.0.0",
+      "minimum_version": "1.0.0",
+      "maintenance_mode": false
+    }
+  }
+  ```
+}

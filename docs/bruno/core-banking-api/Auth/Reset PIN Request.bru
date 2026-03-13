@@ -1,0 +1,35 @@
+meta {
+  name: Reset PIN Request
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{base_url}}/auth/pin/reset/request
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Reset PIN - Request OTP
+
+  Mengirim kode OTP untuk reset PIN ke nomor telepon terdaftar.
+
+  **Security**: AUTH (Bearer Token)
+
+  **Response** (200):
+  ```json
+  {
+    "message": "Kode OTP untuk reset PIN telah dikirim."
+  }
+  ```
+}

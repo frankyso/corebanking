@@ -1,0 +1,28 @@
+meta {
+  name: Interest Projection
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/deposits/{{deposit_account_number}}/interest-projection
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Interest Projection
+
+  Menampilkan proyeksi bunga deposito hingga jatuh tempo.
+
+  **Security**: AUTH (Bearer Token)
+}

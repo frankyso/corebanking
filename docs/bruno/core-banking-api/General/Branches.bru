@@ -1,0 +1,28 @@
+meta {
+  name: Branches
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/branches
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # List Branches
+
+  Menampilkan daftar semua kantor cabang yang aktif.
+
+  **Security**: AUTH (Bearer Token)
+}

@@ -1,0 +1,28 @@
+meta {
+  name: Next Installment
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/loans/{{loan_account_number}}/next-installment
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Next Installment
+
+  Menampilkan informasi angsuran berikutnya yang harus dibayar.
+
+  **Security**: AUTH (Bearer Token)
+}

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\MobileUser;
 use App\Models\User;
 
 return [
@@ -42,6 +43,10 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'mobile' => [
+            'driver' => 'sanctum',
+            'provider' => 'mobile_users',
+        ],
     ],
 
     /*
@@ -66,11 +71,10 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', User::class),
         ],
-
-        // 'users' => [
-        //     'driver' => 'database',
-        //     'table' => 'users',
-        // ],
+        'mobile_users' => [
+            'driver' => 'eloquent',
+            'model' => MobileUser::class,
+        ],
     ],
 
     /*

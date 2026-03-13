@@ -1,0 +1,46 @@
+meta {
+  name: Register Device
+  type: http
+  seq: 9
+}
+
+post {
+  url: {{base_url}}/auth/device/register
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Content-Type: application/json
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+body:json {
+  {
+    "device_id": "{{device_id}}",
+    "device_name": "Samsung Galaxy S24",
+    "platform": "android",
+    "fcm_token": "fcm-token-example-123"
+  }
+}
+
+docs {
+  # Register Device
+
+  Mendaftarkan perangkat untuk push notification dan device binding.
+
+  **Security**: AUTH (Bearer Token)
+
+  **Response** (201):
+  ```json
+  {
+    "data": { ... },
+    "message": "Perangkat berhasil didaftarkan."
+  }
+  ```
+}

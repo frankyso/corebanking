@@ -19,6 +19,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 use OwenIt\Auditing\Auditable;
 use OwenIt\Auditing\Contracts\Auditable as AuditableContract;
 
+/**
+ * @property-read string $display_name
+ */
 class Customer extends Model implements AuditableContract
 {
     use Auditable, HasApproval, HasFactory, HasMicrosecondTimestamps, SoftDeletes;
@@ -93,6 +96,46 @@ class Customer extends Model implements AuditableContract
     public function documents(): HasMany
     {
         return $this->hasMany(CustomerDocument::class);
+    }
+
+    /**
+     * @return HasMany<SavingsAccount, $this>
+     */
+    public function savingsAccounts(): HasMany
+    {
+        return $this->hasMany(SavingsAccount::class);
+    }
+
+    /**
+     * @return HasMany<DepositAccount, $this>
+     */
+    public function depositAccounts(): HasMany
+    {
+        return $this->hasMany(DepositAccount::class);
+    }
+
+    /**
+     * @return HasMany<LoanAccount, $this>
+     */
+    public function loanAccounts(): HasMany
+    {
+        return $this->hasMany(LoanAccount::class);
+    }
+
+    /**
+     * @return HasMany<LoanApplication, $this>
+     */
+    public function loanApplications(): HasMany
+    {
+        return $this->hasMany(LoanApplication::class);
+    }
+
+    /**
+     * @return HasOne<MobileUser, $this>
+     */
+    public function mobileUser(): HasOne
+    {
+        return $this->hasOne(MobileUser::class);
     }
 
     protected function displayName(): Attribute

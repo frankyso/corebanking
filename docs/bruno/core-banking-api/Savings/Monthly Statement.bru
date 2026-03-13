@@ -1,0 +1,35 @@
+meta {
+  name: Monthly Statement
+  type: http
+  seq: 6
+}
+
+get {
+  url: {{base_url}}/savings/{{savings_account_number}}/monthly-statement
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+params:query {
+  month: 2026-03
+}
+
+docs {
+  # Monthly Statement
+
+  Menampilkan mutasi rekening tabungan per bulan.
+
+  **Query Parameters**:
+  - `month` (required): Format Y-m (contoh: 2026-03)
+
+  **Security**: AUTH (Bearer Token)
+}

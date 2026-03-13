@@ -1,0 +1,28 @@
+meta {
+  name: Detail
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/transfers/{{transfer_reference}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Transfer Detail
+
+  Menampilkan detail transaksi transfer berdasarkan nomor referensi.
+
+  **Security**: AUTH (Bearer Token)
+}

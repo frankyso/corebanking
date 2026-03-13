@@ -1,0 +1,42 @@
+meta {
+  name: Get Profile
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/profile
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{token}}
+}
+
+headers {
+  Accept: application/json
+  X-Device-Id: {{device_id}}
+}
+
+docs {
+  # Get Profile
+
+  Menampilkan profil singkat nasabah yang sedang login.
+
+  **Security**: AUTH (Bearer Token)
+
+  **Response** (200):
+  ```json
+  {
+    "data": {
+      "cif_number": "CIF-0000001",
+      "customer_type": "individual",
+      "status": "active",
+      "display_name": "John Doe",
+      "branch": { "id": 1, "name": "Kantor Pusat" },
+      "risk_rating": "low"
+    }
+  }
+  ```
+}
