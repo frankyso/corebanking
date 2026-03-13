@@ -1,0 +1,29 @@
+meta {
+  name: List Savings
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/customers/{{cif_number}}/savings
+  body: none
+  auth: none
+}
+
+docs {
+  # List Savings
+
+  Mengambil daftar semua rekening tabungan yang dimiliki oleh nasabah.
+
+  Mengembalikan ringkasan setiap rekening tabungan termasuk nomor rekening, nama produk, saldo, dan status.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - cif_number: Nomor CIF nasabah
+}

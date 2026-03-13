@@ -1,28 +1,29 @@
 meta {
   name: Overdue
   type: http
-  seq: 6
+  seq: 4
 }
 
 get {
-  url: {{base_url}}/loans/{{loan_account_number}}/overdue
+  url: {{base_url}}/loans/{{loan_account}}/overdue
   body: none
-  auth: bearer
-}
-
-auth:bearer {
-  token: {{token}}
-}
-
-headers {
-  Accept: application/json
-  X-Device-Id: {{device_id}}
+  auth: none
 }
 
 docs {
-  # Overdue Info
+  # Overdue
 
-  Menampilkan informasi keterlambatan/tunggakan pinjaman.
+  Mengambil informasi tunggakan pinjaman.
 
-  **Security**: AUTH (Bearer Token)
+  Mengembalikan detail tunggakan termasuk jumlah angsuran tertunggak, total tunggakan pokok, tunggakan bunga, denda keterlambatan, total kewajiban, dan jumlah hari keterlambatan.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - loan_account: Nomor rekening pinjaman
 }

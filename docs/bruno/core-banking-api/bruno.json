@@ -1,9 +1,5 @@
 {
   "version": "1",
-  "name": "Core Banking Mobile API",
-  "type": "collection",
-  "ignore": [
-    "node_modules",
-    ".git"
-  ]
+  "name": "Core Banking Open API",
+  "type": "collection"
 }

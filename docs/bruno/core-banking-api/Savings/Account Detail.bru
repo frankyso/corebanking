@@ -1,28 +1,29 @@
 meta {
   name: Account Detail
   type: http
-  seq: 2
+  seq: 1
 }
 
 get {
-  url: {{base_url}}/savings/{{savings_account_number}}
+  url: {{base_url}}/savings/{{savings_account}}
   body: none
-  auth: bearer
-}
-
-auth:bearer {
-  token: {{token}}
-}
-
-headers {
-  Accept: application/json
-  X-Device-Id: {{device_id}}
+  auth: none
 }
 
 docs {
-  # Savings Account Detail
+  # Account Detail
 
-  Menampilkan detail rekening tabungan tertentu.
+  Mengambil detail lengkap rekening tabungan berdasarkan nomor rekening.
 
-  **Security**: AUTH (Bearer Token)
+  Mengembalikan informasi seperti nama pemilik, produk tabungan, saldo, suku bunga, tanggal pembukaan, dan status rekening.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - savings_account: Nomor rekening tabungan
 }

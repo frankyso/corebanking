@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Models\ApiClient;
 use App\Models\User;
 use Illuminate\Cache\RateLimiting\Limit;
 use Illuminate\Http\Request;
@@ -35,20 +36,12 @@ class AppServiceProvider extends ServiceProvider
 
     private function configureRateLimiting(): void
     {
-        RateLimiter::for('mobile-api', function (Request $request) {
-            return Limit::perMinute(60)->by($request->user('mobile')?->id ?: $request->ip());
-        });
+        RateLimiter::for('open-api', function (Request $request) {
+            $client = $request->attributes->get('api_client');
+            $limit = $client instanceof ApiClient ? $client->rate_limit : 60;
+            $key = $client instanceof ApiClient ? (string) $client->id : $request->ip();
 
-        RateLimiter::for('mobile-auth', function (Request $request) {
-            return Limit::perMinute(5)->by($request->ip());
-        });
-
-        RateLimiter::for('mobile-otp', function (Request $request) {
-            return Limit::perMinute(3)->by($request->ip());
-        });
-
-        RateLimiter::for('mobile-transaction', function (Request $request) {
-            return Limit::perMinute(10)->by($request->user('mobile')?->id ?: $request->ip());
+            return Limit::perMinute($limit)->by($key);
         });
     }
 }

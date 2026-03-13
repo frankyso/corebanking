@@ -1,22 +1,13 @@
 meta {
   name: Monthly Statement
   type: http
-  seq: 6
+  seq: 4
 }
 
 get {
-  url: {{base_url}}/savings/{{savings_account_number}}/monthly-statement
+  url: {{base_url}}/savings/{{savings_account}}/statement?month=2026-03
   body: none
-  auth: bearer
-}
-
-auth:bearer {
-  token: {{token}}
-}
-
-headers {
-  Accept: application/json
-  X-Device-Id: {{device_id}}
+  auth: none
 }
 
 params:query {
@@ -26,10 +17,20 @@ params:query {
 docs {
   # Monthly Statement
 
-  Menampilkan mutasi rekening tabungan per bulan.
+  Mengambil rekening koran bulanan untuk rekening tabungan.
+
+  Mengembalikan ringkasan transaksi selama satu bulan termasuk saldo awal, total debit, total kredit, saldo akhir, dan detail setiap transaksi.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - savings_account: Nomor rekening tabungan
 
   **Query Parameters**:
-  - `month` (required): Format Y-m (contoh: 2026-03)
-
-  **Security**: AUTH (Bearer Token)
+  - month: Bulan yang diminta (format: YYYY-MM)
 }

@@ -10,27 +10,12 @@ get {
   auth: none
 }
 
-headers {
-  Accept: application/json
-}
-
 docs {
   # App Info
 
-  Menampilkan informasi umum aplikasi (versi, maintenance mode).
-  Endpoint public tanpa autentikasi.
+  Mengambil informasi umum tentang aplikasi Core Banking.
 
-  **Security**: PUBLIC
+  Endpoint publik yang tidak memerlukan autentikasi. Mengembalikan informasi seperti nama aplikasi, versi, nama BPR, dan status sistem.
 
-  **Response** (200):
-  ```json
-  {
-    "data": {
-      "app_name": "Core Banking",
-      "version": "1.0.0",
-      "minimum_version": "1.0.0",
-      "maintenance_mode": false
-    }
-  }
-  ```
+  **Security**: Tidak memerlukan autentikasi (endpoint publik)
 }

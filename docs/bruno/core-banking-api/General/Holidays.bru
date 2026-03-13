@@ -5,31 +5,29 @@ meta {
 }
 
 get {
-  url: {{base_url}}/system/holidays
+  url: {{base_url}}/system/holidays?year=2026
   body: none
-  auth: bearer
-}
-
-auth:bearer {
-  token: {{token}}
-}
-
-headers {
-  Accept: application/json
-  X-Device-Id: {{device_id}}
+  auth: none
 }
 
 params:query {
-  ~year: 2026
+  year: 2026
 }
 
 docs {
-  # List Holidays
+  # Holidays
 
-  Menampilkan daftar hari libur berdasarkan tahun.
+  Mengambil daftar hari libur nasional dan cuti bersama untuk tahun tertentu.
+
+  Mengembalikan daftar tanggal libur yang digunakan sistem untuk menentukan hari kerja operasional bank.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
 
   **Query Parameters**:
-  - `year` (optional): Tahun (default: tahun berjalan)
-
-  **Security**: AUTH (Bearer Token)
+  - year: Tahun yang diminta (format: YYYY)
 }

@@ -130,14 +130,6 @@ class Customer extends Model implements AuditableContract
         return $this->hasMany(LoanApplication::class);
     }
 
-    /**
-     * @return HasOne<MobileUser, $this>
-     */
-    public function mobileUser(): HasOne
-    {
-        return $this->hasOne(MobileUser::class);
-    }
-
     protected function displayName(): Attribute
     {
         return Attribute::make(get: function () {

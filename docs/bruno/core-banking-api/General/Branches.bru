@@ -7,22 +7,20 @@ meta {
 get {
   url: {{base_url}}/branches
   body: none
-  auth: bearer
-}
-
-auth:bearer {
-  token: {{token}}
-}
-
-headers {
-  Accept: application/json
-  X-Device-Id: {{device_id}}
+  auth: none
 }
 
 docs {
-  # List Branches
+  # Branches
 
-  Menampilkan daftar semua kantor cabang yang aktif.
+  Mengambil daftar semua kantor cabang BPR.
 
-  **Security**: AUTH (Bearer Token)
+  Mengembalikan informasi setiap cabang termasuk kode cabang, nama cabang, alamat, nomor telepon, jam operasional, dan status aktif.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
 }

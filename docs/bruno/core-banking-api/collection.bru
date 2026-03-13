@@ -1,5 +1,22 @@
 headers {
   Content-Type: application/json
   Accept: application/json
-  X-Device-Id: {{device_id}}
+}
+
+script:pre-request {
+  // HMAC Signature generation
+  const crypto = require('crypto');
+  const timestamp = new Date().toISOString();
+  const method = req.getMethod().toUpperCase();
+  const url = new URL(req.getUrl());
+  const path = url.pathname;
+  const body = req.getBody() ? JSON.stringify(req.getBody()) : '';
+  const bodyHash = crypto.createHash('sha256').update(body).digest('hex');
+  const stringToSign = method + '\n' + path + '\n' + timestamp + '\n' + bodyHash;
+  const signature = crypto.createHmac('sha256', bru.getEnvVar('secret_key'))
+    .update(stringToSign).digest('hex');
+
+  req.setHeader('X-Client-Id', bru.getEnvVar('client_id'));
+  req.setHeader('X-Timestamp', timestamp);
+  req.setHeader('X-Signature', signature);
 }

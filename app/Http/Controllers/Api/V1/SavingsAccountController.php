@@ -4,12 +4,8 @@ namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Api\V1\SavingsAccountResource;
-use App\Http\Resources\Api\V1\SavingsAccountSummaryResource;
 use App\Http\Resources\Api\V1\SavingsTransactionResource;
-use App\Models\Customer;
-use App\Models\MobileUser;
 use App\Models\SavingsAccount;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
@@ -17,25 +13,13 @@ use Illuminate\Http\Resources\Json\AnonymousResourceCollection;
 class SavingsAccountController extends Controller
 {
     /**
-     * List all savings accounts for the authenticated customer.
-     */
-    public function index(Request $request): AnonymousResourceCollection
-    {
-        $accounts = $this->customer($request)
-            ->savingsAccounts()
-            ->with('savingsProduct')
-            ->get();
-
-        return SavingsAccountSummaryResource::collection($accounts);
-    }
-
-    /**
      * Show detailed information for a specific savings account.
      */
-    public function show(Request $request, string $accountNumber): SavingsAccountResource
+    public function show(string $accountNumber): SavingsAccountResource
     {
-        $account = $this->findAccount($request, $accountNumber);
-        $account->load(['savingsProduct', 'branch']);
+        $account = SavingsAccount::where('account_number', $accountNumber)
+            ->with(['savingsProduct', 'branch'])
+            ->firstOrFail();
 
         return SavingsAccountResource::make($account);
     }
@@ -43,18 +27,16 @@ class SavingsAccountController extends Controller
     /**
      * Get the current balance for a specific savings account.
      */
-    public function balance(Request $request, string $accountNumber): JsonResponse
+    public function balance(string $accountNumber): JsonResponse
     {
-        $account = $this->findAccount($request, $accountNumber);
+        $account = SavingsAccount::where('account_number', $accountNumber)->firstOrFail();
 
-        return response()->json([
-            'data' => [
-                'account_number' => $account->account_number,
-                'balance' => (float) $account->balance,
-                'hold_amount' => (float) $account->hold_amount,
-                'available_balance' => (float) $account->available_balance,
-            ],
-        ]);
+        return response()->json(['data' => [
+            'account_number' => $account->account_number,
+            'balance' => (float) $account->balance,
+            'hold_amount' => (float) $account->hold_amount,
+            'available_balance' => (float) $account->available_balance,
+        ]]);
     }
 
     /**
@@ -64,7 +46,7 @@ class SavingsAccountController extends Controller
      */
     public function transactions(Request $request, string $accountNumber): AnonymousResourceCollection
     {
-        $account = $this->findAccount($request, $accountNumber);
+        $account = SavingsAccount::where('account_number', $accountNumber)->firstOrFail();
 
         $query = $account->transactions()->latest();
 
@@ -80,25 +62,13 @@ class SavingsAccountController extends Controller
     }
 
     /**
-     * Get the last 10 transactions (mini statement) for a specific savings account.
-     */
-    public function miniStatement(Request $request, string $accountNumber): AnonymousResourceCollection
-    {
-        $account = $this->findAccount($request, $accountNumber);
-
-        $transactions = $account->transactions()->latest()->limit(10)->get();
-
-        return SavingsTransactionResource::collection($transactions);
-    }
-
-    /**
      * Get all transactions for a specific month.
      *
      * Requires query parameter: month (YYYY-MM format). Defaults to current month.
      */
-    public function monthlyStatement(Request $request, string $accountNumber): AnonymousResourceCollection
+    public function statement(Request $request, string $accountNumber): AnonymousResourceCollection
     {
-        $account = $this->findAccount($request, $accountNumber);
+        $account = SavingsAccount::where('account_number', $accountNumber)->firstOrFail();
 
         /** @var string $month */
         $month = $request->query('month', now()->format('Y-m'));
@@ -110,30 +80,5 @@ class SavingsAccountController extends Controller
             ->get();
 
         return SavingsTransactionResource::collection($transactions);
-    }
-
-    /**
-     * Find a savings account belonging to the authenticated customer.
-     *
-     * @throws ModelNotFoundException
-     */
-    private function findAccount(Request $request, string $accountNumber): SavingsAccount
-    {
-        return $this->customer($request)
-            ->savingsAccounts()
-            ->where('account_number', $accountNumber)
-            ->firstOrFail();
-    }
-
-    private function mobileUser(Request $request): MobileUser
-    {
-        /** @var MobileUser */
-        return $request->user('mobile');
-    }
-
-    private function customer(Request $request): Customer
-    {
-        /** @var Customer */
-        return $this->mobileUser($request)->customer;
     }
 }

@@ -1,8 +1,7 @@
 <?php
 
-use App\Http\Middleware\EnsureCustomerActive;
-use App\Http\Middleware\EnsureDeviceRegistered;
-use App\Http\Middleware\VerifyTransactionPin;
+use App\Http\Middleware\AuthenticateApiClient;
+use App\Http\Middleware\CacheApiResponse;
 use Illuminate\Foundation\Application;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
@@ -17,9 +16,8 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->alias([
-            'mobile.active' => EnsureCustomerActive::class,
-            'mobile.pin' => VerifyTransactionPin::class,
-            'mobile.device' => EnsureDeviceRegistered::class,
+            'api.auth' => AuthenticateApiClient::class,
+            'api.cache' => CacheApiResponse::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions): void {

@@ -21,7 +21,6 @@ class GeneralController extends Controller
         return response()->json(['data' => [
             'app_name' => config('app.name'),
             'version' => '1.0.0',
-            'minimum_version' => '1.0.0',
             'maintenance_mode' => app()->isDownForMaintenance(),
         ]]);
     }

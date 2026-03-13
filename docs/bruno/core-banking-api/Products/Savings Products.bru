@@ -1,0 +1,26 @@
+meta {
+  name: Savings Products
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/products/savings
+  body: none
+  auth: none
+}
+
+docs {
+  # Savings Products
+
+  Mengambil daftar semua produk tabungan yang tersedia.
+
+  Mengembalikan informasi setiap produk termasuk kode produk, nama produk, suku bunga, setoran minimum, saldo minimum, biaya administrasi, dan status aktif/tidak aktif.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+}

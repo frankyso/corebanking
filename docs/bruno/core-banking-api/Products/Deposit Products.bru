@@ -1,0 +1,26 @@
+meta {
+  name: Deposit Products
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/products/deposits
+  body: none
+  auth: none
+}
+
+docs {
+  # Deposit Products
+
+  Mengambil daftar semua produk deposito berjangka yang tersedia.
+
+  Mengembalikan informasi setiap produk termasuk kode produk, nama produk, jangka waktu yang tersedia, suku bunga per tenor, penempatan minimum, dan status aktif/tidak aktif.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+}
