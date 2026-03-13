@@ -1,0 +1,26 @@
+meta {
+  name: Branches
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/branches
+  body: none
+  auth: none
+}
+
+docs {
+  # Branches
+
+  Mengambil daftar semua kantor cabang BPR.
+
+  Mengembalikan informasi setiap cabang termasuk kode cabang, nama cabang, alamat, nomor telepon, jam operasional, dan status aktif.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+}

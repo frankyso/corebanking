@@ -1,0 +1,29 @@
+meta {
+  name: Get Profile
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/customers/{{cif_number}}
+  body: none
+  auth: none
+}
+
+docs {
+  # Get Profile
+
+  Mengambil data profil nasabah berdasarkan nomor CIF (Customer Information File).
+
+  Mengembalikan informasi dasar nasabah seperti nama, alamat, nomor telepon, dan status akun.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - cif_number: Nomor CIF nasabah
+}

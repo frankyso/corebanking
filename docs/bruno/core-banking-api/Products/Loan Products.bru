@@ -1,0 +1,26 @@
+meta {
+  name: Loan Products
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/products/loans
+  body: none
+  auth: none
+}
+
+docs {
+  # Loan Products
+
+  Mengambil daftar semua produk pinjaman yang tersedia.
+
+  Mengembalikan informasi setiap produk termasuk kode produk, nama produk, suku bunga, plafon minimum dan maksimum, jangka waktu, metode perhitungan bunga, dan status aktif/tidak aktif.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+}

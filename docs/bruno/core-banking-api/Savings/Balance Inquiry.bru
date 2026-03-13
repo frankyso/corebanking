@@ -1,0 +1,29 @@
+meta {
+  name: Balance Inquiry
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/savings/{{savings_account}}/balance
+  body: none
+  auth: none
+}
+
+docs {
+  # Balance Inquiry
+
+  Mengambil informasi saldo terkini dari rekening tabungan.
+
+  Mengembalikan saldo buku, saldo efektif, dan saldo yang dapat ditarik (available balance).
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - savings_account: Nomor rekening tabungan
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Account Detail
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/loans/{{loan_account}}
+  body: none
+  auth: none
+}
+
+docs {
+  # Account Detail
+
+  Mengambil detail lengkap rekening pinjaman berdasarkan nomor rekening.
+
+  Mengembalikan informasi seperti nama debitur, jenis pinjaman, plafon, sisa pokok, suku bunga, jangka waktu, tanggal pencairan, tanggal jatuh tempo, dan status kolektibilitas.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - loan_account: Nomor rekening pinjaman
+}

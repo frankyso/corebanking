@@ -1,0 +1,36 @@
+meta {
+  name: Monthly Statement
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/savings/{{savings_account}}/statement?month=2026-03
+  body: none
+  auth: none
+}
+
+params:query {
+  month: 2026-03
+}
+
+docs {
+  # Monthly Statement
+
+  Mengambil rekening koran bulanan untuk rekening tabungan.
+
+  Mengembalikan ringkasan transaksi selama satu bulan termasuk saldo awal, total debit, total kredit, saldo akhir, dan detail setiap transaksi.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - savings_account: Nomor rekening tabungan
+
+  **Query Parameters**:
+  - month: Bulan yang diminta (format: YYYY-MM)
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Get Detail
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/customers/{{cif_number}}/detail
+  body: none
+  auth: none
+}
+
+docs {
+  # Get Detail
+
+  Mengambil data lengkap nasabah termasuk informasi identitas, pekerjaan, dan data tambahan lainnya.
+
+  Endpoint ini mengembalikan detail yang lebih komprehensif dibandingkan Get Profile.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - cif_number: Nomor CIF nasabah
+}

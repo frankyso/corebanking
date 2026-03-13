@@ -1,0 +1,29 @@
+meta {
+  name: List Loans
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{base_url}}/customers/{{cif_number}}/loans
+  body: none
+  auth: none
+}
+
+docs {
+  # List Loans
+
+  Mengambil daftar semua rekening pinjaman yang dimiliki oleh nasabah.
+
+  Mengembalikan ringkasan setiap pinjaman termasuk nomor rekening, jenis pinjaman, plafon, sisa pokok, dan status kolektibilitas.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - cif_number: Nomor CIF nasabah
+}

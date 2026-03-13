@@ -1,0 +1,29 @@
+meta {
+  name: Payment History
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/loans/{{loan_account}}/payments
+  body: none
+  auth: none
+}
+
+docs {
+  # Payment History
+
+  Mengambil riwayat pembayaran angsuran pinjaman.
+
+  Mengembalikan daftar pembayaran yang telah dilakukan termasuk tanggal bayar, jumlah pokok, bunga, denda (jika ada), total pembayaran, dan metode pembayaran.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - loan_account: Nomor rekening pinjaman
+}

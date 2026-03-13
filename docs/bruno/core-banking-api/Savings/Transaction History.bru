@@ -1,0 +1,38 @@
+meta {
+  name: Transaction History
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{base_url}}/savings/{{savings_account}}/transactions?start_date=2026-01-01&end_date=2026-12-31
+  body: none
+  auth: none
+}
+
+params:query {
+  start_date: 2026-01-01
+  end_date: 2026-12-31
+}
+
+docs {
+  # Transaction History
+
+  Mengambil riwayat transaksi rekening tabungan dalam rentang tanggal tertentu.
+
+  Mengembalikan daftar transaksi termasuk tanggal, jenis transaksi (debit/kredit), jumlah, saldo setelah transaksi, dan keterangan.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - savings_account: Nomor rekening tabungan
+
+  **Query Parameters**:
+  - start_date: Tanggal awal (format: YYYY-MM-DD)
+  - end_date: Tanggal akhir (format: YYYY-MM-DD)
+}

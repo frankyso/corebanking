@@ -1,0 +1,29 @@
+meta {
+  name: Schedule
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/loans/{{loan_account}}/schedule
+  body: none
+  auth: none
+}
+
+docs {
+  # Schedule
+
+  Mengambil jadwal angsuran pinjaman.
+
+  Mengembalikan tabel amortisasi lengkap termasuk tanggal jatuh tempo setiap angsuran, komponen pokok, bunga, total angsuran, dan sisa pokok setelah pembayaran.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - loan_account: Nomor rekening pinjaman
+}

@@ -1,0 +1,29 @@
+meta {
+  name: Transaction History
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{base_url}}/deposits/{{deposit_account}}/transactions
+  body: none
+  auth: none
+}
+
+docs {
+  # Transaction History
+
+  Mengambil riwayat transaksi rekening deposito.
+
+  Mengembalikan daftar transaksi deposito termasuk penempatan awal, perpanjangan (rollover), pembayaran bunga, dan pencairan.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - deposit_account: Nomor rekening deposito
+}

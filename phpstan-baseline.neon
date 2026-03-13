@@ -121,18 +121,6 @@ parameters:
 			path: app/Actions/Deposit/RolloverDeposit.php
 
 		-
-			message: '#^Cannot call method addMonths\(\) on mixed\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Actions/Deposit/RolloverDeposit.php
-
-		-
-			message: '#^Cannot call method copy\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Actions/Deposit/RolloverDeposit.php
-
-		-
 			message: '#^Cannot call method getRateForTenorAndAmount\(\) on App\\Models\\DepositProduct\|null\.$#'
 			identifier: method.nonObject
 			count: 1
@@ -529,19 +517,13 @@ parameters:
 			path: app/Exceptions/Deposit/InvalidDepositStatusException.php
 
 		-
-			message: '#^Cannot call method toDateString\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Exceptions/Deposit/InvalidDepositStatusException.php
-
-		-
 			message: '#^Unsafe usage of new static\(\)\.$#'
 			identifier: new.static
 			count: 4
 			path: app/Exceptions/Deposit/InvalidDepositStatusException.php
 
 		-
-			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			message: '#^Using nullsafe method call on non\-nullable type Illuminate\\Support\\Carbon\. Use \-\> instead\.$#'
 			identifier: nullsafe.neverNull
 			count: 1
 			path: app/Exceptions/Deposit/InvalidDepositStatusException.php
@@ -793,12 +775,6 @@ parameters:
 			path: app/Filament/Pages/TellerDashboard.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
-			identifier: property.notFound
-			count: 3
-			path: app/Filament/Pages/TellerDashboard.php
-
-		-
 			message: '#^Cannot access property \$current_balance on mixed\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -934,12 +910,6 @@ parameters:
 			message: '#^Parameter \$vault of class App\\DTOs\\Teller\\OpenTellerSessionData constructor expects App\\Models\\Vault, App\\Models\\Vault\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\Vault\> given\.$#'
 			identifier: argument.type
 			count: 1
-			path: app/Filament/Pages/TellerDashboard.php
-
-		-
-			message: '#^Part \$acc\-\>customer\?\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 3
 			path: app/Filament/Pages/TellerDashboard.php
 
 		-
@@ -1147,24 +1117,6 @@ parameters:
 			path: app/Filament/Resources/CustomerResource/Pages/ViewCustomer.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Filament/Resources/DepositAccountResource.php
-
-		-
-			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: app/Filament/Resources/DepositAccountResource.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
-
-		-
 			message: '#^Cannot access property \$branch_id on App\\Models\\User\|null\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -1227,12 +1179,6 @@ parameters:
 		-
 			message: '#^Parameter \$savingsAccountId of class App\\DTOs\\Deposit\\PlaceDepositData constructor expects int\|null, mixed given\.$#'
 			identifier: argument.type
-			count: 1
-			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
-
-		-
-			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
 			count: 1
 			path: app/Filament/Resources/DepositAccountResource/Pages/CreateDepositAccount.php
 
@@ -1609,12 +1555,6 @@ parameters:
 			path: app/Filament/Resources/LoanApplicationResource.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
-
-		-
 			message: '#^Access to an undefined property App\\Models\\LoanProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\LoanProduct\>\:\:\$interest_rate\.$#'
 			identifier: property.notFound
 			count: 1
@@ -1683,12 +1623,6 @@ parameters:
 		-
 			message: '#^Parameter \$purpose of class App\\DTOs\\Loan\\CreateLoanApplicationData constructor expects string, mixed given\.$#'
 			identifier: argument.type
-			count: 1
-			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
-
-		-
-			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
 			count: 1
 			path: app/Filament/Resources/LoanApplicationResource/Pages/CreateLoanApplication.php
 
@@ -1789,24 +1723,6 @@ parameters:
 			path: app/Filament/Resources/LoanApplicationResource/Pages/ViewLoanApplication.php
 
 		-
-			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Filament/Resources/SavingsAccountResource.php
-
-		-
-			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
-			count: 1
-			path: app/Filament/Resources/SavingsAccountResource.php
-
-		-
-			message: '#^Access to an undefined property App\\Models\\Customer\:\:\$display_name\.$#'
-			identifier: property.notFound
-			count: 1
-			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
-
-		-
 			message: '#^Cannot access property \$branch_id on App\\Models\\User\|null\.$#'
 			identifier: property.nonObject
 			count: 1
@@ -1839,12 +1755,6 @@ parameters:
 		-
 			message: '#^Parameter \$product of class App\\DTOs\\Savings\\OpenSavingsAccountData constructor expects App\\Models\\SavingsProduct, App\\Models\\SavingsProduct\|Illuminate\\Database\\Eloquent\\Collection\<int, App\\Models\\SavingsProduct\> given\.$#'
 			identifier: argument.type
-			count: 1
-			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
-
-		-
-			message: '#^Part \$customer\-\>display_name \(mixed\) of encapsed string cannot be cast to string\.$#'
-			identifier: encapsedStringPart.nonString
 			count: 1
 			path: app/Filament/Resources/SavingsAccountResource/Pages/CreateSavingsAccount.php
 
@@ -1955,6 +1865,192 @@ parameters:
 			identifier: argument.type
 			count: 4
 			path: app/Filament/Widgets/BankOverviewWidget.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Http/Resources/Api/V1/CustomerProfileResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 3
+			path: app/Http/Resources/Api/V1/DepositAccountResource.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/DepositAccountResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type Illuminate\\Support\\Carbon\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/DepositAccountResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/DepositAccountResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/DepositAccountSummaryResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type Illuminate\\Support\\Carbon\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/DepositAccountSummaryResource.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/HolidayResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/HolidayResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Resources/Api/V1/IndividualDetailResource.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/IndividualDetailResource.php
+
+		-
+			message: '#^Cannot access property \$value on int\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/LoanAccountResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Resources/Api/V1/LoanAccountResource.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 3
+			path: app/Http/Resources/Api/V1/LoanAccountResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 2
+			path: app/Http/Resources/Api/V1/LoanAccountResource.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type int\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/LoanAccountResource.php
+
+		-
+			message: '#^Cannot access property \$value on int\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/LoanAccountSummaryResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/LoanAccountSummaryResource.php
+
+		-
+			message: '#^Using nullsafe property access on non\-nullable type int\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/LoanAccountSummaryResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 2
+			path: app/Http/Resources/Api/V1/LoanProductResource.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Resources/Api/V1/LoanScheduleResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/LoanScheduleResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsAccountResource.php
+
+		-
+			message: '#^Cannot call method format\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 2
+			path: app/Http/Resources/Api/V1/SavingsAccountResource.php
+
+		-
+			message: '#^Using nullsafe method call on non\-nullable type string\. Use \-\> instead\.$#'
+			identifier: nullsafe.neverNull
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsAccountResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsAccountSummaryResource.php
+
+		-
+			message: '#^Access to an undefined property App\\Models\\SavingsProduct\:\:\$admin_fee\.$#'
+			identifier: property.notFound
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsProductResource.php
+
+		-
+			message: '#^Cannot cast mixed to float\.$#'
+			identifier: cast.double
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsProductResource.php
+
+		-
+			message: '#^Cannot access property \$value on string\.$#'
+			identifier: property.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsTransactionResource.php
+
+		-
+			message: '#^Cannot call method getLabel\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsTransactionResource.php
+
+		-
+			message: '#^Cannot call method isCredit\(\) on string\.$#'
+			identifier: method.nonObject
+			count: 1
+			path: app/Http/Resources/Api/V1/SavingsTransactionResource.php
 
 		-
 			message: '#^Cannot call method where\(\) on mixed\.$#'
@@ -2111,18 +2207,6 @@ parameters:
 			identifier: nullsafe.neverNull
 			count: 1
 			path: app/Models/Customer.php
-
-		-
-			message: '#^Cannot call method isPast\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Models/DepositAccount.php
-
-		-
-			message: '#^Cannot call method isToday\(\) on string\.$#'
-			identifier: method.nonObject
-			count: 1
-			path: app/Models/DepositAccount.php
 
 		-
 			message: '#^Cannot call method where\(\) on mixed\.$#'

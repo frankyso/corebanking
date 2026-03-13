@@ -1,0 +1,21 @@
+meta {
+  name: App Info
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{base_url}}/system/app-info
+  body: none
+  auth: none
+}
+
+docs {
+  # App Info
+
+  Mengambil informasi umum tentang aplikasi Core Banking.
+
+  Endpoint publik yang tidak memerlukan autentikasi. Mengembalikan informasi seperti nama aplikasi, versi, nama BPR, dan status sistem.
+
+  **Security**: Tidak memerlukan autentikasi (endpoint publik)
+}

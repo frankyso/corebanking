@@ -1,0 +1,29 @@
+meta {
+  name: Overdue
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/loans/{{loan_account}}/overdue
+  body: none
+  auth: none
+}
+
+docs {
+  # Overdue
+
+  Mengambil informasi tunggakan pinjaman.
+
+  Mengembalikan detail tunggakan termasuk jumlah angsuran tertunggak, total tunggakan pokok, tunggakan bunga, denda keterlambatan, total kewajiban, dan jumlah hari keterlambatan.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - loan_account: Nomor rekening pinjaman
+}

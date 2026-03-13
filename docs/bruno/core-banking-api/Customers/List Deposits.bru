@@ -1,0 +1,29 @@
+meta {
+  name: List Deposits
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{base_url}}/customers/{{cif_number}}/deposits
+  body: none
+  auth: none
+}
+
+docs {
+  # List Deposits
+
+  Mengambil daftar semua rekening deposito yang dimiliki oleh nasabah.
+
+  Mengembalikan ringkasan setiap rekening deposito termasuk nomor rekening, jangka waktu, saldo pokok, tanggal jatuh tempo, dan status.
+
+  **Security**: HMAC Signature
+
+  **Headers**:
+  - X-Client-Id: Identifier klien API
+  - X-Timestamp: Timestamp ISO 8601
+  - X-Signature: Tanda tangan HMAC-SHA256
+
+  **Path Parameters**:
+  - cif_number: Nomor CIF nasabah
+}
